@@ -27,6 +27,8 @@ public class ModifyBookLibraryActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final Book book = (Book) intent.getSerializableExtra("book");
+        final int id = intent.getIntExtra("id", -1);
+
 
         EditText isbnEdit = (EditText) findViewById(R.id.isbnEdit);
         EditText authorEdit = (EditText) findViewById(R.id.authorEdit);
@@ -52,7 +54,7 @@ public class ModifyBookLibraryActivity extends AppCompatActivity {
                     toast.show();
 
                 } else {
-                    bookManager.modifyBook(new Book(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString()));
+                    bookManager.modifyBook(new Book(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString()), id);
                     Intent intent = new Intent(ModifyBookLibraryActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();

@@ -43,15 +43,16 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                 } else {
                     try {
                         bookManager.saveBook(new Book(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString()));
+                        Intent intent = new Intent(AddBookLibraryActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     } catch (BookAlreadyExistsException e) {
 
                         Toast toast = Toast.makeText(AddBookLibraryActivity.this, R.string.bookAlreadyExist, Toast.LENGTH_SHORT);
                         toast.show();
 
                     }
-                    Intent intent = new Intent(AddBookLibraryActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+
                 }
             }
         });

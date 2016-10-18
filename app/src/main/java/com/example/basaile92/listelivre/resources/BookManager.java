@@ -63,32 +63,25 @@ public class BookManager {
      * Modify a book in the book save file.
      * @param book is the new book that you want to put in the save file.
      */
-    public void modifyBook(Book book){
+    public void modifyBook(Book book, int id){
 
         BookLibrary bookLibrary;
         bookLibrary = (BookLibrary) readData(this.file);
-        bookLibrary.modifyBook(book);
+        bookLibrary.modifyBook(book, id);
         saveData(this.file, bookLibrary);
 
     }
 
     /**
      * Delete a book in the book save file.
-     * @param book is the book that you want to remove in the save file
      */
-    public void deleteBook(Book book){
+    public void deleteBook(int id){
 
         BookLibrary bookLibrary;
         bookLibrary = (BookLibrary) this.readData(this.file);
+        bookLibrary.removeBook(id);
+        saveData(this.file, bookLibrary);
 
-        for(Book thisBook : bookLibrary){
-            if(book.getIsbn().equals(thisBook.getIsbn())){
-                bookLibrary.removeBook(thisBook);
-                saveData(this.file, bookLibrary);
-                break;
-            }
-
-        }
     }
 
     /**

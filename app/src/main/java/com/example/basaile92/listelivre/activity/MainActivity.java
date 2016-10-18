@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 BookLibrary bookLibrary = bookManager.readBookLibrary();
                 Book book = bookLibrary.get(position);
                 Intent intent = new Intent(MainActivity.this, ModifyBookLibraryActivity.class);
+                intent.putExtra("id", position);
                 intent.putExtra("book", book);
                 startActivity(intent);
                 finish();
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                                 BookManager bookManager = new BookManager(new File("/storage/emulated/0/Android/data/com.example.basaile92.listelivre/files/listeLivre.txt"));
                                 BookLibrary bookLibrary = bookManager.readBookLibrary();
                                 Book book = bookLibrary.get(pos);
-                                bookManager.deleteBook(book);
+                                bookManager.deleteBook(pos);
                                 dialogInterface.cancel();
                                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                                 startActivity(intent);
