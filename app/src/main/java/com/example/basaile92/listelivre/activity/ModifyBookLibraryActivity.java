@@ -22,7 +22,6 @@ public class ModifyBookLibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_book_library);
         initLabel();
-        setTitle(R.string.modifyBookLibraryActivity);
 
         Button modifyButton = (Button) findViewById(R.id.modifyButton);
 
@@ -53,7 +52,7 @@ public class ModifyBookLibraryActivity extends AppCompatActivity {
                     toast.show();
 
                 } else {
-                    bookManager.saveBook(new Book(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString()));
+                    bookManager.modifyBook(new Book(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString()));
                     Intent intent = new Intent(ModifyBookLibraryActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -61,7 +60,7 @@ public class ModifyBookLibraryActivity extends AppCompatActivity {
             }
         });
     }
-    public void initLabel() {
+    private void initLabel() {
 
         TextView isbnText = (TextView) findViewById(R.id.isbnText);
         TextView authorText = (TextView) findViewById(R.id.authorText);
@@ -76,6 +75,8 @@ public class ModifyBookLibraryActivity extends AppCompatActivity {
         addImageText.setText(R.string.addImageText);
         addImageButton.setText(R.string.addImageButton);
         modifyButton.setText(R.string.modifyButton);
+
+        setTitle(R.string.modifyBookLibraryActivity);
     }
 
     public void onBackPressed()

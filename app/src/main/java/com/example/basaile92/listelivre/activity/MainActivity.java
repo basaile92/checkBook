@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initLabel();
-        setTitle(R.string.mainActivity);
 
 
         File file = new File("/storage/emulated/0/Android/data/com.example.basaile92.listelivre/files/listeLivre.txt");
@@ -130,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void initLabel(){
+    private void initLabel(){
 
         Button addBookButton = (Button) findViewById(R.id.addBookButton);
         Button searchBookButton = (Button) findViewById(R.id.searchBookButton);
@@ -138,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
         addBookButton.setText(R.string.addBookButton);
         searchBookButton.setText(R.string.searchBookButton);
         myLibraryButton.setText(R.string.myLibraryButton);
+
+        setTitle(R.string.mainActivity);
     }
 
 

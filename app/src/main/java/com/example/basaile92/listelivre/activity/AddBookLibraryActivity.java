@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.resources.Book;
+import com.example.basaile92.listelivre.resources.BookAlreadyExistsException;
 import com.example.basaile92.listelivre.resources.BookManager;
 
 import java.io.File;
@@ -22,7 +23,6 @@ public class AddBookLibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_library);
         initLabel();
-        setTitle(R.string.addBookLibraryActivity);
 
         Button sendButton = (Button) findViewById(R.id.sendButton);
 
@@ -41,7 +41,14 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                     toast.show();
 
                 } else {
-                    bookManager.saveBook(new Book(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString()));
+                    try {
+                        bookManager.saveBook(new Book(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString()));
+                    } catch (BookAlreadyExistsException e) {
+
+                        Toast toast = Toast.makeText(AddBookLibraryActivity.this, R.string.bookAlreadyExist, Toast.LENGTH_SHORT);
+                        toast.show();
+
+                    }
                     Intent intent = new Intent(AddBookLibraryActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -50,7 +57,7 @@ public class AddBookLibraryActivity extends AppCompatActivity {
         });
     }
 
-    public void initLabel() {
+    private void initLabel() {
 
         TextView isbnText = (TextView) findViewById(R.id.isbnText);
         TextView authorText = (TextView) findViewById(R.id.authorText);
@@ -65,6 +72,9 @@ public class AddBookLibraryActivity extends AppCompatActivity {
         addImageText.setText(R.string.addImageText);
         addImageButton.setText(R.string.addImageButton);
         sendButton.setText(R.string.sendButton);
+
+        setTitle(R.string.addBookLibraryActivity);
+
     }
     public void onBackPressed()
     {

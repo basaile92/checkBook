@@ -1,6 +1,8 @@
 package com.example.basaile92.listelivre.resources;
 
 import android.os.Environment;
+import android.widget.Toast;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -44,15 +46,30 @@ public class BookManager {
      * Add a book in the book save file.
      * @param book is the book that you want to add in the save file.
      */
-    public void saveBook(Book book){
-
+    public void saveBook(Book book) throws BookAlreadyExistsException {
         BookLibrary bookLibrary;
         bookLibrary = (BookLibrary) readData(this.file);
         if(bookLibrary == null)
             bookLibrary = new BookLibrary();
+        else if(bookLibrary.existBook(book)){
 
+            throw new BookAlreadyExistsException();
+        }
         bookLibrary.addBook(book);
         saveData(this.file, bookLibrary);
+    }
+
+    /**
+     * Modify a book in the book save file.
+     * @param book is the new book that you want to put in the save file.
+     */
+    public void modifyBook(Book book){
+
+        BookLibrary bookLibrary;
+        bookLibrary = (BookLibrary) readData(this.file);
+        bookLibrary.modifyBook(book);
+        saveData(this.file, bookLibrary);
+
     }
 
     /**
@@ -74,6 +91,10 @@ public class BookManager {
         }
     }
 
+    /**
+     * Read the Book Library in the book save file.
+     * @return the booklibrary
+     */
     public BookLibrary readBookLibrary(){
 
         return (BookLibrary) readData(this.file);
@@ -127,7 +148,6 @@ public class BookManager {
         }
         return null;
     }
-
 
 
 }

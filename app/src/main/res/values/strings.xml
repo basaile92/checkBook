@@ -18,5 +18,6 @@
     <string name="mainActivity">Check Book</string>
     <string name="addBookLibraryActivity">Add a Book</string>
     <string name="modifyBookLibraryActivity">Modify a Book</string>
+    <string name="bookAlreadyExist">This ISBN already exists</string>
 
 </resources>
