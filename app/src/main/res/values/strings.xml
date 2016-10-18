@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Check Book</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="deleteQuestion">Do you really want to delete it?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="addBookButton">Add Book</string>
+    <string name="searchBookButton">Search Book</string>
+    <string name="myLibraryButton">My Library</string>
+    <string name="isbnText">Isbn</string>
+    <string name="authorText">Author</string>
+    <string name="titleText">Title</string>
+    <string name="addImageText">Add an Image</string>
+    <string name="addImageButton">Browse</string>
+    <string name="sendButton">Send</string>
+    <string name="toastEmptyField">You should fill the empty fields!</string>
+    <string name="modifyButton">Modify</string>
+    <string name="mainActivity">Check Book</string>
+    <string name="addBookLibraryActivity">Add a Book</string>
+    <string name="modifyBookLibraryActivity">Modify a Book</string>
+
+</resources>

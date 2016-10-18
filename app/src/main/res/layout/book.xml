@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1"
+    android:id="@+id/livreLayout">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/frame"
+        android:layout_weight="0.90">
+
+        <TextView
+            android:text="Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/titleBook"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/background_dark"
+            android:textStyle="normal|bold"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:text="Author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:id="@+id/authorBook"
+            android:textColor="@android:color/black"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:text="isbn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/isbnBook"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/background_dark"
+            android:textAlignment="viewStart" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.10"
+        android:gravity="right|center_vertical">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            android:id="@+id/deleteBookButton"
+            android:backgroundTint="@color/brownie"
+            android:visibility="invisible"
+            android:background="@android:drawable/ic_menu_delete" />
+    </LinearLayout>
+
+</LinearLayout>

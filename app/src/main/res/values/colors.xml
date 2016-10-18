@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="brownie">#764100</color>
+    <color name="pagecolor">#e2bd92</color>
+    <color name="brownie_top">#4f2c00</color>
+    <color name="brownie_top_dark">#392000</color>
+</resources>
