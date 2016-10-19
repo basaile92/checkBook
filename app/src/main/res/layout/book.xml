@@ -56,10 +56,10 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_delete"
             android:id="@+id/deleteBookButton"
-            android:backgroundTint="@color/brownie"
             android:visibility="invisible"
+            android:backgroundTint="@color/brownie"
+            app:srcCompat="@android:drawable/ic_menu_delete"
             android:background="@android:drawable/ic_menu_delete" />
     </LinearLayout>
 
