@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Check Book</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="deleteQuestion">Voulez vous vraiment le supprimer?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="addBookButton">Ajouter un livre</string>
+    <string name="searchBookButton">Chercher un livre</string>
+    <string name="myLibraryButton">Ma Bibliothèque</string>
+    <string name="isbnText">Isbn</string>
+    <string name="authorText">Auteur</string>
+    <string name="titleText">Titre</string>
+    <string name="addImageText">Ajouter une image</string>
+    <string name="addImageButton">Rechercher</string>
+    <string name="sendButton">Envoyer</string>
+    <string name="toastEmptyField">Certains champs sont vides!</string>
+    <string name="modifyButton">Modifier</string>
+    <string name="mainActivity">Check Book</string>
+    <string name="addBookLibraryActivity">Ajouter un livre</string>
+    <string name="modifyBookLibraryActivity">Modifier un livre</string>
+    <string name="bookAlreadyExist">Cet ISBN existe déjà dans votre bibliothèque</string>
+
+</resources>
