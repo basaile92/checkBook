@@ -27,7 +27,7 @@ package com.example.basaile92.listelivre.fragment;
     import java.util.List;
     import java.util.Map;
 
-    public class BookLibraryFragment extends ListFragment {
+    public class BookLibraryFragment extends Fragment {
 
         private ListView bookList;
 
@@ -40,22 +40,11 @@ package com.example.basaile92.listelivre.fragment;
             View view = inflater.inflate(R.layout.fragment_book_library, container, false);
 
             File file = new File("/storage/emulated/0/Android/data/com.example.basaile92.listelivre/files/listeLivre.txt");
-            bookList = (ListView) getView().findViewById(R.id.bookList);
-            Button addBookButton = (Button) getView().findViewById(R.id.addBookButton);
+            bookList = (ListView) view.findViewById(R.id.bookList);
             BookManager bookManager = new BookManager(file);
             bookManager.createFile();
             BookLibrary bookLibrary = bookManager.readBookLibrary();
             final List<Map<String, String>> listOfBook = new ArrayList<Map<String, String>>();
-
-            addBookButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent intent = new Intent(getActivity(), AddBookLibraryActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                }
-            });
 
             bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
