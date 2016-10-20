@@ -3,6 +3,7 @@ package com.example.basaile92.listelivre.fragment;
     import android.content.DialogInterface;
     import android.content.Intent;
     import android.support.v4.app.Fragment;
+    import android.support.v4.app.ListFragment;
     import android.support.v7.app.AlertDialog;
     import android.os.Bundle;
     import android.view.LayoutInflater;
@@ -26,7 +27,7 @@ package com.example.basaile92.listelivre.fragment;
     import java.util.List;
     import java.util.Map;
 
-    public class BookLibraryFragment extends Fragment {
+    public class BookLibraryFragment extends ListFragment {
 
         private ListView bookList;
 
