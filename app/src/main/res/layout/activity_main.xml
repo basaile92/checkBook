@@ -55,15 +55,43 @@
 
     </LinearLayout>
 
-    <fragment
-        android:id="@+id/bookLibraryFragment"
-        class="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
-        android:name="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_book_library">
-    </fragment>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/bookLibraryLayout">
+            <fragment
+                android:id="@+id/bookLibraryFragment"
+                class="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
+                android:name="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                tools:layout="@layout/fragment_book_library">
+            </fragment>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:visibility="invisible"
+            android:id="@+id/modifyBookLibraryLayout">
+            <fragment
+                android:id="@+id/modifyBookLibraryFragment"
+                class="com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment"
+                android:name="com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                tools:layout="@layout/fragment_modify_book_library">
 
+            </fragment>
+        </LinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

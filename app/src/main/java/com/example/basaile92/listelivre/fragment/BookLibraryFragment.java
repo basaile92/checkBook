@@ -1,5 +1,6 @@
 package com.example.basaile92.listelivre.fragment;
 
+    import android.app.Activity;
     import android.content.DialogInterface;
     import android.content.Intent;
     import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ package com.example.basaile92.listelivre.fragment;
     import com.example.basaile92.listelivre.resources.Book;
     import com.example.basaile92.listelivre.resources.BookLibrary;
     import com.example.basaile92.listelivre.resources.BookManager;
+    import com.example.basaile92.listelivre.resources.BookLibraryFragmentCallBack;
 
     import java.io.File;
     import java.util.ArrayList;
@@ -25,6 +27,8 @@ package com.example.basaile92.listelivre.fragment;
 
     public class BookLibraryFragment extends Fragment {
 
+        private BookLibraryFragmentCallBack parent;
+        int position = 0;
         private ListView bookList;
 
         public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,7 @@ package com.example.basaile92.listelivre.fragment;
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle b) {
             View view = inflater.inflate(R.layout.fragment_book_library, container, false);
 
             File file = new File("/storage/emulated/0/Android/data/com.example.basaile92.listelivre/files/listeLivre.txt");
@@ -44,26 +48,20 @@ package com.example.basaile92.listelivre.fragment;
 
             bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
 
-                    BookManager bookManager = new BookManager(new File("/storage/emulated/0/Android/data/com.example.basaile92.listelivre/files/listeLivre.txt"));
-                    BookLibrary bookLibrary = bookManager.readBookLibrary();
-                    Book book = bookLibrary.get(position);
-                    Intent intent = new Intent(getActivity(), ModifyBookLibraryFragment.class);
-                    intent.putExtra("id", position);
-                    intent.putExtra("book", book);
-                    startActivity(intent);
-                    getActivity().finish();
+                    position = pos;
+                    parent.onItemSelected(position);
                 }
             });
 
 
             bookList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
-                public boolean onItemLongClick(final AdapterView<?> adapterView, View view, int position, long l) {
+                public boolean onItemLongClick(final AdapterView<?> adapterView, View view, int pos, long l) {
 
+                    position = pos;
                     View deleteBookButton = adapterView.getChildAt(position).findViewById(R.id.deleteBookButton);
-                    final int pos = position;
                     deleteBookButton.setVisibility(View.VISIBLE);
                     deleteBookButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -77,8 +75,8 @@ package com.example.basaile92.listelivre.fragment;
 
                                     BookManager bookManager = new BookManager(new File("/storage/emulated/0/Android/data/com.example.basaile92.listelivre/files/listeLivre.txt"));
                                     BookLibrary bookLibrary = bookManager.readBookLibrary();
-                                    Book book = bookLibrary.get(pos);
-                                    bookManager.deleteBook(pos);
+                                    Book book = bookLibrary.get(position);
+                                    bookManager.deleteBook(position);
                                     dialogInterface.cancel();
                                     Intent intent = new Intent(getActivity(), getActivity().getClass());
                                     startActivity(intent);
@@ -103,12 +101,12 @@ package com.example.basaile92.listelivre.fragment;
             });
             if(bookLibrary != null) {
 
-                for (Book livre : bookLibrary) {
+                for (Book booki : bookLibrary) {
 
                     Map<String, String> bookMap = new HashMap<String, String>();
-                    bookMap.put("authorBook", livre.getAuthor());
-                    bookMap.put("titleBook", livre.getTitle());
-                    bookMap.put("isbnBook", livre.getIsbn());
+                    bookMap.put("authorBook", booki.getAuthor());
+                    bookMap.put("titleBook", booki.getTitle());
+                    bookMap.put("isbnBook", booki.getIsbn());
                     listOfBook.add(bookMap);
                 }
 
@@ -118,6 +116,15 @@ package com.example.basaile92.listelivre.fragment;
 
             return view;
         }
+
+
+        public void onAttach(Activity activity){
+            super.onAttach(activity);
+
+            parent = (BookLibraryFragmentCallBack) activity;
+
+        }
+
     }
 
 

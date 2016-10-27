@@ -15,11 +15,19 @@ import android.widget.Toast;
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.activity.MainActivity;
 import com.example.basaile92.listelivre.resources.Book;
+import com.example.basaile92.listelivre.resources.BookLibrary;
+import com.example.basaile92.listelivre.resources.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.resources.BookManager;
 
 import java.io.File;
 
 public class ModifyBookLibraryFragment extends Fragment {
+
+    private EditText isbnEdit;
+    private EditText authorEdit;
+    private EditText titleEdit;
+    private BookLibraryFragmentCallBack parent;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,18 +37,7 @@ public class ModifyBookLibraryFragment extends Fragment {
 
         Button modifyButton = (Button) view.findViewById(R.id.modifyButton);
 
-        Intent intent = getActivity().getIntent();
-        final Book book = (Book) intent.getSerializableExtra("book");
-        final int id = intent.getIntExtra("id", -1);
 
-
-        EditText isbnEdit = (EditText) view.findViewById(R.id.isbnEdit);
-        EditText authorEdit = (EditText) view.findViewById(R.id.authorEdit);
-        EditText titleEdit = (EditText) view.findViewById(R.id.titleEdit);
-
-        isbnEdit.setText(book.getIsbn());
-        authorEdit.setText(book.getAuthor());
-        titleEdit.setText(book.getTitle());
 
 
         modifyButton.setOnClickListener(new View.OnClickListener() {
@@ -58,17 +55,13 @@ public class ModifyBookLibraryFragment extends Fragment {
                     toast.show();
 
                 } else {
-                    bookManager.modifyBook(new Book(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString()), id);
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
+                    bookManager.modifyBook(new Book(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString()), parent.getId());
                 }
             }
         });
 
         return view;
     }
-
 
     private void initLabel(View view, Activity thisActivity) {
 
@@ -96,4 +89,30 @@ public class ModifyBookLibraryFragment extends Fragment {
         getActivity().finish();
     }
 
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+
+        parent = (BookLibraryFragmentCallBack) activity;
+
+    }
+
+    public void updateView(int itemId) {
+
+        BookManager bookManager = new BookManager(new File("/storage/emulated/0/Android/data/com.example.basaile92.listelivre/files/listeLivre.txt"));
+        BookLibrary bookLibrary = bookManager.readBookLibrary();
+
+        Book book;
+        if(parent.getId() == -1){
+
+            book =  bookLibrary.get(0);
+        }else {
+
+            book = bookLibrary.get(itemId);
+        }
+        isbnEdit.setText(book.getIsbn());
+        authorEdit.setText(book.getAuthor());
+        titleEdit.setText(book.getTitle());
+
+
+    }
 }

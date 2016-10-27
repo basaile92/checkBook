@@ -1,18 +1,31 @@
 package com.example.basaile92.listelivre.activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.support.v4.app.FragmentTransaction;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
+import com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment;
+import com.example.basaile92.listelivre.resources.Book;
+import com.example.basaile92.listelivre.resources.BookLibrary;
+import com.example.basaile92.listelivre.resources.BookManager;
+import com.example.basaile92.listelivre.resources.BookLibraryFragmentCallBack;
+import com.example.basaile92.listelivre.resources.ModifyBookLibraryFragmentCallBack;
+
+import java.io.File;
 
 
+public class MainActivity extends FragmentActivity implements BookLibraryFragmentCallBack, ModifyBookLibraryFragmentCallBack {
 
-public class MainActivity extends FragmentActivity {
+    private int id = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +35,8 @@ public class MainActivity extends FragmentActivity {
 
 
         Button addBookButton = (Button) findViewById(R.id.addBookButton);
+
+
 
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,21 +64,70 @@ public class MainActivity extends FragmentActivity {
     }
 
 
-    public boolean onCreateOptionsMenu(Menu menu){
+    public int getId(){
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-
+        return this.id;
     }
 
+    public void setId(int id){
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+        this.id = id;
+    }
+    @Override
+    public void onItemSelected(int itemId) {
 
-        if(item.getItemId()== R.id.deleteMenu){
+        BookLibraryFragment bookLibraryFragment = (BookLibraryFragment) getSupportFragmentManager().findFragmentById(R.id.bookLibraryFragment);
+        ModifyBookLibraryFragment modifyBookLibraryFragment = (ModifyBookLibraryFragment) getSupportFragmentManager().findFragmentById(R.id.modifyBookLibraryFragment);
 
+        LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
+        LinearLayout bookLibraryLayout = (LinearLayout) findViewById(R.id.bookLibraryLayout);
+        this.id = itemId;
+        if(modifyBookLibraryFragment != null) {
+
+            modifyBookLibraryFragment.updateView(itemId);
+        }else
+        {
+            BookLibraryFragment bookLibraryFragment1 = new BookLibraryFragment();
+            Bundle args = new Bundle();
+            args.putInt("itemId", itemId);
+            bookLibraryFragment1.setArguments(args);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.modifyBookLibraryFragment, bookLibraryFragment1);
+            transaction.addToBackStack(null);
+
+            transaction.commit();
         }
-        return true;
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(0, 0, 1.0f);
+            LinearLayout.LayoutParams param2 = new LinearLayout.LayoutParams(0, 0, 0f);
+            modifyBookLibraryLayout.setLayoutParams(param);
+            bookLibraryLayout.setLayoutParams(param2);
+        }
+        modifyBookLibraryLayout.setVisibility(View.VISIBLE);
+
     }
+
+    @Override
+    public void modified() {
+
+        LinearLayout bookLibraryLayout = (LinearLayout) findViewById(R.id.bookLibraryLayout);
+        LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
+
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(0, 0, 0f);
+            LinearLayout.LayoutParams param2 = new LinearLayout.LayoutParams(0, 0, 1.0f);
+            modifyBookLibraryLayout.setLayoutParams(param);
+            bookLibraryLayout.setLayoutParams(param2);
+        }
+        modifyBookLibraryLayout.setVisibility(View.INVISIBLE);
+
+    }
+
+        /*intent.putExtra("id", pos);
+        intent.putExtra("book", book);
+        startActivity(intent);
+        */
 
 }
