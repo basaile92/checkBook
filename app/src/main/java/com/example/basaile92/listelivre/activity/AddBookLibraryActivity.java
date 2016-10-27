@@ -13,6 +13,7 @@ import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.resources.Book;
 import com.example.basaile92.listelivre.resources.BookAlreadyExistsException;
 import com.example.basaile92.listelivre.resources.BookManager;
+import com.example.basaile92.listelivre.resources.SimpleBook;
 
 import java.io.File;
 
@@ -34,6 +35,7 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                 EditText isbnEdit = (EditText) findViewById(R.id.isbnEdit);
                 EditText authorEdit = (EditText) findViewById(R.id.authorEdit);
                 EditText titleEdit = (EditText) findViewById(R.id.titleEdit);
+                EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
 
                 if(isbnEdit.getText().toString().equals("")|| authorEdit.getText().toString().equals("") || titleEdit.getText().toString().equals("")){
 
@@ -42,7 +44,7 @@ public class AddBookLibraryActivity extends AppCompatActivity {
 
                 } else {
                     try {
-                        bookManager.saveBook(new Book(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString()));
+                        bookManager.saveSimpleBook(new SimpleBook(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString(), descriptionEdit.getText().toString()));
                         Intent intent = new Intent(AddBookLibraryActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -64,12 +66,14 @@ public class AddBookLibraryActivity extends AppCompatActivity {
         TextView authorText = (TextView) findViewById(R.id.authorText);
         TextView titleText = (TextView) findViewById(R.id.titleText);
         TextView addImageText = (TextView) findViewById(R.id.addImageText);
+        TextView descriptionText = (TextView) findViewById(R.id.descriptionText);
         Button addImageButton = (Button) findViewById(R.id.addImageButton);
         Button sendButton = (Button) findViewById(R.id.sendButton);
 
         isbnText.setText(R.string.isbnText);
         authorText.setText(R.string.authorText);
         titleText.setText(R.string.titleText);
+        descriptionText.setText(R.string.descriptionText);
         addImageText.setText(R.string.addImageText);
         addImageButton.setText(R.string.addImageButton);
         sendButton.setText(R.string.sendButton);

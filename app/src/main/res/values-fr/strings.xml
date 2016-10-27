@@ -20,5 +20,6 @@
     <string name="addBookLibraryActivity">Ajouter un livre</string>
     <string name="modifyBookLibraryActivity">Modifier un livre</string>
     <string name="bookAlreadyExist">Cet ISBN existe déjà dans votre bibliothèque</string>
+    <string name="descriptionText">Description</string>
 
 </resources>

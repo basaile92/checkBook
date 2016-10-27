@@ -16,6 +16,8 @@ public class BookFilter {
         this.isbn = isbn;
     }
 
+    //TODO: Modifier cette fonction
+/*
     public boolean isSelected (Book book){
         if (book.getAuthor().equals(this.author))
             return true;
@@ -25,5 +27,5 @@ public class BookFilter {
             return true;
         return false;
     }
-
+*/
 }

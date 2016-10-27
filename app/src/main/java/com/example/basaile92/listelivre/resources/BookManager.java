@@ -46,12 +46,12 @@ public class BookManager {
      * Add a book in the book save file.
      * @param book is the book that you want to add in the save file.
      */
-    public void saveBook(Book book) throws BookAlreadyExistsException {
+    public void saveSimpleBook(SimpleBook book) throws BookAlreadyExistsException {
         BookLibrary bookLibrary;
         bookLibrary = (BookLibrary) readData(this.file);
         if(bookLibrary == null)
             bookLibrary = new BookLibrary();
-        else if(bookLibrary.existBook(book)){
+        else if(bookLibrary.existSimpleBook(book)){
 
             throw new BookAlreadyExistsException();
         }

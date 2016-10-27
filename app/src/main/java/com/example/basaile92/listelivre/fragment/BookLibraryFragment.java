@@ -18,6 +18,7 @@ package com.example.basaile92.listelivre.fragment;
     import com.example.basaile92.listelivre.resources.BookLibrary;
     import com.example.basaile92.listelivre.resources.BookManager;
     import com.example.basaile92.listelivre.resources.BookLibraryFragmentCallBack;
+    import com.example.basaile92.listelivre.resources.SimpleBook;
 
     import java.io.File;
     import java.util.ArrayList;
@@ -102,12 +103,17 @@ package com.example.basaile92.listelivre.fragment;
             if(bookLibrary != null) {
 
                 for (Book booki : bookLibrary) {
+                    if(!booki.canContainBook()) {
+                        SimpleBook simpleBook = (SimpleBook) booki;
+                        Map<String, String> bookMap = new HashMap<String, String>();
+                        bookMap.put("authorBook", simpleBook.getAuthor());
+                        bookMap.put("titleBook", simpleBook.getTitle());
+                        bookMap.put("isbnBook", simpleBook.getIsbn());
+                        listOfBook.add(bookMap);
+                    }else{
 
-                    Map<String, String> bookMap = new HashMap<String, String>();
-                    bookMap.put("authorBook", booki.getAuthor());
-                    bookMap.put("titleBook", booki.getTitle());
-                    bookMap.put("isbnBook", booki.getIsbn());
-                    listOfBook.add(bookMap);
+                        //TODO: On traitera ça autrement
+                    }
                 }
 
                 SimpleAdapter listAdapter = new SimpleAdapter(getActivity().getBaseContext(), listOfBook, R.layout.book, new String[]{"authorBook", "titleBook", "isbnBook"}, new int[]{R.id.authorBook, R.id.titleBook, R.id.isbnBook});

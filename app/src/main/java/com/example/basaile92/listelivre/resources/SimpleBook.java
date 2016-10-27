@@ -72,4 +72,11 @@ public class SimpleBook extends Book{
     public void removeKeyword(String keyword){
         this.keywords.removeKeyword(keyword);
     }
+
+    @Override
+    public boolean canContainBook(){
+
+        return false;
+    }
+
 }

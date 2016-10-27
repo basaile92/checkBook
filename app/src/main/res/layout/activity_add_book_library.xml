@@ -75,6 +75,26 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:text="Description"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/descriptionText" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/descriptionEdit" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
             android:text="Add an image"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

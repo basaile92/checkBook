@@ -42,4 +42,6 @@ public abstract class Book implements Serializable{
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public abstract boolean canContainBook();
 }

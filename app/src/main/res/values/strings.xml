@@ -19,5 +19,6 @@
     <string name="addBookLibraryActivity">Add a Book</string>
     <string name="modifyBookLibraryActivity">Modify a Book</string>
     <string name="bookAlreadyExist">This ISBN already exists</string>
+    <string name="descriptionText">Description</string>
 
 </resources>

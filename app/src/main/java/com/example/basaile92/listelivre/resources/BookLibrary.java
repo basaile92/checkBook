@@ -23,7 +23,6 @@ public class BookLibrary extends ArrayList<Book> implements Serializable{
         this.add(book);
     }
 
-
     /**
      * Modify a book in the Book library if it already exists. Add just the book in the other case
      * @param book is the new Book that you want to add in the library.
@@ -45,19 +44,19 @@ public class BookLibrary extends ArrayList<Book> implements Serializable{
     }
 
     /**
-     * Test if the book already exists in the library.
-     * @param book is the book you want to check the presence in the library
+     * Test if the Simplebook already exists in the library.
+     * @param book is the Simplebook you want to check the presence in the library
      * @return true or false
      */
-    public boolean existBook(Book book){
+    public boolean existSimpleBook(SimpleBook book){
 
         boolean test = false;
         for(Book b : this){
 
-            if(b.getIsbn().equals(book.getIsbn()))
-            {
-
-                test = true;
+            if(!b.canContainBook()){
+                if (((SimpleBook) b).getIsbn().equals(book.getIsbn())) {
+                    test = true;
+                }
             }
         }
 
