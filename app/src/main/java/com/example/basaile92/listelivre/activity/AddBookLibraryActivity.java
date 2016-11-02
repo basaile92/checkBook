@@ -1,6 +1,7 @@
 package com.example.basaile92.listelivre.activity;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,7 +32,7 @@ public class AddBookLibraryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                BookManager bookManager = new BookManager(new File("/storage/emulated/0/Android/data/com.example.basaile92.listelivre/files/listeLivre.txt"));
+                BookManager bookManager = new BookManager(getBaseContext());
                 EditText isbnEdit = (EditText) findViewById(R.id.isbnEdit);
                 EditText authorEdit = (EditText) findViewById(R.id.authorEdit);
                 EditText titleEdit = (EditText) findViewById(R.id.titleEdit);
@@ -44,7 +45,7 @@ public class AddBookLibraryActivity extends AppCompatActivity {
 
                 } else {
                     try {
-                        bookManager.saveSimpleBook(new SimpleBook(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString(), descriptionEdit.getText().toString()));
+                        bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString()));
                         Intent intent = new Intent(AddBookLibraryActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

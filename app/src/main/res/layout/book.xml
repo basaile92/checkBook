@@ -22,8 +22,7 @@
             android:id="@+id/titleBook"
             android:gravity="center_horizontal"
             android:textColor="@android:color/background_dark"
-            android:textStyle="normal|bold"
-            android:textAlignment="viewStart" />
+            android:textStyle="normal|bold"/>
 
         <TextView
             android:text="Author"
@@ -31,17 +30,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:id="@+id/authorBook"
-            android:textColor="@android:color/black"
-            android:textAlignment="viewStart" />
-
-        <TextView
-            android:text="isbn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/isbnBook"
-            android:gravity="center_horizontal"
-            android:textColor="@android:color/background_dark"
-            android:textAlignment="viewStart" />
+            android:textColor="@android:color/black"/>
 
 
     </LinearLayout>

@@ -3,6 +3,7 @@ package com.example.basaile92.listelivre.activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -76,58 +77,61 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
     @Override
     public void onItemSelected(int itemId) {
 
-        BookLibraryFragment bookLibraryFragment = (BookLibraryFragment) getSupportFragmentManager().findFragmentById(R.id.bookLibraryFragment);
         ModifyBookLibraryFragment modifyBookLibraryFragment = (ModifyBookLibraryFragment) getSupportFragmentManager().findFragmentById(R.id.modifyBookLibraryFragment);
+                if (modifyBookLibraryFragment != null) {
 
-        LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
-        LinearLayout bookLibraryLayout = (LinearLayout) findViewById(R.id.bookLibraryLayout);
-        this.id = itemId;
-        if(modifyBookLibraryFragment != null) {
+                    ModifyBookLibraryFragment newModifyBookLibraryFragment = new ModifyBookLibraryFragment();
+                    Bundle args = new Bundle();
+                    args.putInt("id", id);
+                    newModifyBookLibraryFragment.setArguments(args);
 
-            modifyBookLibraryFragment.updateView(itemId);
-        }else
-        {
-            BookLibraryFragment bookLibraryFragment1 = new BookLibraryFragment();
-            Bundle args = new Bundle();
-            args.putInt("itemId", itemId);
-            bookLibraryFragment1.setArguments(args);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.modifyBookLibraryFragment, bookLibraryFragment1);
-            transaction.addToBackStack(null);
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-            transaction.commit();
-        }
+                    transaction.replace(R.id.modifyBookLibraryLayout, newModifyBookLibraryFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                } else {
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    ModifyBookLibraryFragment newModifyBookLibraryFragment = new ModifyBookLibraryFragment();
+                    Bundle args = new Bundle();
+                    args.putInt("id", id);
+                    newModifyBookLibraryFragment.setArguments(args);
 
-            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(0, 0, 1.0f);
-            LinearLayout.LayoutParams param2 = new LinearLayout.LayoutParams(0, 0, 0f);
-            modifyBookLibraryLayout.setLayoutParams(param);
-            bookLibraryLayout.setLayoutParams(param2);
-        }
-        modifyBookLibraryLayout.setVisibility(View.VISIBLE);
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                    transaction.replace(R.id.mainLibraryLayout, newModifyBookLibraryFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
 
     }
+
 
     @Override
     public void modified() {
 
-        LinearLayout bookLibraryLayout = (LinearLayout) findViewById(R.id.bookLibraryLayout);
-        LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
+        ModifyBookLibraryFragment modifyBookLibraryFragment = (ModifyBookLibraryFragment) getSupportFragmentManager().findFragmentById(R.id.modifyBookLibraryFragment);
+        if (modifyBookLibraryFragment != null) {
 
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(0, 0, 0f);
-            LinearLayout.LayoutParams param2 = new LinearLayout.LayoutParams(0, 0, 1.0f);
-            modifyBookLibraryLayout.setLayoutParams(param);
-            bookLibraryLayout.setLayoutParams(param2);
+            Fragment emptyFragment = new Fragment();
+            Bundle args = new Bundle();
+            args.putInt("id", id);
+            emptyFragment.setArguments(args);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            transaction.replace(R.id.modifyBookLibraryLayout, emptyFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else {
+
+            BookLibraryFragment bookLibraryFragment = new BookLibraryFragment();
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            transaction.replace(R.id.mainLibraryLayout, bookLibraryFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
-        modifyBookLibraryLayout.setVisibility(View.INVISIBLE);
-
     }
-
-        /*intent.putExtra("id", pos);
-        intent.putExtra("book", book);
-        startActivity(intent);
-        */
-
 }

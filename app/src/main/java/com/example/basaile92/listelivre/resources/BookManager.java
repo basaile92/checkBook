@@ -1,146 +1,103 @@
 package com.example.basaile92.listelivre.resources;
 
-import android.os.Environment;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.database.DatabaseUtilsCompat;
 
 /**
  * Created by basaile92 on 06/10/2016.
  */
 
-public class BookManager {
+public class BookManager extends DAOBase {
 
-    private File file;
+    public static final String bookNameDb = "Book";
+    public static final String idBookDb = "id";
+    public static final String isbnBookDb = "isbn";
+    public static final String authorBookDb = "author";
+    public static final String titleBookDb = "title";
+    public static final String descriptionBookDb = "description";
 
-    public BookManager(File file){
 
-        this.file = file;
+    public BookManager(Context pContext) {
+        super(pContext);
     }
 
-    /**
-     * Create the file of the book manager
-     */
-    public void createFile(){
-
-        try {
-            if (!file.exists()) {
-
-                new File(Environment.getExternalStorageDirectory().getPath() + "/Android/data/com.example.basaile92.listelivre").mkdirs();
-                new File(Environment.getExternalStorageDirectory().getPath() + "/Android/data/com.example.basaile92.listelivre/files").mkdirs();
-                this.file.createNewFile();
-            }
-        } catch (IOException e) {
-        }
-
-    }
 
     /**
      * Add a book in the book save file.
+     *
      * @param book is the book that you want to add in the save file.
      */
     public void saveSimpleBook(SimpleBook book) throws BookAlreadyExistsException {
-        BookLibrary bookLibrary;
-        bookLibrary = (BookLibrary) readData(this.file);
-        if(bookLibrary == null)
-            bookLibrary = new BookLibrary();
-        else if(bookLibrary.existSimpleBook(book)){
+
+        if (dbExistSimpleBook(book)) {
 
             throw new BookAlreadyExistsException();
         }
-        bookLibrary.addBook(book);
-        saveData(this.file, bookLibrary);
+
+        ContentValues value = new ContentValues();
+        value.put(isbnBookDb, book.getIsbn());
+        value.put(authorBookDb, book.getAuthor());
+        value.put(titleBookDb, book.getTitle());
+        value.put(descriptionBookDb, book.getDescription());
+        db.insert(bookNameDb, null, value);
+    }
+
+    private boolean dbExistSimpleBook(SimpleBook book){
+
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ bookNameDb + " WHERE " + isbnBookDb + " = ?", new String[]{ book.getIsbn()} );
+
+        return cursor.getCount() != 0;
     }
 
     /**
      * Modify a book in the book save file.
+     *
      * @param book is the new book that you want to put in the save file.
      */
-    public void modifyBook(Book book, int id){
+    public void modifyBook(Book book, long position) {
 
-        BookLibrary bookLibrary;
-        bookLibrary = (BookLibrary) readData(this.file);
-        bookLibrary.modifyBook(book, id);
-        saveData(this.file, bookLibrary);
-
+        ContentValues value = new ContentValues();
+        value.put(isbnBookDb, book.getIsbn());
+        value.put(authorBookDb, book.getAuthor());
+        value.put(titleBookDb, book.getTitle());
+        value.put(descriptionBookDb, book.getDescription());
+        db.update(bookNameDb, value, idBookDb + " = ? ", new String[]{String.valueOf(position)});
     }
 
     /**
      * Delete a book in the book save file.
      */
-    public void deleteBook(int id){
+    public void deleteBook(long id) {
 
-        BookLibrary bookLibrary;
-        bookLibrary = (BookLibrary) this.readData(this.file);
-        bookLibrary.removeBook(id);
-        saveData(this.file, bookLibrary);
-
+        db.delete(bookNameDb, idBookDb + " = ?", new String[]{String.valueOf(id)});
     }
 
     /**
      * Read the Book Library in the book save file.
+     *
      * @return the booklibrary
      */
-    public BookLibrary readBookLibrary(){
+    public BookLibrary readBookLibrary() {
 
-        return (BookLibrary) readData(this.file);
-    }
 
-    /**
-     * Used to save the data in a file.
-     * @param file is the File where you want to save the data.
-     * @param data is the Data that you want to save in the file.
-     */
-    private void saveData(File file, final Object data)
-    {
-            synchronized (data) {
-            if(data == null) return;
-            try {
-                FileOutputStream fos = new FileOutputStream(file);
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(data);
-                oos.close();
-                fos.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        BookLibrary bookLibrary = new BookLibrary();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + bookNameDb, new String[]{});
+
+        while (cursor.moveToNext()) {
+
+            String isbn = cursor.getString(1);
+            String author = cursor.getString(2);
+            String title = cursor.getString(3);
+            String description = cursor.getString(4);
+
+            bookLibrary.addBook(new SimpleBook(isbn, author, title, description));
         }
+        cursor.close();
+        return bookLibrary;
+
+
     }
-
-    /**
-     * Used to read the data of a file
-     * @param file is the file that you want to read.
-     * @return the data read in the file
-     */
-    private Object readData(File file){
-
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            Object o = ois.readObject();
-            ois.close();
-            fis.close();
-            return o;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (StreamCorruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
 }

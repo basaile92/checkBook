@@ -17,7 +17,7 @@ public class SimpleBook extends Book{
      * @param isbn
      * @param description
      */
-    public SimpleBook(String author, String title, String isbn, String description){
+    public SimpleBook(String isbn, String author, String title, String description){
         this.author = author;
         this.title = title;
         this.isbn = isbn;

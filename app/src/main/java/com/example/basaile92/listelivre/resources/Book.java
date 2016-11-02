@@ -10,6 +10,8 @@ public abstract class Book implements Serializable{
 
     protected String author;
     protected String title;
+    protected String isbn;
+    private String description;
 
     /**
      * getter author
@@ -44,4 +46,18 @@ public abstract class Book implements Serializable{
     }
 
     public abstract boolean canContainBook();
+
+    public String getIsbn() {
+        return this.isbn;
+    }
+
+    public void setIsbn(String title) {
+        this.isbn = isbn;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
 }

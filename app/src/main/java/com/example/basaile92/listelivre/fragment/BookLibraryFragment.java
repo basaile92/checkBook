@@ -3,7 +3,9 @@ package com.example.basaile92.listelivre.fragment;
     import android.app.Activity;
     import android.content.DialogInterface;
     import android.content.Intent;
+    import android.database.Cursor;
     import android.support.v4.app.Fragment;
+    import android.support.v4.widget.SimpleCursorAdapter;
     import android.support.v7.app.AlertDialog;
     import android.os.Bundle;
     import android.view.LayoutInflater;
@@ -40,10 +42,8 @@ package com.example.basaile92.listelivre.fragment;
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle b) {
             View view = inflater.inflate(R.layout.fragment_book_library, container, false);
 
-            File file = new File("/storage/emulated/0/Android/data/com.example.basaile92.listelivre/files/listeLivre.txt");
             bookList = (ListView) view.findViewById(R.id.bookList);
-            BookManager bookManager = new BookManager(file);
-            bookManager.createFile();
+            BookManager bookManager = new BookManager(getContext());
             BookLibrary bookLibrary = bookManager.readBookLibrary();
             final List<Map<String, String>> listOfBook = new ArrayList<Map<String, String>>();
 
@@ -74,9 +74,7 @@ package com.example.basaile92.listelivre.fragment;
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
 
-                                    BookManager bookManager = new BookManager(new File("/storage/emulated/0/Android/data/com.example.basaile92.listelivre/files/listeLivre.txt"));
-                                    BookLibrary bookLibrary = bookManager.readBookLibrary();
-                                    Book book = bookLibrary.get(position);
+                                    BookManager bookManager = new BookManager(getContext());
                                     bookManager.deleteBook(position);
                                     dialogInterface.cancel();
                                     Intent intent = new Intent(getActivity(), getActivity().getClass());
@@ -103,20 +101,15 @@ package com.example.basaile92.listelivre.fragment;
             if(bookLibrary != null) {
 
                 for (Book booki : bookLibrary) {
-                    if(!booki.canContainBook()) {
-                        SimpleBook simpleBook = (SimpleBook) booki;
-                        Map<String, String> bookMap = new HashMap<String, String>();
-                        bookMap.put("authorBook", simpleBook.getAuthor());
-                        bookMap.put("titleBook", simpleBook.getTitle());
-                        bookMap.put("isbnBook", simpleBook.getIsbn());
-                        listOfBook.add(bookMap);
-                    }else{
-
-                        //TODO: On traitera ça autrement
-                    }
+                    Map<String, String> bookMap = new HashMap<String, String>();
+                    bookMap.put("authorBook", booki.getAuthor());
+                    bookMap.put("titleBook", booki.getTitle());
+                    listOfBook.add(bookMap);
                 }
 
-                SimpleAdapter listAdapter = new SimpleAdapter(getActivity().getBaseContext(), listOfBook, R.layout.book, new String[]{"authorBook", "titleBook", "isbnBook"}, new int[]{R.id.authorBook, R.id.titleBook, R.id.isbnBook});
+                Cursor cursor = bookManager.getDb().rawQuery("SELECT id as _id, author, title from Book;", new String[]{});
+
+                SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(getActivity().getBaseContext(), R.layout.book, cursor ,new String[]{"author", "title"}, new int[]{R.id.authorBook, R.id.titleBook});
                 bookList.setAdapter(listAdapter);
             }
 
