@@ -1,6 +1,7 @@
 package com.example.basaile92.listelivre.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +46,8 @@ public class AddBookLibraryActivity extends AppCompatActivity {
 
                 } else {
                     try {
+                        //TODO : A supprimer plus tard en même temps que le parametre ID.
+                        Cursor cursor = bookManager.getDb().rawQuery("SELECT * FROM "+BookManager.bookNameDb, new String[]{});
                         bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString()));
                         Intent intent = new Intent(AddBookLibraryActivity.this, MainActivity.class);
                         startActivity(intent);

@@ -16,6 +16,8 @@ public class BookDatabaseHandler extends SQLiteOpenHelper {
     public static final String authorBookDb = "author";
     public static final String titleBookDb = "title";
     public static final String descriptionBookDb = "description";
+    public static final String destroy_table_book = "DROP TABLE IF EXISTS " + bookNameDb + ";";
+
 
     public BookDatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -27,7 +29,7 @@ public class BookDatabaseHandler extends SQLiteOpenHelper {
      */
     private String createTableBook(){
 
-        return ("CREATE TABLE "+bookNameDb+" ( "+idBookDb+" INTEGER PRIMARY KEY AUTOINCREMENT, "+isbnBookDb+" TEXT NOT NULL, "+authorBookDb+" TEXT NOT NULL, "+ titleBookDb +" TEXT NOT NULL, "+ descriptionBookDb+" TEXT);");
+        return ("CREATE TABLE "+bookNameDb+" ( "+idBookDb+" INTEGER PRIMARY KEY, "+isbnBookDb+" TEXT NOT NULL, "+authorBookDb+" TEXT NOT NULL, "+ titleBookDb +" TEXT NOT NULL, "+ descriptionBookDb+" TEXT);");
     }
 
     @Override
@@ -37,6 +39,8 @@ public class BookDatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(destroy_table_book);
+        onCreate(db);
 
     }
 }

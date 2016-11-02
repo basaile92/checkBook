@@ -45,7 +45,6 @@ package com.example.basaile92.listelivre.fragment;
             bookList = (ListView) view.findViewById(R.id.bookList);
             BookManager bookManager = new BookManager(getContext());
             BookLibrary bookLibrary = bookManager.readBookLibrary();
-            final List<Map<String, String>> listOfBook = new ArrayList<Map<String, String>>();
 
             bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -79,7 +78,7 @@ package com.example.basaile92.listelivre.fragment;
 
                                     Book book = bookLibrary.get(position);
 
-                                    bookManager.deleteBook((SimpleBook) book);
+                                    bookManager.deleteBook(position);
                                     dialogInterface.cancel();
                                     Intent intent = new Intent(getActivity(), getActivity().getClass());
                                     startActivity(intent);
@@ -104,12 +103,7 @@ package com.example.basaile92.listelivre.fragment;
             });
             if(bookLibrary != null) {
 
-                for (Book booki : bookLibrary) {
-                    Map<String, String> bookMap = new HashMap<String, String>();
-                    bookMap.put("authorBook", booki.getAuthor());
-                    bookMap.put("titleBook", booki.getTitle());
-                    listOfBook.add(bookMap);
-                }
+
 
                 Cursor cursor = bookManager.getDb().rawQuery("SELECT id as _id, author, title from Book;", new String[]{});
 

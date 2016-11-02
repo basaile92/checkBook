@@ -59,20 +59,42 @@ public class BookManager extends DAOBase {
      */
     public void modifyBook(Book book, long position) {
 
+        long pos = position;
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ bookNameDb, null);
+
+        while(cursor.moveToNext() && pos > 0){
+
+            pos --;
+
+        }
+        long id = cursor.getLong(0);
+
         ContentValues value = new ContentValues();
         value.put(isbnBookDb, book.getIsbn());
         value.put(authorBookDb, book.getAuthor());
         value.put(titleBookDb, book.getTitle());
         value.put(descriptionBookDb, book.getDescription());
-        db.update(bookNameDb, value, idBookDb + " = ? ", new String[]{String.valueOf(position)});
+        db.update(bookNameDb, value, idBookDb + " = ? ", new String[]{String.valueOf(id)});
     }
 
     /**
      * Delete a book in the book save file.
+     * @param position is the position in the database
      */
-    public void deleteBook(SimpleBook book) {
+    public void deleteBook(long position) {
 
-        db.delete(bookNameDb, isbnBookDb + " = ?", new String[]{book.getIsbn()});
+
+        long pos = position;
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ bookNameDb, null);
+
+        while(cursor.moveToNext() && pos > 0){
+
+            pos --;
+
+        }
+
+        long id = cursor.getLong(0);
+        db.delete(bookNameDb, idBookDb + " = ?", new String[]{String.valueOf(id)});
     }
 
     /**
@@ -84,7 +106,7 @@ public class BookManager extends DAOBase {
 
 
         BookLibrary bookLibrary = new BookLibrary();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + bookNameDb, new String[]{});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + bookNameDb, null);
 
         while (cursor.moveToNext()) {
 
