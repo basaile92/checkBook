@@ -104,6 +104,9 @@ public class ModifyBookLibraryFragment extends Fragment {
 
         BookManager bookManager = new BookManager(getContext());
         BookLibrary bookLibrary = bookManager.readBookLibrary();
+        isbnEdit = (EditText) getView().findViewById(R.id.isbnEdit);
+        authorEdit = (EditText) getView().findViewById(R.id.authorEdit);
+        titleEdit = (EditText) getView().findViewById(R.id.titleEdit);
 
         Book book;
         if(parent.getId() == -1){

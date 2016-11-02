@@ -70,9 +70,9 @@ public class BookManager extends DAOBase {
     /**
      * Delete a book in the book save file.
      */
-    public void deleteBook(long id) {
+    public void deleteBook(SimpleBook book) {
 
-        db.delete(bookNameDb, idBookDb + " = ?", new String[]{String.valueOf(id)});
+        db.delete(bookNameDb, isbnBookDb + " = ?", new String[]{book.getIsbn()});
     }
 
     /**

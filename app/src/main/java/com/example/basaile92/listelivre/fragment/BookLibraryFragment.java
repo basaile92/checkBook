@@ -75,7 +75,11 @@ package com.example.basaile92.listelivre.fragment;
                                 public void onClick(DialogInterface dialogInterface, int i) {
 
                                     BookManager bookManager = new BookManager(getContext());
-                                    bookManager.deleteBook(position);
+                                    BookLibrary bookLibrary= bookManager.readBookLibrary();
+
+                                    Book book = bookLibrary.get(position);
+
+                                    bookManager.deleteBook((SimpleBook) book);
                                     dialogInterface.cancel();
                                     Intent intent = new Intent(getActivity(), getActivity().getClass());
                                     startActivity(intent);
