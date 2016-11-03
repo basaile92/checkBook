@@ -24,6 +24,14 @@ public class ModifyBookLibraryFragment extends Fragment {
 
     public static final String POSITION = "itemPosition";
 
+    private BookLibraryFragmentCallBack mCallback;
+    private BookManager bookManager;
+    private EditText isbnEdit;
+    private EditText authorEdit;
+    private EditText titleEdit;
+    private EditText descriptionEdit;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -32,37 +40,44 @@ public class ModifyBookLibraryFragment extends Fragment {
 
         Button modifyButton = (Button) view.findViewById(R.id.modifyButton);
 
-        //TODO Récuper Bundle et Intent
-        Intent intent = ;
         final int position = getPositionInListView();
 
-
-        modifyButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                BookManager bookManager = new BookManager(getContext());
-                EditText isbnEdit = (EditText) view.findViewById(R.id.isbnEdit);
-                EditText authorEdit = (EditText) view.findViewById(R.id.authorEdit);
-                EditText titleEdit = (EditText) view.findViewById(R.id.titleEdit);
-                EditText descriptionEdit = (EditText) view.findViewById(R.id.descriptionEdit);
+        if(position == -1) {
 
 
+            isbnEdit = (EditText) view.findViewById(R.id.isbnEdit);
+            authorEdit = (EditText) view.findViewById(R.id.authorEdit);
+            titleEdit = (EditText) view.findViewById(R.id.titleEdit);
+            descriptionEdit = (EditText) view.findViewById(R.id.descriptionEdit);
 
-                if(isbnEdit.getText().toString().equals("")|| authorEdit.getText().toString().equals("") || titleEdit.getText().toString().equals("")){
+            bookManager = new BookManager(getContext());
+            SimpleBook book = bookManager.getSimpleBook(position);
 
-                    Toast toast = Toast.makeText(getActivity(), R.string.toastEmptyField, Toast.LENGTH_SHORT);
-                    toast.show();
+            isbnEdit.setText(book.getIsbn());
+            authorEdit.setText(book.getAuthor());
+            titleEdit.setText(book.getTitle());
+            descriptionEdit.setText(book.getDescription());
 
-                } else {
-                    bookManager.modifyBook(new SimpleBook(authorEdit.getText().toString(), titleEdit.getText().toString(), isbnEdit.getText().toString(), descriptionEdit.getText().toString() ), position);
+
+            modifyButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+
+                    if (isbnEdit.getText().toString().equals("") || authorEdit.getText().toString().equals("") || titleEdit.getText().toString().equals("")) {
+
+                        Toast toast = Toast.makeText(getActivity(), R.string.toastEmptyField, Toast.LENGTH_SHORT);
+                        toast.show();
+
+                    } else {
+                        bookManager.modifyBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString()), position);
+                        mCallback.updateBookLibraryFragment();
+                    }
                 }
-            }
-        });
+            });
 
 
-
+        }
 
         return view;
     }
@@ -70,8 +85,12 @@ public class ModifyBookLibraryFragment extends Fragment {
 
     private int getPositionInListView() {
 
-        Intent intent =
+        Bundle bundle = getArguments();
 
+        if(bundle != null){
+            return bundle.getInt(POSITION);
+        }else
+            return -1;
 
     }
 
@@ -90,6 +109,21 @@ public class ModifyBookLibraryFragment extends Fragment {
         descriptionText.setText(R.string.descriptionText);
 
         thisActivity.setTitle(R.string.modifyBookLibraryActivity);
+    }
+
+    @Override
+    public void onAttach(Activity activity){
+
+        super.onAttach(activity);
+
+        try{
+
+            mCallback = (BookLibraryFragmentCallBack) activity;
+
+        }catch (ClassCastException e){
+
+            throw new ClassCastException(activity.toString() + " must implement BookLibraryFragmentCallBack");
+        }
     }
 
 }

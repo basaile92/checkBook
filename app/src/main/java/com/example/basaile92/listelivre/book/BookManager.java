@@ -122,4 +122,25 @@ public class BookManager extends DAOBase {
 
 
     }
+
+    public SimpleBook getSimpleBook(int position) {
+
+        long pos = position;
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ bookNameDb, null);
+
+        while(cursor.moveToNext() && pos > 0){
+
+            pos --;
+
+        }
+
+        String isbn = cursor.getString(1);
+        String author = cursor.getString(2);
+        String title = cursor.getString(3);
+        String description = cursor.getString(4);
+
+        cursor.close();
+        return new SimpleBook(isbn, author, title, description);
+
+    }
 }

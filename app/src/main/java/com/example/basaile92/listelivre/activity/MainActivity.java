@@ -3,12 +3,12 @@ package com.example.basaile92.listelivre.activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment;
 
@@ -25,7 +25,6 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
 
 
         Button addBookButton = (Button) findViewById(R.id.addBookButton);
-
 
 
         addBookButton.setOnClickListener(new View.OnClickListener() {
@@ -54,26 +53,39 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
     }
 
 
-    @Override
-    public void onItemSelected(int itemId) {
+    public void updateModifyBookLibraryFragment(int position){
 
         LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
+        if(modifyBookLibraryLayout != null) {
 
-        if(modifyBookLibraryLayout != null){
-
+            modifyBookLibraryLayout.setVisibility(View.VISIBLE);
             ModifyBookLibraryFragment modifyBookLibraryFragment = new ModifyBookLibraryFragment();
             Bundle args = new Bundle();
-            args.putInt(ModifyBookLibraryFragment.POSITION, itemId);
+            args.putInt(ModifyBookLibraryFragment.POSITION, position);
             modifyBookLibraryFragment.setArguments(args);
-            getSupportFragmentManager().beginTransaction().add(R.id.modifyBookLibraryLayout, modifyBookLibraryFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.modifyBookLibraryLayout, modifyBookLibraryFragment).addToBackStack(null).commit();
 
-        }else
-        {
+        }else{
 
             Intent intent = new Intent(MainActivity.this, ModifyBookLibraryActivity.class);
-            intent.putExtra(ModifyBookLibraryFragment.POSITION, itemId);
+            intent.putExtra(ModifyBookLibraryFragment.POSITION, position);
             startActivity(intent);
             finish();
+
+
+        }
+
+    }
+
+    @Override
+    public void updateBookLibraryFragment() {
+
+        LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
+        if(modifyBookLibraryLayout != null) {
+
+            BookLibraryFragment bookLibraryFragment = new BookLibraryFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.bookLibraryLayout, bookLibraryFragment).addToBackStack(null).commit();
+
         }
 
     }

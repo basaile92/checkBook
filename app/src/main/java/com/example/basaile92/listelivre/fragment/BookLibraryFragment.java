@@ -40,7 +40,7 @@ public class BookLibraryFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                    mCallback.onItemSelected(position);
+                    mCallback.updateModifyBookLibraryFragment(position);
                 }
             });
 
