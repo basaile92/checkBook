@@ -1,6 +1,5 @@
-package com.example.basaile92.listelivre.resources;
+package com.example.basaile92.listelivre.book;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
 /**

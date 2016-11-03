@@ -1,10 +1,10 @@
-package com.example.basaile92.listelivre.resources;
+package com.example.basaile92.listelivre.book;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.database.DatabaseUtilsCompat;
+
+import com.example.basaile92.listelivre.database.DAOBase;
 
 /**
  * Created by basaile92 on 06/10/2016.

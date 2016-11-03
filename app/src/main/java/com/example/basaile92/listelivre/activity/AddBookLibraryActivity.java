@@ -2,7 +2,6 @@ package com.example.basaile92.listelivre.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,12 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.resources.Book;
-import com.example.basaile92.listelivre.resources.BookAlreadyExistsException;
-import com.example.basaile92.listelivre.resources.BookManager;
-import com.example.basaile92.listelivre.resources.SimpleBook;
-
-import java.io.File;
+import com.example.basaile92.listelivre.book.BookAlreadyExistsException;
+import com.example.basaile92.listelivre.book.BookManager;
+import com.example.basaile92.listelivre.book.SimpleBook;
 
 public class AddBookLibraryActivity extends AppCompatActivity {
 
@@ -46,8 +42,6 @@ public class AddBookLibraryActivity extends AppCompatActivity {
 
                 } else {
                     try {
-                        //TODO : A supprimer plus tard en même temps que le parametre ID.
-                        Cursor cursor = bookManager.getDb().rawQuery("SELECT * FROM "+BookManager.bookNameDb, new String[]{});
                         bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString()));
                         Intent intent = new Intent(AddBookLibraryActivity.this, MainActivity.class);
                         startActivity(intent);
@@ -69,17 +63,13 @@ public class AddBookLibraryActivity extends AppCompatActivity {
         TextView isbnText = (TextView) findViewById(R.id.isbnText);
         TextView authorText = (TextView) findViewById(R.id.authorText);
         TextView titleText = (TextView) findViewById(R.id.titleText);
-        TextView addImageText = (TextView) findViewById(R.id.addImageText);
         TextView descriptionText = (TextView) findViewById(R.id.descriptionText);
-        Button addImageButton = (Button) findViewById(R.id.addImageButton);
         Button sendButton = (Button) findViewById(R.id.sendButton);
 
         isbnText.setText(R.string.isbnText);
         authorText.setText(R.string.authorText);
         titleText.setText(R.string.titleText);
         descriptionText.setText(R.string.descriptionText);
-        addImageText.setText(R.string.addImageText);
-        addImageButton.setText(R.string.addImageButton);
         sendButton.setText(R.string.sendButton);
 
         setTitle(R.string.addBookLibraryActivity);

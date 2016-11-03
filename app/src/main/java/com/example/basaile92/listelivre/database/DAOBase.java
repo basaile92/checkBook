@@ -1,7 +1,9 @@
-package com.example.basaile92.listelivre.resources;
+package com.example.basaile92.listelivre.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.basaile92.listelivre.database.BookDatabaseHandler;
 
 /**
  * Created by Basile on 02/11/2016.

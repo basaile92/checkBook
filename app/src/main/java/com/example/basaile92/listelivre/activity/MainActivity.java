@@ -1,30 +1,19 @@
 package com.example.basaile92.listelivre.activity;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
+import com.example.basaile92.listelivre.fragment.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment;
-import com.example.basaile92.listelivre.resources.Book;
-import com.example.basaile92.listelivre.resources.BookLibrary;
-import com.example.basaile92.listelivre.resources.BookManager;
-import com.example.basaile92.listelivre.resources.BookLibraryFragmentCallBack;
-import com.example.basaile92.listelivre.resources.ModifyBookLibraryFragmentCallBack;
-
-import java.io.File;
 
 
-public class MainActivity extends FragmentActivity implements BookLibraryFragmentCallBack, ModifyBookLibraryFragmentCallBack {
+public class MainActivity extends FragmentActivity implements BookLibraryFragmentCallBack{
 
     private int id = -1;
 
@@ -65,73 +54,27 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
     }
 
 
-    public int getId(){
-
-        return this.id;
-    }
-
-    public void setId(int id){
-
-        this.id = id;
-    }
     @Override
     public void onItemSelected(int itemId) {
 
-        ModifyBookLibraryFragment modifyBookLibraryFragment = (ModifyBookLibraryFragment) getSupportFragmentManager().findFragmentById(R.id.modifyBookLibraryFragment);
-                if (modifyBookLibraryFragment != null) {
+        LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
 
-                    ModifyBookLibraryFragment newModifyBookLibraryFragment = new ModifyBookLibraryFragment();
-                    Bundle args = new Bundle();
-                    args.putInt("id", id);
-                    newModifyBookLibraryFragment.setArguments(args);
+        if(modifyBookLibraryLayout != null){
 
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                    transaction.replace(R.id.modifyBookLibraryLayout, newModifyBookLibraryFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                } else {
-
-                    ModifyBookLibraryFragment newModifyBookLibraryFragment = new ModifyBookLibraryFragment();
-                    Bundle args = new Bundle();
-                    args.putInt("id", id);
-                    newModifyBookLibraryFragment.setArguments(args);
-
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                    transaction.replace(R.id.mainLibraryLayout, newModifyBookLibraryFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }
-
-    }
-
-
-    @Override
-    public void modified() {
-
-        ModifyBookLibraryFragment modifyBookLibraryFragment = (ModifyBookLibraryFragment) getSupportFragmentManager().findFragmentById(R.id.modifyBookLibraryFragment);
-        if (modifyBookLibraryFragment != null) {
-
-            Fragment emptyFragment = new Fragment();
+            ModifyBookLibraryFragment modifyBookLibraryFragment = new ModifyBookLibraryFragment();
             Bundle args = new Bundle();
-            args.putInt("id", id);
-            emptyFragment.setArguments(args);
+            args.putInt(ModifyBookLibraryFragment.POSITION, itemId);
+            modifyBookLibraryFragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction().add(R.id.modifyBookLibraryLayout, modifyBookLibraryFragment).commit();
 
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        }else
+        {
 
-            transaction.replace(R.id.modifyBookLibraryLayout, emptyFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } else {
-
-            BookLibraryFragment bookLibraryFragment = new BookLibraryFragment();
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-            transaction.replace(R.id.mainLibraryLayout, bookLibraryFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            Intent intent = new Intent(MainActivity.this, ModifyBookLibraryActivity.class);
+            intent.putExtra(ModifyBookLibraryFragment.POSITION, itemId);
+            startActivity(intent);
+            finish();
         }
+
     }
 }

@@ -13,25 +13,15 @@ package com.example.basaile92.listelivre.fragment;
     import android.view.ViewGroup;
     import android.widget.AdapterView;
     import android.widget.ListView;
-    import android.widget.SimpleAdapter;
 
     import com.example.basaile92.listelivre.R;
-    import com.example.basaile92.listelivre.resources.Book;
-    import com.example.basaile92.listelivre.resources.BookLibrary;
-    import com.example.basaile92.listelivre.resources.BookManager;
-    import com.example.basaile92.listelivre.resources.BookLibraryFragmentCallBack;
-    import com.example.basaile92.listelivre.resources.SimpleBook;
+    import com.example.basaile92.listelivre.book.Book;
+    import com.example.basaile92.listelivre.book.BookLibrary;
+    import com.example.basaile92.listelivre.book.BookManager;
 
-    import java.io.File;
-    import java.util.ArrayList;
-    import java.util.HashMap;
-    import java.util.List;
-    import java.util.Map;
+public class BookLibraryFragment extends Fragment {
 
-    public class BookLibraryFragment extends Fragment {
-
-        private BookLibraryFragmentCallBack parent;
-        int position = 0;
+        private BookLibraryFragmentCallBack mCallback;
         private ListView bookList;
 
         public void onCreate(Bundle savedInstanceState) {
@@ -48,19 +38,17 @@ package com.example.basaile92.listelivre.fragment;
 
             bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                    position = pos;
-                    parent.onItemSelected(position);
+                    mCallback.onItemSelected(position);
                 }
             });
 
 
             bookList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
-                public boolean onItemLongClick(final AdapterView<?> adapterView, View view, int pos, long l) {
+                public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int position, long l) {
 
-                    position = pos;
                     View deleteBookButton = adapterView.getChildAt(position).findViewById(R.id.deleteBookButton);
                     deleteBookButton.setVisibility(View.VISIBLE);
                     deleteBookButton.setOnClickListener(new View.OnClickListener() {
@@ -74,9 +62,6 @@ package com.example.basaile92.listelivre.fragment;
                                 public void onClick(DialogInterface dialogInterface, int i) {
 
                                     BookManager bookManager = new BookManager(getContext());
-                                    BookLibrary bookLibrary= bookManager.readBookLibrary();
-
-                                    Book book = bookLibrary.get(position);
 
                                     bookManager.deleteBook(position);
                                     dialogInterface.cancel();
@@ -114,13 +99,22 @@ package com.example.basaile92.listelivre.fragment;
             return view;
         }
 
-
+        @Override
         public void onAttach(Activity activity){
+
             super.onAttach(activity);
 
-            parent = (BookLibraryFragmentCallBack) activity;
+            try{
 
+                mCallback = (BookLibraryFragmentCallBack) activity;
+
+            }catch (ClassCastException e){
+
+                throw new ClassCastException(activity.toString() + " must implement BookLibraryFragmentCallBack");
+            }
         }
+
+
 
     }
 

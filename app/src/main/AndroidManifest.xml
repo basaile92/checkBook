@@ -22,7 +22,8 @@
             android:label="Add a book" />
         <activity android:name=".fragment.ModifyBookLibraryFragment" />
         <activity android:name=".activity.BookLibraryActivity" />
-        <activity android:name=".activity.ModifyBookLibrary"></activity>
+        <activity android:name=".activity.ModifyBookLibrary" />
+        <activity android:name=".activity.ModifyBookLibraryActivity"></activity>
     </application>
 
 </manifest>

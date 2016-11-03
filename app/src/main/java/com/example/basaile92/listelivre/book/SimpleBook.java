@@ -1,10 +1,10 @@
-package com.example.basaile92.listelivre.resources;
+package com.example.basaile92.listelivre.book;
 
 /**
  * Created by Mercier on 27/10/2016.
  */
 
-public class SimpleBook extends Book{
+public class SimpleBook extends Book {
 
     protected String isbn;
     protected String description;

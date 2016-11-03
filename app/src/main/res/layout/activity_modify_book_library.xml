@@ -8,13 +8,17 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.basaile92.listelivre.activity.ModifyBookLibrary">
-
+    android:orientation="vertical"
+    tools:context="com.example.basaile92.listelivre.activity.ModifyBookLibraryActivity">
     <fragment
-        android:id="@+id/modifyBookLibraryFragment"
+        android:id="@+id/fragment_modify_book_library"
         class="com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment"
         android:name="com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_modify_book_library"></fragment>
+        android:orientation="horizontal"
+        android:layout_weight="3"
+        tools:layout="@layout/fragment_modify_book_library">
+    </fragment>
+
 </LinearLayout>

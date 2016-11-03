@@ -1,4 +1,4 @@
-package com.example.basaile92.listelivre.resources;
+package com.example.basaile92.listelivre.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
