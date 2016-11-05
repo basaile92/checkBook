@@ -3,11 +3,13 @@ package com.example.basaile92.listelivre.activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.book.BookManager;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment;
@@ -83,8 +85,12 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
         LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
         if(modifyBookLibraryLayout != null) {
 
-            BookLibraryFragment bookLibraryFragment = new BookLibraryFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.bookLibraryLayout, bookLibraryFragment).addToBackStack(null).commit();
+            BookLibraryFragment bookLibraryFragment = (BookLibraryFragment) getSupportFragmentManager().findFragmentById(R.id.bookLibraryFragment);
+
+            bookLibraryFragment.updateView();
+
+           // getSupportFragmentManager().beginTransaction().detach(bookLibraryFragment);
+           // getSupportFragmentManager().beginTransaction().add(R.id.bookLibraryLayout, bookLibraryFragment).addToBackStack(null).commit();
 
         }
 

@@ -23,6 +23,7 @@ public class BookLibraryFragment extends Fragment {
 
         private BookLibraryFragmentCallBack mCallback;
         private ListView bookList;
+        private View view;
 
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -30,9 +31,18 @@ public class BookLibraryFragment extends Fragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle b) {
-            View view = inflater.inflate(R.layout.fragment_book_library, container, false);
+            this.view = inflater.inflate(R.layout.fragment_book_library, container, false);
 
-            bookList = (ListView) view.findViewById(R.id.bookList);
+            updateView();
+
+
+            return view;
+        }
+
+        public void updateView(){
+
+
+            bookList = (ListView) this.view.findViewById(R.id.bookList);
             BookManager bookManager = new BookManager(getContext());
             BookLibrary bookLibrary = bookManager.readBookLibrary();
 
@@ -96,7 +106,9 @@ public class BookLibraryFragment extends Fragment {
                 bookList.setAdapter(listAdapter);
             }
 
-            return view;
+
+
+
         }
 
         @Override
