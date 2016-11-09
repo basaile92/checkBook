@@ -60,4 +60,9 @@ public abstract class Book implements Serializable{
         return description;
     }
 
+
+    public String toString(){
+
+        return (this.isbn+ " "+this.title+" "+this.author);
+    }
 }

@@ -82,15 +82,6 @@
             android:orientation="horizontal"
             android:id="@+id/modifyBookLibraryLayout"
             android:visibility="invisible">
-            <fragment
-                android:id="@+id/modifyBookLibraryFragment"
-                class="com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment"
-                android:name="com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                tools:layout="@layout/fragment_modify_book_library">
-            </fragment>
 
         </LinearLayout>
     </LinearLayout>

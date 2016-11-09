@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,73 +27,78 @@ public class ModifyBookLibraryFragment extends Fragment {
 
     private BookLibraryFragmentCallBack mCallback;
     private BookManager bookManager;
-    private EditText isbnEdit;
-    private EditText authorEdit;
-    private EditText titleEdit;
-    private EditText descriptionEdit;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_modify_book_library, container, false);
+        final View view = inflater.inflate(R.layout.fragment_modify_book_library, container, false);
+
+
+
+
         initLabel(view, getActivity());
 
-        Button modifyButton = (Button) view.findViewById(R.id.modifyButton);
+        Bundle bundle = getArguments();
+        int position;
 
-        final int position = getPositionInListView();
-
-        if(position == -1) {
-
-
-            isbnEdit = (EditText) view.findViewById(R.id.isbnEdit);
-            authorEdit = (EditText) view.findViewById(R.id.authorEdit);
-            titleEdit = (EditText) view.findViewById(R.id.titleEdit);
-            descriptionEdit = (EditText) view.findViewById(R.id.descriptionEdit);
-
-            bookManager = new BookManager(getContext());
-            SimpleBook book = bookManager.getSimpleBook(position);
-
-            isbnEdit.setText(book.getIsbn());
-            authorEdit.setText(book.getAuthor());
-            titleEdit.setText(book.getTitle());
-            descriptionEdit.setText(book.getDescription());
-
-
-            modifyButton.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-
-                    if (isbnEdit.getText().toString().equals("") || authorEdit.getText().toString().equals("") || titleEdit.getText().toString().equals("")) {
-
-                        Toast toast = Toast.makeText(getActivity(), R.string.toastEmptyField, Toast.LENGTH_SHORT);
-                        toast.show();
-
-                    } else {
-                        bookManager.modifyBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString()), position);
-                        mCallback.updateBookLibraryFragment();
-                    }
-                }
-            });
-
-
+        if (bundle != null) {
+            position = bundle.getInt(POSITION);
+        } else{
+            position = 0;
         }
+
+
+        updateView(position, view, view);
 
         return view;
     }
 
+    public void updateView(final int position, View viewModif, View viewLibrary) {
 
-    private int getPositionInListView() {
 
-        Bundle bundle = getArguments();
+        Button modifyButton = (Button) viewModif.findViewById(R.id.modifyButton);
 
-        if(bundle != null){
-            return bundle.getInt(POSITION);
-        }else
-            return -1;
 
+        final EditText isbnEdit = (EditText) viewModif.findViewById(R.id.isbnEdit);
+        final EditText authorEdit = (EditText) viewModif.findViewById(R.id.authorEdit);
+        final EditText titleEdit = (EditText) viewModif.findViewById(R.id.titleEdit);
+        final EditText descriptionEdit = (EditText) viewModif.findViewById(R.id.descriptionEdit);
+
+        bookManager = new BookManager(viewLibrary.getContext());
+
+        SimpleBook book = bookManager.getSimpleBook(position);
+
+        Log.e("Salut", book.getIsbn()+" "+book.getAuthor()+" "+book.getTitle());
+
+        isbnEdit.setText(book.getIsbn());
+        authorEdit.setText(book.getAuthor());
+        titleEdit.setText(book.getTitle());
+        descriptionEdit.setText(book.getDescription());
+
+        Log.e("Salut", isbnEdit.getText()+" "+authorEdit.getText()+" "+titleEdit.getText());
+
+
+        modifyButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                if (isbnEdit.getText().toString().equals("") || authorEdit.getText().toString().equals("") || titleEdit.getText().toString().equals("")) {
+
+                    Toast toast = Toast.makeText(getActivity(), R.string.toastEmptyField, Toast.LENGTH_SHORT);
+                    toast.show();
+
+                } else {
+                    bookManager.modifyBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString()), position);
+                    Log.e("Salut2", mCallback.toString());
+                    mCallback.updateBookLibraryFragment(view);
+                }
+            }
+        });
     }
+
+
 
     private void initLabel(View view, Activity thisActivity) {
 
@@ -112,17 +118,17 @@ public class ModifyBookLibraryFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity){
+    public void onAttach(Context context){
 
-        super.onAttach(activity);
+        super.onAttach(context);
 
         try{
 
-            mCallback = (BookLibraryFragmentCallBack) activity;
+            mCallback = (BookLibraryFragmentCallBack) context;
 
         }catch (ClassCastException e){
 
-            throw new ClassCastException(activity.toString() + " must implement BookLibraryFragmentCallBack");
+            throw new ClassCastException(context.toString() + " must implement BookLibraryFragmentCallBack");
         }
     }
 

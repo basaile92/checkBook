@@ -1,6 +1,7 @@
 package com.example.basaile92.listelivre.fragment;
 
     import android.app.Activity;
+    import android.content.Context;
     import android.content.DialogInterface;
     import android.content.Intent;
     import android.database.Cursor;
@@ -23,7 +24,6 @@ public class BookLibraryFragment extends Fragment {
 
         private BookLibraryFragmentCallBack mCallback;
         private ListView bookList;
-        private View view;
 
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -31,18 +31,18 @@ public class BookLibraryFragment extends Fragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle b) {
-            this.view = inflater.inflate(R.layout.fragment_book_library, container, false);
+            View view = inflater.inflate(R.layout.fragment_book_library, container, false);
 
-            updateView();
+            updateView(view);
 
 
             return view;
         }
 
-        public void updateView(){
+        public void updateView(final View view){
 
 
-            bookList = (ListView) this.view.findViewById(R.id.bookList);
+            bookList = (ListView) view.findViewById(R.id.bookList);
             BookManager bookManager = new BookManager(getContext());
             BookLibrary bookLibrary = bookManager.readBookLibrary();
 
@@ -50,7 +50,7 @@ public class BookLibraryFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                    mCallback.updateModifyBookLibraryFragment(position);
+                    mCallback.updateModifyBookLibraryFragment(position, getView());
                 }
             });
 
@@ -112,17 +112,17 @@ public class BookLibraryFragment extends Fragment {
         }
 
         @Override
-        public void onAttach(Activity activity){
+        public void onAttach(Context context){
 
-            super.onAttach(activity);
+            super.onAttach(context);
 
             try{
 
-                mCallback = (BookLibraryFragmentCallBack) activity;
+                mCallback = (BookLibraryFragmentCallBack) context;
 
             }catch (ClassCastException e){
 
-                throw new ClassCastException(activity.toString() + " must implement BookLibraryFragmentCallBack");
+                throw new ClassCastException(context.toString() + " must implement BookLibraryFragmentCallBack");
             }
         }
 

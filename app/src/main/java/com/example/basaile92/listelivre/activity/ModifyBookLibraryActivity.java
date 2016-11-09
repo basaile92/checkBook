@@ -3,6 +3,8 @@ package com.example.basaile92.listelivre.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragmentCallBack;
@@ -14,6 +16,7 @@ public class ModifyBookLibraryActivity extends AppCompatActivity implements Book
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_book_library);
+
 
         Intent intent = getIntent();
         int itemId = intent.getIntExtra(ModifyBookLibraryFragment.POSITION, -1);
@@ -34,16 +37,17 @@ public class ModifyBookLibraryActivity extends AppCompatActivity implements Book
     }
 
     @Override
-    public void updateModifyBookLibraryFragment(int position) {
+    public void updateModifyBookLibraryFragment(int position, View view) {
 
     }
 
     @Override
-    public void updateBookLibraryFragment() {
+    public void updateBookLibraryFragment(View view) {
 
         Intent intent = new Intent(ModifyBookLibraryActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
+
 
 }

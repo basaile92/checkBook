@@ -3,13 +3,11 @@ package com.example.basaile92.listelivre.activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.book.BookManager;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment;
@@ -25,6 +23,12 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
         setContentView(R.layout.activity_main);
         initLabel();
 
+
+        LinearLayout modifyBookLibraryLayout =(LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
+        if(modifyBookLibraryLayout != null){
+            ModifyBookLibraryFragment modifyBookLibraryFragment = new ModifyBookLibraryFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.modifyBookLibraryLayout, modifyBookLibraryFragment).commit();
+        }
 
         Button addBookButton = (Button) findViewById(R.id.addBookButton);
 
@@ -55,18 +59,16 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
     }
 
 
-    public void updateModifyBookLibraryFragment(int position){
+    public void updateModifyBookLibraryFragment(int position, View viewLibrary){
 
         LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
         if(modifyBookLibraryLayout != null) {
 
-            modifyBookLibraryLayout.setVisibility(View.VISIBLE);
+            LinearLayout layout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
+            layout.setVisibility(View.VISIBLE);
             ModifyBookLibraryFragment modifyBookLibraryFragment = new ModifyBookLibraryFragment();
-            Bundle args = new Bundle();
-            args.putInt(ModifyBookLibraryFragment.POSITION, position);
-            modifyBookLibraryFragment.setArguments(args);
-            getSupportFragmentManager().beginTransaction().replace(R.id.modifyBookLibraryLayout, modifyBookLibraryFragment).addToBackStack(null).commit();
-
+            View viewModif = findViewById(R.id.fragment_modify_book_library);
+            modifyBookLibraryFragment.updateView(position, viewModif, viewLibrary);
         }else{
 
             Intent intent = new Intent(MainActivity.this, ModifyBookLibraryActivity.class);
@@ -80,19 +82,19 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
     }
 
     @Override
-    public void updateBookLibraryFragment() {
+    public void updateBookLibraryFragment(View view) {
 
         LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
         if(modifyBookLibraryLayout != null) {
 
             BookLibraryFragment bookLibraryFragment = (BookLibraryFragment) getSupportFragmentManager().findFragmentById(R.id.bookLibraryFragment);
 
-            bookLibraryFragment.updateView();
-
-           // getSupportFragmentManager().beginTransaction().detach(bookLibraryFragment);
-           // getSupportFragmentManager().beginTransaction().add(R.id.bookLibraryLayout, bookLibraryFragment).addToBackStack(null).commit();
+            bookLibraryFragment.updateView(view);
 
         }
 
     }
+
+
+
 }
