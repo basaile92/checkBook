@@ -27,8 +27,9 @@ public class ModifyBookLibraryFragment extends Fragment {
 
     public static final String POSITION = "itemPosition";
 
-    private BookLibraryFragmentCallBack mCallback;
+    protected BookLibraryFragmentCallBack mCallback;
     private BookManager bookManager;
+
 
 
     @Override
@@ -80,7 +81,6 @@ public class ModifyBookLibraryFragment extends Fragment {
 
         Log.e("Salut", isbnEdit.getText()+" "+authorEdit.getText()+" "+titleEdit.getText());
 
-
         modifyButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -94,7 +94,8 @@ public class ModifyBookLibraryFragment extends Fragment {
                 } else {
                     try {
                         bookManager.modifyBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString()), position);
-                        Log.e("Salut2", mCallback.toString());
+                        BookLibraryFragmentCallBack mCallback = (BookLibraryFragmentCallBack) view.getContext();
+
                         mCallback.updateBookLibraryFragment(view);
 
                     } catch (BookAlreadyExistsException e) {
@@ -134,6 +135,7 @@ public class ModifyBookLibraryFragment extends Fragment {
         try{
 
             mCallback = (BookLibraryFragmentCallBack) context;
+            Log.e("OnAttach", context.toString());
 
         }catch (ClassCastException e){
 

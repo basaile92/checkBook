@@ -20,5 +20,6 @@
     <string name="modifyBookLibraryActivity">Modify a Book</string>
     <string name="bookAlreadyExist">This ISBN already exists</string>
     <string name="descriptionText">Description</string>
+    <string name="getBookInfosButton">Get book infos</string>
 
 </resources>

@@ -8,7 +8,11 @@ public class SimpleBook extends Book {
 
     protected String isbn;
     protected String description;
-    protected Keywords keywords;
+    protected boolean isRead;
+    protected boolean isBorrowed;
+    protected String borrower;
+    protected String owner;
+    protected String comments;
 
     /**
      * Constructor of a simple book
@@ -16,13 +20,22 @@ public class SimpleBook extends Book {
      * @param title
      * @param isbn
      * @param description
+     * @param isRead
+     * @param isBorrowed
+     * @param borrower
+     * @param owner
+     * @param comments
      */
-    public SimpleBook(String isbn, String author, String title, String description){
+    public SimpleBook(String isbn, String author, String title, String description, boolean isRead, boolean isBorrowed, String borrower, String owner, String comments){
         this.author = author;
         this.title = title;
         this.isbn = isbn;
         this.description = description;
-        this.keywords = new Keywords();
+        this.isRead = isRead;
+        this.isBorrowed = isBorrowed;
+        this.borrower = borrower;
+        this.owner = owner;
+        this.comments = comments;
     }
 
     /**
@@ -57,21 +70,6 @@ public class SimpleBook extends Book {
         this.description = description;
     }
 
-    /**
-     * Add a new keyword to the Book
-     * @param keyword
-     */
-    public void addKeyword(String keyword){
-        this.keywords.addKeyword(keyword);
-    }
-
-    /**
-     * Remove the keyword from the book
-     * @param keyword
-     */
-    public void removeKeyword(String keyword){
-        this.keywords.removeKeyword(keyword);
-    }
 
     @Override
     public boolean canContainBook(){

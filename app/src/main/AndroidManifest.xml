@@ -3,6 +3,7 @@
     package="com.example.basaile92.listelivre">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -20,9 +21,6 @@
         <activity
             android:name=".activity.AddBookLibraryActivity"
             android:label="Add a book" />
-        <activity android:name=".fragment.ModifyBookLibraryFragment" />
-        <activity android:name=".activity.BookLibraryActivity" />
-        <activity android:name=".activity.ModifyBookLibrary" />
         <activity android:name=".activity.ModifyBookLibraryActivity"></activity>
     </application>
 
