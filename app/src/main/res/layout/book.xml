@@ -5,15 +5,21 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="1"
     android:id="@+id/livreLayout">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_add"
+        android:id="@+id/imageButton"
+        android:layout_weight="1" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/frame"
-        android:layout_weight="0.90">
+        android:layout_weight="6">
 
         <TextView
             android:text="Title"
@@ -39,7 +45,7 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="0.10"
+        android:layout_weight="1"
         android:gravity="right|center_vertical">
 
         <ImageButton

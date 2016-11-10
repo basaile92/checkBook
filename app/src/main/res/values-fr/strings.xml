@@ -22,5 +22,8 @@
     <string name="bookAlreadyExist">Cet ISBN existe déjà dans votre bibliothèque</string>
     <string name="descriptionText">Description</string>
     <string name="getBookInfosButton">Complétion des infos du livre</string>
+    <string name="ownerText">Owner</string>
+    <string name="borrowerText">Borrower</string>
+    <string name="commentText">Comment</string>
 
 </resources>

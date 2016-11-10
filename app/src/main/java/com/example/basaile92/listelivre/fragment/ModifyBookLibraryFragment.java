@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,19 +69,30 @@ public class ModifyBookLibraryFragment extends Fragment {
         final EditText authorEdit = (EditText) viewModif.findViewById(R.id.authorEdit);
         final EditText titleEdit = (EditText) viewModif.findViewById(R.id.titleEdit);
         final EditText descriptionEdit = (EditText) viewModif.findViewById(R.id.descriptionEdit);
+        final CheckBox isReadCheckBox = (CheckBox) viewModif.findViewById(R.id.isReadCheckBox);
+        final CheckBox isBorrowedCheckBox = (CheckBox) viewModif.findViewById(R.id.isBorrowedCheckBox);
+        final EditText borrowerEdit = (EditText) viewModif.findViewById(R.id.borrowerEdit);
+        final EditText ownerEdit = (EditText) viewModif.findViewById(R.id.ownerEdit);
+        final EditText commentsEdit = (EditText) viewModif.findViewById(R.id.commentsEdit);
+        final ImageView imageButton = (ImageView) viewModif.findViewById(R.id.imageButton);
+
+
+
 
         bookManager = new BookManager(viewLibrary.getContext());
 
         SimpleBook book = bookManager.getSimpleBook(position);
 
-        Log.e("Salut", book.getIsbn()+" "+book.getAuthor()+" "+book.getTitle());
-
         isbnEdit.setText(book.getIsbn());
         authorEdit.setText(book.getAuthor());
         titleEdit.setText(book.getTitle());
         descriptionEdit.setText(book.getDescription());
-
-        Log.e("Salut", isbnEdit.getText()+" "+authorEdit.getText()+" "+titleEdit.getText());
+        isReadCheckBox.setChecked(book.isRead());
+        isBorrowedCheckBox.setChecked(book.isBorrowed());
+        borrowerEdit.setText(book.getBorrower());
+        ownerEdit.setText(book.getOwner());
+        commentsEdit.setText(book.getComments());
+        // TODO importer l'image dans la bdd : imageButton.setImageURI();
 
         modifyButton.setOnClickListener(new View.OnClickListener() {
 
@@ -93,8 +106,7 @@ public class ModifyBookLibraryFragment extends Fragment {
 
                 } else {
                     try {
-                        bookManager.modifyBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString()), position);
-                        BookLibraryFragmentCallBack mCallback = (BookLibraryFragmentCallBack) view.getContext();
+                        bookManager.modifyBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(), ""/* TODO: Mettre ici le lien de l'image*/), position);
 
                         mCallback.updateBookLibraryFragment(view);
 

@@ -45,8 +45,6 @@ public abstract class Book implements Serializable{
         this.title = title;
     }
 
-    public abstract boolean canContainBook();
-
     public String getIsbn() {
         return this.isbn;
     }

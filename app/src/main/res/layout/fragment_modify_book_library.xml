@@ -9,97 +9,163 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="12"
+    android:isScrollContainer="true">
 
-    <LinearLayout
+
+<LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:text="Isbn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/isbnText" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/isbnEdit"
+            android:tag="@string/isbnText"
+            android:hint="@string/isbnText"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:text="@string/getBookInfosButton"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/isbnEdit" />
+            android:id="@+id/getBookInfosButton"
+            android:layout_weight="3"
+            app:srcCompat="@android:drawable/ic_menu_agenda" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
-        <TextView
-            android:text="Author"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/authorText" />
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/authorEdit"
+                android:layout_weight="1"
+                android:hint="@string/authorText" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/titleEdit"
+                android:hint="@string/titleText"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/ic_menu_add"
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_weight="3"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/authorEdit" />
+            android:id="@+id/descriptionEdit"
+            android:hint="@string/descriptionText" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:text="Title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/titleText" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/titleEdit" />
+            android:id="@+id/ownerEdit"
+            android:hint="@string/ownerText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <CheckBox
+            android:text="Is Read"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/isReadCheckBox"
+            android:layout_weight="1"
+            android:checked="false" />
 
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
-        <TextView
-            android:text="Description"
-            android:layout_width="wrap_content"
+        <CheckBox
+            android:text="Is Borrowed"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/descriptionText" />
+            android:id="@+id/isBorrowedCheckBox"
+            android:layout_weight="3"
+            android:checked="false" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/descriptionEdit" />
+            android:id="@+id/borrowerEdit"
+            android:layout_weight="2"
+            android:visibility="invisible"
+            android:hint="@string/borrowerText"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:id="@+id/commentsEdit"
+            android:hint="@string/commentText" />
     </LinearLayout>
+
 
     <Button
-        android:text="Modify"
+        android:text="Send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/modifyButton"
+        android:id="@+id/sendButton"
         android:layout_weight="0.90" />
 </LinearLayout>

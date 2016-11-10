@@ -19,7 +19,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:text="Add Book"
+            android:text="@string/addBookButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="center"
@@ -31,7 +31,7 @@
             android:backgroundTint="@color/brownie" />
 
         <Button
-            android:text="Search Book"
+            android:text="@string/searchBookButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="center"
@@ -42,7 +42,7 @@
             android:backgroundTint="@color/brownie" />
 
         <Button
-            android:text="My Library"
+            android:text="@string/myLibraryButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="center"

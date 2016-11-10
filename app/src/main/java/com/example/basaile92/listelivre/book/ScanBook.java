@@ -72,7 +72,8 @@ public class ScanBook{
                 String description = book.getString("description");
                 String author = parseAuthor(book.getJSONArray("authors"));
                 String title = book.getString("title");
-                list.addBook(new SimpleBook(isbn, author, title, description, false, false, "", "", ""));
+                String photo = book.getJSONObject("imageLinks").getString("thumbnail");
+                list.addBook(new SimpleBook(isbn, author, title, description, false, false, "", "", "", photo));
             }
 
 

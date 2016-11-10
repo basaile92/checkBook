@@ -1,6 +1,7 @@
 package com.example.basaile92.listelivre.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +29,8 @@ public class AddBookLibraryActivity extends AppCompatActivity {
         initLabel();
 
         Button sendButton = (Button) findViewById(R.id.sendButton);
-        Button getBookInfosButton = (Button) findViewById(R.id.getBookInfosButton);
+        ImageButton getBookInfosButton = (ImageButton) findViewById(R.id.getBookInfosButton);
+        ImageView imageButton = (ImageView) findViewById(R.id.imageButton);
         CheckBox isBorrowedCheckBox = (CheckBox) findViewById(R.id.isBorrowedCheckBox);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +47,14 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                 EditText borrowerEdit = (EditText) findViewById(R.id.borrowerEdit);
                 EditText ownerEdit = (EditText) findViewById(R.id.ownerEdit);
                 EditText commentsEdit = (EditText) findViewById(R.id.commentsEdit);
+                ImageView imageButton = (ImageView) findViewById(R.id.imageButton);
+
+                imageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO faire ici l'activite photo add
+                    }
+                });
 
                 if(isbnEdit.getText().toString().equals("")|| authorEdit.getText().toString().equals("") || titleEdit.getText().toString().equals("")){
 
@@ -52,7 +64,7 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                 } else {
                     try {
 
-                        bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString()));
+                        bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(),"FAIRE ICI LA PHOTO"));
                         Intent intent = new Intent(AddBookLibraryActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -91,6 +103,7 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                 EditText authorEdit = (EditText) findViewById(R.id.authorEdit);
                 EditText titleEdit = (EditText) findViewById(R.id.titleEdit);
                 EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
+                ImageView imageButton = (ImageView) findViewById(R.id.imageButton);
 
                 ScanBook scanBook = new ScanBook(isbnEdit.getText().toString(), v.getContext());
                 SimpleBook book = scanBook.getBooks().get(0);
@@ -98,26 +111,14 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                 authorEdit.setText(book.getAuthor());
                 titleEdit.setText(book.getTitle());
                 descriptionEdit.setText(book.getDescription());
+                //TODO : imageButton.setImageURI(new Uri() {
             }
         });
+
     }
 
     private void initLabel() {
-
-        TextView isbnText = (TextView) findViewById(R.id.isbnText);
-        TextView authorText = (TextView) findViewById(R.id.authorText);
-        TextView titleText = (TextView) findViewById(R.id.titleText);
-        TextView descriptionText = (TextView) findViewById(R.id.descriptionText);
-        Button sendButton = (Button) findViewById(R.id.sendButton);
-
-        isbnText.setText(R.string.isbnText);
-        authorText.setText(R.string.authorText);
-        titleText.setText(R.string.titleText);
-        descriptionText.setText(R.string.descriptionText);
-        sendButton.setText(R.string.sendButton);
-
         setTitle(R.string.addBookLibraryActivity);
-
     }
     public void onBackPressed()
     {
