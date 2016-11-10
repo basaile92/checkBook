@@ -53,12 +53,32 @@ public class BookManager extends DAOBase {
         return cursor.getCount() != 0;
     }
 
+    private boolean dbExistSimpleBook(SimpleBook book, long position){
+
+        if(book.getIsbn().equals(getSimpleBook(position).getIsbn())){
+
+            return false;
+        }
+
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ bookNameDb + " WHERE " + isbnBookDb + " = ?", new String[]{ book.getIsbn()} );
+
+        return cursor.getCount() != 0;
+
+
+    }
+
     /**
      * Modify a book in the book save file.
      *
      * @param book is the new book that you want to put in the save file.
      */
-    public void modifyBook(Book book, long position) {
+    public void modifyBook(SimpleBook book, long position) throws BookAlreadyExistsException {
+
+        if (dbExistSimpleBook(book, position)){
+
+            throw new BookAlreadyExistsException();
+        }
+
 
         long pos = position;
         Cursor cursor = db.rawQuery("SELECT * FROM "+ bookNameDb, null);
@@ -124,7 +144,7 @@ public class BookManager extends DAOBase {
 
     }
 
-    public SimpleBook getSimpleBook(int position) {
+    public SimpleBook getSimpleBook(long position) {
 
         long pos = position;
         Cursor cursor = db.rawQuery("SELECT * FROM "+ bookNameDb, null);

@@ -15,8 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.activity.AddBookLibraryActivity;
 import com.example.basaile92.listelivre.activity.MainActivity;
 import com.example.basaile92.listelivre.book.Book;
+import com.example.basaile92.listelivre.book.BookAlreadyExistsException;
 import com.example.basaile92.listelivre.book.BookLibrary;
 import com.example.basaile92.listelivre.book.BookManager;
 import com.example.basaile92.listelivre.book.SimpleBook;
@@ -90,9 +92,16 @@ public class ModifyBookLibraryFragment extends Fragment {
                     toast.show();
 
                 } else {
-                    bookManager.modifyBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString()), position);
-                    Log.e("Salut2", mCallback.toString());
-                    mCallback.updateBookLibraryFragment(view);
+                    try {
+                        bookManager.modifyBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString()), position);
+                        Log.e("Salut2", mCallback.toString());
+                        mCallback.updateBookLibraryFragment(view);
+
+                    } catch (BookAlreadyExistsException e) {
+
+                        Toast toast = Toast.makeText(getActivity(), R.string.bookAlreadyExist, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
             }
         });
