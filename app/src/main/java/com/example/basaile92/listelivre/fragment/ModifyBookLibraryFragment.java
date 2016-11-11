@@ -3,6 +3,8 @@ package com.example.basaile92.listelivre.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +28,9 @@ import com.example.basaile92.listelivre.book.BookManager;
 import com.example.basaile92.listelivre.book.SimpleBook;
 
 public class ModifyBookLibraryFragment extends Fragment {
+
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     public static final String POSITION = "itemPosition";
 
@@ -91,8 +96,19 @@ public class ModifyBookLibraryFragment extends Fragment {
         isBorrowedCheckBox.setChecked(book.isBorrowed());
         borrowerEdit.setText(book.getBorrower());
         ownerEdit.setText(book.getOwner());
-        commentsEdit.setText(book.getComments());
+        commentsEdit.setText(book.getComment());
         // TODO importer l'image dans la bdd : imageButton.setImageURI();
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+                }
+        }});
+
 
         modifyButton.setOnClickListener(new View.OnClickListener() {
 
@@ -123,20 +139,17 @@ public class ModifyBookLibraryFragment extends Fragment {
 
 
     private void initLabel(View view, Activity thisActivity) {
-
-        TextView isbnText = (TextView) view.findViewById(R.id.isbnText);
-        TextView authorText = (TextView) view.findViewById(R.id.authorText);
-        TextView titleText = (TextView) view.findViewById(R.id.titleText);
-        TextView descriptionText = (TextView) view.findViewById(R.id.descriptionText);
-        Button modifyButton = (Button) view.findViewById(R.id.modifyButton);
-
-        isbnText.setText(R.string.isbnText);
-        authorText.setText(R.string.authorText);
-        titleText.setText(R.string.titleText);
-        modifyButton.setText(R.string.modifyButton);
-        descriptionText.setText(R.string.descriptionText);
-
         thisActivity.setTitle(R.string.modifyBookLibraryActivity);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == getActivity().RESULT_OK) {
+            ImageView imageButton = (ImageView) getActivity().findViewById(R.id.imageButton);
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageButton.setImageBitmap(imageBitmap);
+        }
     }
 
     @Override

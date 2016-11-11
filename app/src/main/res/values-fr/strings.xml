@@ -25,5 +25,6 @@
     <string name="ownerText">Owner</string>
     <string name="borrowerText">Borrower</string>
     <string name="commentText">Comment</string>
+    <string name="isbnCantComplet">This ISBN is not associated with a book</string>
 
 </resources>

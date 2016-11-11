@@ -44,10 +44,4 @@ public class CollectionBook extends Book {
             this.books.remove(book);
         }
     }
-
-    @Override
-    public boolean canContainBook(){
-
-        return true;
-    }
 }

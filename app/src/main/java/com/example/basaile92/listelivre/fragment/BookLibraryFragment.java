@@ -100,7 +100,7 @@ public class BookLibraryFragment extends Fragment {
 
 
 
-                Cursor cursor = bookManager.getDb().rawQuery("SELECT id as _id, author, title from Book;", new String[]{});
+                Cursor cursor = bookManager.getDb().rawQuery("SELECT id as _id, author, title, photo from Book;", new String[]{});
 
                 SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(getActivity().getBaseContext(), R.layout.book, cursor ,new String[]{"author", "title"}, new int[]{R.id.authorBook, R.id.titleBook});
                 bookList.setAdapter(listAdapter);

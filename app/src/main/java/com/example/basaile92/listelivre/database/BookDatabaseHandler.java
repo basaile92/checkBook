@@ -16,6 +16,15 @@ public class BookDatabaseHandler extends SQLiteOpenHelper {
     public static final String authorBookDb = "author";
     public static final String titleBookDb = "title";
     public static final String descriptionBookDb = "description";
+    public static final String isReadDb = "isread";
+    public static final String isBorrowedDb = "isborrowed";
+    public static final String borrowerDb = "borrower";
+    public static final String ownerDb = "owner";
+    public static final String commentDb = "comment";
+    public static final String photoDb = "photo";
+
+
+
     public static final String destroy_table_book = "DROP TABLE IF EXISTS " + bookNameDb + ";";
 
 
@@ -29,7 +38,7 @@ public class BookDatabaseHandler extends SQLiteOpenHelper {
      */
     private String createTableBook(){
 
-        return ("CREATE TABLE "+bookNameDb+" ( "+idBookDb+" INTEGER PRIMARY KEY, "+isbnBookDb+" TEXT NOT NULL, "+authorBookDb+" TEXT NOT NULL, "+ titleBookDb +" TEXT NOT NULL, "+ descriptionBookDb+" TEXT);");
+        return ("CREATE TABLE "+bookNameDb+" ( "+idBookDb+" INTEGER PRIMARY KEY, "+isbnBookDb+" TEXT NOT NULL, "+authorBookDb+" TEXT NOT NULL, "+ titleBookDb +" TEXT NOT NULL, "+ descriptionBookDb+" TEXT, "+ isReadDb + " INTEGER DEFAULT 0, "+ isBorrowedDb + " INTEGER DEFAULT 0, "+ borrowerDb + " TEXT, "+ ownerDb + " TEXT, " + commentDb + " TEXT, " + photoDb + " TEXT );");
     }
 
     @Override

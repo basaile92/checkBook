@@ -19,6 +19,12 @@ public class BookManager extends DAOBase {
     public static final String authorBookDb = "author";
     public static final String titleBookDb = "title";
     public static final String descriptionBookDb = "description";
+    public static final String isReadDb = "isread";
+    public static final String isBorrowedDb = "isborrowed";
+    public static final String borrowerDb = "borrower";
+    public static final String ownerDb = "owner";
+    public static final String commentDb = "comment";
+    public static final String photoDb = "photo";
 
 
     public BookManager(Context pContext) {
@@ -43,6 +49,17 @@ public class BookManager extends DAOBase {
         value.put(authorBookDb, book.getAuthor());
         value.put(titleBookDb, book.getTitle());
         value.put(descriptionBookDb, book.getDescription());
+        value.put(isReadDb, book.isRead());
+        value.put(isBorrowedDb, book.isBorrowed());
+        value.put(borrowerDb, book.getBorrower());
+        value.put(ownerDb, book.getOwner());
+        value.put(commentDb, book.getComment());
+        value.put(photoDb, book.getPhoto());
+
+
+
+
+
         db.insert(bookNameDb, null, value);
     }
 
@@ -135,13 +152,25 @@ public class BookManager extends DAOBase {
             String author = cursor.getString(2);
             String title = cursor.getString(3);
             String description = cursor.getString(4);
+            boolean isRead = intToBool(cursor.getInt(5));
+            boolean isBorrowed = intToBool(cursor.getInt(6));
+            String borrower = cursor.getString(7);
+            String owner = cursor.getString(8);
+            String comment = cursor.getString(9);
+            String photo = cursor.getString(10);
 
-            bookLibrary.addBook(new SimpleBook(isbn, author, title, description));
+            bookLibrary.addBook(new SimpleBook(isbn, author, title, description, isRead, isBorrowed, borrower, owner, comment, photo));
         }
         cursor.close();
         return bookLibrary;
 
 
+    }
+
+    private boolean intToBool(int anInt) {
+        if(anInt == 0) return false;
+
+        return true;
     }
 
     public SimpleBook getSimpleBook(long position) {
@@ -159,9 +188,15 @@ public class BookManager extends DAOBase {
         String author = cursor.getString(2);
         String title = cursor.getString(3);
         String description = cursor.getString(4);
+        boolean isRead = intToBool(cursor.getInt(5));
+        boolean isBorrowed = intToBool(cursor.getInt(6));
+        String borrower = cursor.getString(7);
+        String owner = cursor.getString(8);
+        String comment = cursor.getString(9);
+        String photo = cursor.getString(10);
 
         cursor.close();
-        return new SimpleBook(isbn, author, title, description);
+        return new SimpleBook(isbn, author, title, description, isRead, isBorrowed, borrower, owner, comment, photo);
 
     }
 }

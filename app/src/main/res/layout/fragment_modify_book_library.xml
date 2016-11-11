@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_modify_book_library"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment"
     android:orientation="vertical"
-    android:weightSum="12"
     android:isScrollContainer="true">
 
 
@@ -163,9 +163,9 @@
 
 
     <Button
-        android:text="Send"
+        android:text="Modify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/sendButton"
+        android:id="@+id/modifyButton"
         android:layout_weight="0.90" />
 </LinearLayout>

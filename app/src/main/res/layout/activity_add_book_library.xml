@@ -4,21 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_add_book_library"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.basaile92.listelivre.activity.AddBookLibraryActivity"
     android:orientation="vertical"
-    android:weightSum="12"
-    android:isScrollContainer="true">
+    android:isScrollContainer="true"
+    android:measureWithLargestChild="false"
+    android:touchscreenBlocksFocus="false"
+    android:scrollbarAlwaysDrawHorizontalTrack="false"
+    android:scrollbarStyle="insideOverlay">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="match_parent"
@@ -28,6 +30,7 @@
             android:tag="@string/isbnText"
             android:hint="@string/isbnText"
             style="@style/Widget.AppCompat.EditText"
+            android:elegantTextHeight="true"
             android:layout_weight="1" />
 
         <ImageButton
@@ -42,30 +45,31 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-        <EditText
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/authorEdit"
+                android:layout_weight="1"
+                android:hint="@string/authorText"
+                android:elegantTextHeight="true"
+                android:inputType="textShortMessage" />
+
+            <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:id="@+id/authorEdit"
-            android:layout_weight="1"
-            android:hint="@string/authorText" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:id="@+id/titleEdit"
+                android:id="@+id/titleEdit"
             android:hint="@string/titleText"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+                android:elegantTextHeight="true"
+                android:inputType="textShortMessage" />
     </LinearLayout>
 
         <ImageView
@@ -73,7 +77,10 @@
             app:srcCompat="@android:drawable/ic_menu_add"
             android:id="@+id/imageButton"
             android:layout_width="match_parent"
-            android:layout_weight="3"/>
+            android:layout_weight="3"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="false"
+            android:cropToPadding="true" />
 
     </LinearLayout>
 
@@ -81,36 +88,35 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textPersonName"
             android:id="@+id/descriptionEdit"
-            android:hint="@string/descriptionText" />
+            android:hint="@string/descriptionText"
+            android:elegantTextHeight="true"
+            android:inputType="textLongMessage" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textPersonName"
             android:id="@+id/ownerEdit"
-            android:hint="@string/ownerText" />
+            android:hint="@string/ownerText"
+            android:elegantTextHeight="true"
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <CheckBox
             android:text="Is Read"
@@ -125,8 +131,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <CheckBox
             android:text="Is Borrowed"
@@ -139,26 +144,27 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textPersonName"
             android:id="@+id/borrowerEdit"
             android:layout_weight="2"
             android:visibility="invisible"
-            android:hint="@string/borrowerText"/>
+            android:hint="@string/borrowerText"
+            android:elegantTextHeight="true"
+            android:inputType="textPersonName" />
 
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textPersonName"
             android:id="@+id/commentsEdit"
-            android:hint="@string/commentText" />
+            android:hint="@string/commentText"
+            android:elegantTextHeight="true"
+            android:inputType="textLongMessage" />
     </LinearLayout>
 
 
@@ -166,6 +172,5 @@
         android:text="Send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/sendButton"
-        android:layout_weight="0.90" />
+        android:id="@+id/sendButton"/>
 </LinearLayout>

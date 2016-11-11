@@ -12,7 +12,7 @@ public class SimpleBook extends Book {
     protected boolean isBorrowed;
     protected String borrower;
     protected String owner;
-    protected String comments;
+    protected String comment;
     protected String photo;
 
     /**
@@ -25,10 +25,10 @@ public class SimpleBook extends Book {
      * @param isBorrowed
      * @param borrower
      * @param owner
-     * @param comments
+     * @param comment
      * @param photo
      */
-    public SimpleBook(String isbn, String author, String title, String description, boolean isRead, boolean isBorrowed, String borrower, String owner, String comments, String photo){
+    public SimpleBook(String isbn, String author, String title, String description, boolean isRead, boolean isBorrowed, String borrower, String owner, String comment, String photo){
         this.author = author;
         this.title = title;
         this.isbn = isbn;
@@ -37,7 +37,7 @@ public class SimpleBook extends Book {
         this.isBorrowed = isBorrowed;
         this.borrower = borrower;
         this.owner = owner;
-        this.comments = comments;
+        this.comment = comment;
         this.photo = photo;
     }
 
@@ -105,12 +105,12 @@ public class SimpleBook extends Book {
         this.owner = owner;
     }
 
-    public String getComments() {
-        return comments;
+    public String getComment() {
+        return comment;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public String getPhoto() {
