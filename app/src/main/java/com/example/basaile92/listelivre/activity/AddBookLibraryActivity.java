@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddBookLibraryActivity extends AppCompatActivity {
@@ -73,19 +75,57 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                     toast.show();
 
                 } else {
-                    try {
 
-                        bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(),"FAIRE ICI LA PHOTO"));
-                        Intent intent = new Intent(AddBookLibraryActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } catch (BookAlreadyExistsException e) {
+                    if(isbnEdit.getText().toString().length() != 13){
 
-                        Toast toast = Toast.makeText(AddBookLibraryActivity.this, R.string.bookAlreadyExist, Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(AddBookLibraryActivity.this, R.string.isbnNotGoodFormat, Toast.LENGTH_SHORT);
                         toast.show();
 
-                    }
 
+                    }else{
+
+                        Intent takePictureIntent = new Intent((MediaStore.ACTION_IMAGE_CAPTURE));
+                        String mCurrentPhotoPath="";
+                        if(takePictureIntent.resolveActivity(getPackageManager()) != null){
+
+                            File photoFile = null;
+                            try {
+
+                                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                                String imageFileName = "JPEG_" + timeStamp + "_";
+                                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                                File image = File.createTempFile(imageFileName,".jpg", storageDir);
+                                mCurrentPhotoPath = image.getAbsolutePath();
+                                photoFile = image;
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            if(photoFile != null){
+
+                                Uri photoURI = FileProvider.getUriForFile(view.getContext(), "com.example.android.fileprovider", photoFile);
+                                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                            }
+
+                        }
+
+
+                        try {
+
+
+                            bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(),mCurrentPhotoPath));
+                            Intent intent = new Intent(AddBookLibraryActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } catch (BookAlreadyExistsException e) {
+
+                            Toast toast = Toast.makeText(AddBookLibraryActivity.this, R.string.bookAlreadyExist, Toast.LENGTH_SHORT);
+                            toast.show();
+
+                        }
+                    }
                 }
             }
         });
@@ -126,12 +166,21 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                 ScanBook scanBook = new ScanBook(isbnEdit.getText().toString(), v.getContext());
 
                 BookLibrary bookLibrary = scanBook.getBooks();
-                if(bookLibrary.size() > 0) {
-                    SimpleBook book = scanBook.getBooks().get(0);
 
-                    authorEdit.setText(book.getAuthor());
-                    titleEdit.setText(book.getTitle());
-                    descriptionEdit.setText(book.getDescription());
+                if(isbnEdit.getText().toString().length() != 13){
+
+                    Toast toast = Toast.makeText(AddBookLibraryActivity.this, R.string.isbnNotGoodFormat, Toast.LENGTH_SHORT);
+                    toast.show();
+
+
+                }else {
+
+                    if (bookLibrary.size() > 0) {
+                        SimpleBook book = scanBook.getBooks().get(0);
+
+                        authorEdit.setText(book.getAuthor());
+                        titleEdit.setText(book.getTitle());
+                        descriptionEdit.setText(book.getDescription());
                     /*
                     //TODO: Faire l'import de photos par ISBN
                     try
@@ -147,10 +196,11 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 */
-                }else {
+                    } else {
 
-                    Toast toast = Toast.makeText(AddBookLibraryActivity.this, R.string.isbnCantComplet, Toast.LENGTH_SHORT);
-                    toast.show();
+                        Toast toast = Toast.makeText(AddBookLibraryActivity.this, R.string.isbnCantComplet, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
             }
         });

@@ -26,5 +26,6 @@
     <string name="borrowerText">Borrower</string>
     <string name="commentText">Comment</string>
     <string name="isbnCantComplet">This ISBN is not associated with a book</string>
+    <string name="isbnNotGoodFormat">The ISBN should contain 13 characters</string>
 
 </resources>

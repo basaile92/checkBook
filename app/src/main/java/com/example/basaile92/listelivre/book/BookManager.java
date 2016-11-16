@@ -84,6 +84,7 @@ public class BookManager extends DAOBase {
 
     }
 
+
     /**
      * Modify a book in the book save file.
      *
@@ -112,6 +113,13 @@ public class BookManager extends DAOBase {
         value.put(authorBookDb, book.getAuthor());
         value.put(titleBookDb, book.getTitle());
         value.put(descriptionBookDb, book.getDescription());
+        value.put(isReadDb, book.isRead());
+        value.put(isBorrowedDb, book.isBorrowed);
+        value.put(borrowerDb, book.getBorrower());
+        value.put(ownerDb, book.getOwner());
+        value.put(commentDb, book.getComment());
+        value.put(photoDb, book.getPhoto());
+
         db.update(bookNameDb, value, idBookDb + " = ? ", new String[]{String.valueOf(id)});
     }
 

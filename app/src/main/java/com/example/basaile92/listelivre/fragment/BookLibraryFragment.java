@@ -1,11 +1,11 @@
 package com.example.basaile92.listelivre.fragment;
 
-    import android.app.Activity;
     import android.content.Context;
     import android.content.DialogInterface;
     import android.content.Intent;
     import android.database.Cursor;
     import android.support.v4.app.Fragment;
+    import android.support.v4.widget.CursorAdapter;
     import android.support.v4.widget.SimpleCursorAdapter;
     import android.support.v7.app.AlertDialog;
     import android.os.Bundle;
@@ -16,9 +16,9 @@ package com.example.basaile92.listelivre.fragment;
     import android.widget.ListView;
 
     import com.example.basaile92.listelivre.R;
-    import com.example.basaile92.listelivre.book.Book;
     import com.example.basaile92.listelivre.book.BookLibrary;
     import com.example.basaile92.listelivre.book.BookManager;
+    import com.example.basaile92.listelivre.database.BookDatabaseHandler;
 
 public class BookLibraryFragment extends Fragment {
 
@@ -102,7 +102,8 @@ public class BookLibraryFragment extends Fragment {
 
                 Cursor cursor = bookManager.getDb().rawQuery("SELECT id as _id, author, title, photo from Book;", new String[]{});
 
-                SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(getActivity().getBaseContext(), R.layout.book, cursor ,new String[]{"author", "title"}, new int[]{R.id.authorBook, R.id.titleBook});
+                SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(getActivity().getBaseContext(), R.layout.book, cursor ,new String[]{BookDatabaseHandler.authorBookDb, BookDatabaseHandler.titleBookDb}, new int[]{R.id.authorBook, R.id.titleBook}, CursorAdapter.FLAG_AUTO_REQUERY);
+
                 bookList.setAdapter(listAdapter);
             }
 
