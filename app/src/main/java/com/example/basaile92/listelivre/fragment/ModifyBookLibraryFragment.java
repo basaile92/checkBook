@@ -19,13 +19,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.activity.AddBookLibraryActivity;
-import com.example.basaile92.listelivre.activity.MainActivity;
-import com.example.basaile92.listelivre.book.Book;
 import com.example.basaile92.listelivre.book.BookAlreadyExistsException;
 import com.example.basaile92.listelivre.book.BookLibrary;
 import com.example.basaile92.listelivre.book.BookManager;

@@ -22,10 +22,20 @@
     <string name="bookAlreadyExist">Cet ISBN existe déjà dans votre bibliothèque</string>
     <string name="descriptionText">Description</string>
     <string name="getBookInfosButton">Complétion des infos du livre</string>
-    <string name="ownerText">Owner</string>
-    <string name="borrowerText">Borrower</string>
-    <string name="commentText">Comment</string>
-    <string name="isbnCantComplet">This ISBN is not associated with a book</string>
-    <string name="isbnNotGoodFormat">The ISBN should contain 13 characters</string>
+    <string name="ownerText">Propriétaire</string>
+    <string name="borrowerText">Emprunteur</string>
+    <string name="commentText">Commentaire</string>
+    <string name="isbnCantComplet">Cet ISBN n\'est pas associé avec un livre</string>
+    <string name="isbnNotGoodFormat">L\'ISBN doit contenir 13 caractères.</string>
+    <string name="summaryText">Résumé</string>
+    <string name="isReadText">Lu</string>
+    <string name="isBorrowedText">Emprunté</string>
+    <string name="collectionText">Collection</string>
+    <string name="authorsText">Auteur(s)</string>
+    <string name="typesText">Type(s)</string>
+    <string name="editorText">Editeur</string>
+    <string name="yearText">Année</string>
+    <string name="addAuthorsText">Ajouter Auteur</string>
+    <string name="publisherText">Editeur</string>
 
 </resources>

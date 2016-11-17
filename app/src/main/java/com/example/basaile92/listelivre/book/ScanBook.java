@@ -67,12 +67,15 @@ public class ScanBook{
 
                     JSONObject book = items.getJSONObject(i).getJSONObject("volumeInfo");
                     String isbn = this.isbn;
-                    String description = book.getString("description");
-                    String author = parseAuthor(book.getJSONArray("authors"));
+                    String summary = book.getString("description");
+                    ArrayList<String> authors = parseArrayString(book.getJSONArray("authors"));
+                    ArrayList<String> types = parseArrayString(book.getJSONArray("categories"));
+                    String publisher = book.getString("publisher");
+                    String year = parseYear(book.getString("publisherDate"));
                     String title = book.getString("title");
                     String photo = book.getJSONObject("imageLinks").getString("thumbnail");
 
-                    list.addBook(new SimpleBook(isbn, author, title, description, false, false, "", "", "", photo));
+                    list.addBook(new SimpleBook(isbn, authors, title, "", types, publisher, year,  summary, false, false, "", "", "", photo));
                 }
 
 
@@ -83,14 +86,26 @@ public class ScanBook{
         return list;
     }
 
-    private String parseAuthor(JSONArray authors) throws JSONException {
+    private String parseYear(String publisherDate) {
 
-        String res = authors.getString(0);
+        int i = 0;
+        while(publisherDate.charAt(i) != '-'){
+            i++;
+        }
+
+        String res = publisherDate.substring(0, 4);
+        return res;
+
+    }
+
+    private ArrayList<String> parseArrayString(JSONArray array) throws JSONException {
+
+        ArrayList<String> res = new ArrayList<String>();
 
 
 
-        for (int i = 1; i < authors.length(); i++) {
-            res += ", " + authors.getString(i);
+        for (int i = 0; i < array.length(); i++) {
+            res.add(array.getString(i));
         }
 
         return res;

@@ -1,7 +1,5 @@
 package com.example.basaile92.listelivre.book;
 
-import com.example.basaile92.listelivre.book.Book;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

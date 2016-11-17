@@ -13,9 +13,11 @@ public class BookDatabaseHandler extends SQLiteOpenHelper {
     public static final String bookNameDb = "Book";
     public static final String idBookDb = "id";
     public static final String isbnBookDb = "isbn";
-    public static final String authorBookDb = "author";
     public static final String titleBookDb = "title";
-    public static final String descriptionBookDb = "description";
+    public static final String collectionBookDb = "collection";
+    public static final String publisherBookDb = "publisher";
+    public static final String yearBookDb = "year";
+    public static final String summaryBookDb = "summary";
     public static final String isReadDb = "isread";
     public static final String isBorrowedDb = "isborrowed";
     public static final String borrowerDb = "borrower";
@@ -38,7 +40,7 @@ public class BookDatabaseHandler extends SQLiteOpenHelper {
      */
     private String createTableBook(){
 
-        return ("CREATE TABLE "+bookNameDb+" ( "+idBookDb+" INTEGER PRIMARY KEY, "+isbnBookDb+" TEXT NOT NULL, "+authorBookDb+" TEXT NOT NULL, "+ titleBookDb +" TEXT NOT NULL, "+ descriptionBookDb+" TEXT, "+ isReadDb + " INTEGER DEFAULT 0, "+ isBorrowedDb + " INTEGER DEFAULT 0, "+ borrowerDb + " TEXT, "+ ownerDb + " TEXT, " + commentDb + " TEXT, " + photoDb + " TEXT );");
+        return ("CREATE TABLE "+bookNameDb+" ( "+idBookDb+" INTEGER PRIMARY KEY, "+isbnBookDb+" TEXT NOT NULL, "+ titleBookDb +" TEXT NOT NULL, "+  collectionBookDb+" TEXT, "+ publisherBookDb+" TEXT, " + yearBookDb+" TEXT, "+ summaryBookDb+" TEXT, "+ isReadDb + " INTEGER DEFAULT 0, "+ isBorrowedDb + " INTEGER DEFAULT 0, "+ borrowerDb + " TEXT, "+ ownerDb + " TEXT, " + commentDb + " TEXT, " + photoDb + " TEXT );");
     }
 
     @Override

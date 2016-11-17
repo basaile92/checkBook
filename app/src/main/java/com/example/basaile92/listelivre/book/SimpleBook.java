@@ -1,26 +1,36 @@
 package com.example.basaile92.listelivre.book;
 
+import java.util.ArrayList;
+
 /**
  * Created by Mercier on 27/10/2016.
  */
 
-public class SimpleBook extends Book {
+public class SimpleBook{
 
-    protected String isbn;
-    protected String description;
-    protected boolean isRead;
-    protected boolean isBorrowed;
-    protected String borrower;
-    protected String owner;
-    protected String comment;
-    protected String photo;
+    private String isbn;
+    private ArrayList<String> authors;
+    private String title;
+    private String collection;
+    private ArrayList<String> types;
+    private String editor;
+    private String year;
+    private String summary;
+    private boolean isRead;
+    private boolean isBorrowed;
+    private String borrower;
+    private String owner;
+    private String comment;
+    private String photo;
+
 
     /**
      * Constructor of a simple book
-     * @param author
+     * @param authors
+
      * @param title
      * @param isbn
-     * @param description
+     * @param summary
      * @param isRead
      * @param isBorrowed
      * @param borrower
@@ -28,11 +38,15 @@ public class SimpleBook extends Book {
      * @param comment
      * @param photo
      */
-    public SimpleBook(String isbn, String author, String title, String description, boolean isRead, boolean isBorrowed, String borrower, String owner, String comment, String photo){
-        this.author = author;
+    public SimpleBook(String isbn, ArrayList<String> authors, String title, String collection, ArrayList<String> types, String editor, String year, String summary, boolean isRead, boolean isBorrowed, String borrower, String owner, String comment, String photo){
+        this.authors = authors;
         this.title = title;
         this.isbn = isbn;
-        this.description = description;
+        this.collection = collection;
+        this.types = types;
+        this.editor = editor;
+        this.year = year;
+        this.summary = summary;
         this.isRead = isRead;
         this.isBorrowed = isBorrowed;
         this.borrower = borrower;
@@ -58,19 +72,19 @@ public class SimpleBook extends Book {
     }
 
     /**
-     * getter description
+     * getter summary
      * @return a String which gives more information about the Book
      */
-    public String getDescription(){
-        return this.description;
+    public String getSummary(){
+        return this.summary;
     }
 
     /**
-     * setter description
-     * @param description
+     * setter summary
+     * @param summary
      */
-    public void setDescription(String description){
-        this.description = description;
+    public void setSummary(String summary){
+        this.summary = summary;
     }
 
     public boolean isRead() {
@@ -120,4 +134,53 @@ public class SimpleBook extends Book {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
+    public ArrayList<String> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(ArrayList<String> authors) {
+        this.authors = authors;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCollection() {
+        return collection;
+    }
+
+    public void setCollection(String collection) {
+        this.collection = collection;
+    }
+
+    public ArrayList<String> getTypes() {
+        return types;
+    }
+
+    public void setTypes(ArrayList<String> types) {
+        this.types = types;
+    }
+
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
 }

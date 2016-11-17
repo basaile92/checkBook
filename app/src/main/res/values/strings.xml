@@ -26,5 +26,15 @@
     <string name="commentText">Comment</string>
     <string name="isbnCantComplet">This ISBN is not associated with a book</string>
     <string name="isbnNotGoodFormat">The ISBN should contain 13 characters</string>
+    <string name="summaryText">Summary</string>
+    <string name="isReadText">Read</string>
+    <string name="isBorrowedText">Borrowed</string>
+    <string name="collectionText">Collection</string>
+    <string name="authorsText">Author(s)</string>
+    <string name="typesText">Type(s)</string>
+    <string name="editorText">Editor</string>
+    <string name="yearText">Year</string>
+    <string name="addAuthorsText">Add Author</string>
+    <string name="publisherText">Publisher</string>
 
 </resources>
