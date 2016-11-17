@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.example.basaile92.listelivre.database.DAOBase;
 
+import java.util.ArrayList;
+
 /**
  * Created by basaile92 on 06/10/2016.
  */
@@ -14,17 +16,28 @@ import com.example.basaile92.listelivre.database.DAOBase;
 public class BookManager extends DAOBase {
 
     public static final String bookNameDb = "Book";
-    public static final String idBookDb = "id";
     public static final String isbnBookDb = "isbn";
-    public static final String authorBookDb = "author";
     public static final String titleBookDb = "title";
-    public static final String descriptionBookDb = "description";
+    public static final String collectionBookDb = "collection";
+    public static final String publisherBookDb = "publisher";
+    public static final String yearBookDb = "year";
+    public static final String summaryBookDb = "summary";
     public static final String isReadDb = "isread";
     public static final String isBorrowedDb = "isborrowed";
     public static final String borrowerDb = "borrower";
     public static final String ownerDb = "owner";
     public static final String commentDb = "comment";
     public static final String photoDb = "photo";
+
+    public static final String authorNameDb = "Author";
+    public static final String nameAuthorDb = "name";
+
+    public static final String typeBookNameDb = "TypeBook";
+    public static final String idTypeDb = "idType";
+    public static final String idBookDb = "idBook";
+
+    public static final String typeNameDb = "Type";
+    public static final String nameTypeDb = "name";
 
 
     public BookManager(Context pContext) {
@@ -44,11 +57,14 @@ public class BookManager extends DAOBase {
             throw new BookAlreadyExistsException();
         }
 
+
         ContentValues value = new ContentValues();
         value.put(isbnBookDb, book.getIsbn());
-        value.put(authorBookDb, book.getAuthor());
         value.put(titleBookDb, book.getTitle());
-        value.put(descriptionBookDb, book.getDescription());
+        value.put(collectionBookDb, book.getCollection());
+        value.put(publisherBookDb, book.getPublisher());
+        value.put(yearBookDb, book.getYear());
+        value.put(summaryBookDb, book.getSummary());
         value.put(isReadDb, book.isRead());
         value.put(isBorrowedDb, book.isBorrowed());
         value.put(borrowerDb, book.getBorrower());
@@ -56,18 +72,39 @@ public class BookManager extends DAOBase {
         value.put(commentDb, book.getComment());
         value.put(photoDb, book.getPhoto());
 
+        ContentValues valueAuthor = new ContentValues();
 
+        for(String author: book.getAuthors()){
+
+            valueAuthor.put(nameAuthorDb, author);
+            valueAuthor.put(isbnBookDb, book.getIsbn());
+        }
+
+        ContentValues valueTypeBook = new ContentValues();
+
+        for(String type: book.getTypes()){
+
+            Cursor cursor = db.rawQuery("SELECT "+ idTypeDb +" FROM "+ typeNameDb + " WHERE " + nameTypeDb + " = ?", new String[]{ type} );
+            valueTypeBook.put(idTypeDb, cursor.getString(0));
+            valueTypeBook.put(idBookDb, book.getIsbn());
+
+            cursor.close();
+        }
 
 
 
         db.insert(bookNameDb, null, value);
+        db.insert(authorNameDb, null, valueAuthor);
+        db.insert(typeBookNameDb, null, valueTypeBook);
     }
 
     private boolean dbExistSimpleBook(SimpleBook book){
 
         Cursor cursor = db.rawQuery("SELECT * FROM "+ bookNameDb + " WHERE " + isbnBookDb + " = ?", new String[]{ book.getIsbn()} );
+        boolean res = cursor.getCount() != 0;
 
-        return cursor.getCount() != 0;
+        cursor.close();
+        return res;
     }
 
     private boolean dbExistSimpleBook(SimpleBook book, long position){
@@ -78,8 +115,10 @@ public class BookManager extends DAOBase {
         }
 
         Cursor cursor = db.rawQuery("SELECT * FROM "+ bookNameDb + " WHERE " + isbnBookDb + " = ?", new String[]{ book.getIsbn()} );
+        boolean res = cursor.getCount() !=0;
 
-        return cursor.getCount() != 0;
+        cursor.close();
+        return res;
 
 
     }
@@ -110,17 +149,46 @@ public class BookManager extends DAOBase {
 
         ContentValues value = new ContentValues();
         value.put(isbnBookDb, book.getIsbn());
-        value.put(authorBookDb, book.getAuthor());
         value.put(titleBookDb, book.getTitle());
-        value.put(descriptionBookDb, book.getDescription());
+        value.put(collectionBookDb, book.getCollection());
+        value.put(publisherBookDb, book.getPublisher());
+        value.put(summaryBookDb, book.getSummary());
+        value.put(yearBookDb, book.getYear());
         value.put(isReadDb, book.isRead());
-        value.put(isBorrowedDb, book.isBorrowed);
+        value.put(isBorrowedDb, book.isBorrowed());
         value.put(borrowerDb, book.getBorrower());
         value.put(ownerDb, book.getOwner());
         value.put(commentDb, book.getComment());
         value.put(photoDb, book.getPhoto());
 
+        ContentValues valueAuthor = new ContentValues();
+
+        db.delete(authorNameDb, isbnBookDb + " = ?", new String[]{book.getIsbn()});
+
+        for(String author: book.getAuthors()){
+
+            valueAuthor.put(nameAuthorDb, author);
+            valueAuthor.put(isbnBookDb, book.getIsbn());
+        }
+
+        ContentValues valueTypeBook = new ContentValues();
+
+        db.delete(typeBookNameDb, isbnBookDb + " = ? ", new String[]{book.getIsbn()});
+
+        for(String type: book.getTypes()){
+
+            Cursor cursorType = db.rawQuery("SELECT "+ idTypeDb +" FROM "+ typeNameDb + " WHERE " + nameTypeDb + " = ?", new String[]{ type} );
+            valueTypeBook.put(idTypeDb, cursorType.getString(0));
+            valueTypeBook.put(idBookDb, book.getIsbn());
+
+            cursorType.close();
+        }
+
+        cursor.close();
         db.update(bookNameDb, value, idBookDb + " = ? ", new String[]{String.valueOf(id)});
+        db.insert(authorNameDb, null, valueAuthor);
+        db.insert(typeBookNameDb, null, valueTypeBook);
+
     }
 
     /**
@@ -131,7 +199,7 @@ public class BookManager extends DAOBase {
 
 
         long pos = position;
-        Cursor cursor = db.rawQuery("SELECT * FROM "+ bookNameDb, null);
+        Cursor cursor = db.rawQuery("SELECT "+ idBookDb+", "+isbnBookDb+" FROM "+ bookNameDb, null);
 
         while(cursor.moveToNext() && pos > 0){
 
@@ -140,7 +208,14 @@ public class BookManager extends DAOBase {
         }
 
         long id = cursor.getLong(0);
+        String isbn = cursor.getString(1);
+
+
+        cursor.close();
+
         db.delete(bookNameDb, idBookDb + " = ?", new String[]{String.valueOf(id)});
+        db.delete(authorNameDb, isbnBookDb + " = ?", new String[]{isbn});
+        db.delete(typeBookNameDb, isbnBookDb + " = ?", new String[]{isbn});
     }
 
     /**
@@ -157,19 +232,40 @@ public class BookManager extends DAOBase {
         while (cursor.moveToNext()) {
 
             String isbn = cursor.getString(1);
-            String author = cursor.getString(2);
-            String title = cursor.getString(3);
-            String description = cursor.getString(4);
-            boolean isRead = intToBool(cursor.getInt(5));
-            boolean isBorrowed = intToBool(cursor.getInt(6));
-            String borrower = cursor.getString(7);
-            String owner = cursor.getString(8);
-            String comment = cursor.getString(9);
-            String photo = cursor.getString(10);
+            String title = cursor.getString(2);
+            String collection = cursor.getString(3);
+            String publisher = cursor.getString(4);
+            String year = cursor.getString(5);
+            String summary = cursor.getString(6);
+            boolean isRead = intToBool(cursor.getInt(7));
+            boolean isBorrowed = intToBool(cursor.getInt(8));
+            String borrower = cursor.getString(9);
+            String owner = cursor.getString(10);
+            String comment = cursor.getString(11);
+            String photo = cursor.getString(12);
 
-            bookLibrary.addBook(new SimpleBook(isbn, author, title, description, isRead, isBorrowed, borrower, owner, comment, photo));
+            ArrayList<String> authors = new ArrayList<String>();
+            Cursor cursorAuthors = db.rawQuery("SELECT "+ nameAuthorDb +" FROM "+ authorNameDb + " WHERE " + isbnBookDb + " = ?", new String[]{ isbn} );
+            while(cursorAuthors.moveToNext()){
+
+                authors.add(cursorAuthors.getString(1));
+            }
+
+            Cursor cursorType = db.rawQuery("SELECT "+ nameTypeDb +" FROM "+ typeNameDb + " NATURAL JOIN "+ typeBookNameDb+" WHERE " + isbnBookDb + " = ?" , new String[]{ isbn} );
+            ArrayList<String> types = new ArrayList<String>();
+            while(cursorType.moveToNext()){
+
+                types.add(cursorType.getString(1));
+            }
+
+
+            cursorAuthors.close();
+            cursorType.close();
+
+            bookLibrary.addBook(new SimpleBook(isbn, authors, title, collection, types, publisher, year, summary, isRead, isBorrowed, borrower, owner, comment, photo));
         }
         cursor.close();
+
         return bookLibrary;
 
 
@@ -193,18 +289,37 @@ public class BookManager extends DAOBase {
         }
 
         String isbn = cursor.getString(1);
-        String author = cursor.getString(2);
-        String title = cursor.getString(3);
-        String description = cursor.getString(4);
-        boolean isRead = intToBool(cursor.getInt(5));
-        boolean isBorrowed = intToBool(cursor.getInt(6));
-        String borrower = cursor.getString(7);
-        String owner = cursor.getString(8);
-        String comment = cursor.getString(9);
-        String photo = cursor.getString(10);
+        String title = cursor.getString(2);
+        String collection = cursor.getString(3);
+        String publisher = cursor.getString(4);
+        String year = cursor.getString(5);
+        String summary = cursor.getString(6);
+        boolean isRead = intToBool(cursor.getInt(7));
+        boolean isBorrowed = intToBool(cursor.getInt(8));
+        String borrower = cursor.getString(9);
+        String owner = cursor.getString(10);
+        String comment = cursor.getString(11);
+        String photo = cursor.getString(12);
+
+        ArrayList<String> authors = new ArrayList<String>();
+        Cursor cursorAuthors = db.rawQuery("SELECT "+ nameAuthorDb +" FROM "+ authorNameDb + " WHERE " + isbnBookDb + " = ?", new String[]{ isbn} );
+        while(cursorAuthors.moveToNext()){
+
+            authors.add(cursorAuthors.getString(1));
+        }
+
+        Cursor cursorType = db.rawQuery("SELECT "+ nameTypeDb +" FROM "+ typeNameDb + " NATURAL JOIN "+ typeBookNameDb+" WHERE " + isbnBookDb + " = ?" , new String[]{ isbn} );
+        ArrayList<String> types = new ArrayList<String>();
+        while(cursorType.moveToNext()){
+
+            types.add(cursorType.getString(1));
+        }
 
         cursor.close();
-        return new SimpleBook(isbn, author, title, description, isRead, isBorrowed, borrower, owner, comment, photo);
+        cursorAuthors.close();
+        cursorType.close();
+
+        return new SimpleBook(isbn, authors, title, collection, types, publisher, year, summary, isRead, isBorrowed, borrower, owner, comment, photo);
 
     }
 }

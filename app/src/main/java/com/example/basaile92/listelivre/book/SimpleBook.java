@@ -13,7 +13,7 @@ public class SimpleBook{
     private String title;
     private String collection;
     private ArrayList<String> types;
-    private String editor;
+    private String publisher;
     private String year;
     private String summary;
     private boolean isRead;
@@ -38,13 +38,13 @@ public class SimpleBook{
      * @param comment
      * @param photo
      */
-    public SimpleBook(String isbn, ArrayList<String> authors, String title, String collection, ArrayList<String> types, String editor, String year, String summary, boolean isRead, boolean isBorrowed, String borrower, String owner, String comment, String photo){
+    public SimpleBook(String isbn, ArrayList<String> authors, String title, String collection, ArrayList<String> types, String publisher, String year, String summary, boolean isRead, boolean isBorrowed, String borrower, String owner, String comment, String photo){
         this.authors = authors;
         this.title = title;
         this.isbn = isbn;
         this.collection = collection;
         this.types = types;
-        this.editor = editor;
+        this.publisher = publisher;
         this.year = year;
         this.summary = summary;
         this.isRead = isRead;
@@ -167,12 +167,12 @@ public class SimpleBook{
         this.types = types;
     }
 
-    public String getEditor() {
-        return editor;
+    public String getPublisher() {
+        return this.publisher;
     }
 
-    public void setEditor(String editor) {
-        this.editor = editor;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
     public String getYear() {

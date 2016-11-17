@@ -8,20 +8,20 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by dyment on 17/11/16.
  */
 
-public class TypeAuthorDatabaseHandler extends SQLiteOpenHelper {
+public class TypeBookDatabaseHandler extends SQLiteOpenHelper {
 
-    public static final String typeAuthorNameDb = "TypeAuthor";
-    public static final String idTypeAuthorDb = "id";
+    public static final String typeBookNameDb = "TypeBook";
+    public static final String idTypeBookDb = "id";
     public static final String idTypeDb = "idType";
-    public static final String idAuthorDb = "idAuthor";
+    public static final String isbnBookDb = "isbn";
 
 
 
 
-    public static final String destroy_table_book = "DROP TABLE IF EXISTS " + typeAuthorNameDb + ";";
+    public static final String destroy_table_book = "DROP TABLE IF EXISTS " + typeBookNameDb + ";";
 
 
-    public TypeAuthorDatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public TypeBookDatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
@@ -31,7 +31,7 @@ public class TypeAuthorDatabaseHandler extends SQLiteOpenHelper {
      */
     private String createTableBook(){
 
-        return ("CREATE TABLE "+typeAuthorNameDb+" ( "+idTypeAuthorDb+" INTEGER PRIMARY KEY, "+idTypeDb +" NUMERIC NOT NULL, "+ idAuthorDb  +"NUMERIC NOT NULL);");
+        return ("CREATE TABLE "+typeBookNameDb+" ( "+idTypeBookDb+" INTEGER PRIMARY KEY, "+idTypeDb +" NUMERIC NOT NULL, "+ isbnBookDb  +"NUMERIC NOT NULL);");
     }
 
     @Override
