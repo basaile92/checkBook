@@ -13,6 +13,7 @@
     android:orientation="vertical"
     android:isScrollContainer="true"
     android:weightSum="1">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,13 +37,6 @@
                     style="@style/Widget.AppCompat.EditText"
                     android:layout_weight="1" />
 
-                <ImageButton
-                    android:text="@string/getBookInfosButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/getBookInfosButton"
-                    android:layout_weight="3"
-                    app:srcCompat="@android:drawable/ic_menu_agenda" />
             </LinearLayout>
 
             <LinearLayout
@@ -169,17 +163,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/typeText"
-                    android:layout_weight="1"
                     android:text="@string/typesText"
                     android:textSize="18sp"
-                    android:gravity="center_vertical|center_horizontal" />
+                    android:gravity="center_vertical|center_horizontal|center"
+                    />
 
                 <ListView
-                    android:layout_width="270dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/typeListView" />
-            </LinearLayout>
+                    android:id="@+id/typeListView"
+                    android:layout_weight="1"/>
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@android:drawable/ic_menu_edit"
+                    android:gravity="center_vertical|center_horizontal|center"
+                    android:id="@+id/typeEditButton" />
+                />
+
+            </LinearLayout>
 
 
             <LinearLayout

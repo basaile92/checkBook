@@ -30,7 +30,9 @@ import com.example.basaile92.listelivre.book.SimpleBook;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ModifyBookLibraryFragment extends Fragment {
@@ -72,12 +74,15 @@ public class ModifyBookLibraryFragment extends Fragment {
 
 
         Button modifyButton = (Button) viewModif.findViewById(R.id.modifyButton);
-        ImageButton getBookInfosButton = (ImageButton) viewModif.findViewById(R.id.getBookInfosButton);
 
         final EditText isbnEdit = (EditText) viewModif.findViewById(R.id.isbnEdit);
-        final EditText authorEdit = (EditText) viewModif.findViewById(R.id.authorEdit);
         final EditText titleEdit = (EditText) viewModif.findViewById(R.id.titleEdit);
-        final EditText descriptionEdit = (EditText) viewModif.findViewById(R.id.descriptionEdit);
+        final ArrayList<String> authors = new ArrayList<String>();
+        final ArrayList<String> types = new ArrayList<String>();
+        final EditText collectionEdit = (EditText) viewModif.findViewById(R.id.collectionEdit);
+        final EditText publisherEdit = (EditText) viewModif.findViewById(R.id.publisherEdit);
+        final EditText yearEdit = (EditText) viewModif.findViewById(R.id.yearEdit);
+        final EditText summaryEdit = (EditText) viewModif.findViewById(R.id.summaryEdit);
         final CheckBox isReadCheckBox = (CheckBox) viewModif.findViewById(R.id.isReadCheckBox);
         final CheckBox isBorrowedCheckBox = (CheckBox) viewModif.findViewById(R.id.isBorrowedCheckBox);
         final EditText borrowerEdit = (EditText) viewModif.findViewById(R.id.borrowerEdit);
@@ -93,9 +98,13 @@ public class ModifyBookLibraryFragment extends Fragment {
         SimpleBook book = bookManager.getSimpleBook(position);
 
         isbnEdit.setText(book.getIsbn());
-        authorEdit.setText(book.getAuthor());
+        authors.addAll(book.getAuthors());
+        types.addAll(book.getTypes());
         titleEdit.setText(book.getTitle());
-        descriptionEdit.setText(book.getDescription());
+        collectionEdit.setText(book.getCollection());
+        publisherEdit.setText(book.getPublisher());
+        yearEdit.setText(book.getYear());
+        summaryEdit.setText(book.getSummary());
         isReadCheckBox.setChecked(book.isRead());
         isBorrowedCheckBox.setChecked(book.isBorrowed());
         borrowerEdit.setText(book.getBorrower());
@@ -122,7 +131,7 @@ public class ModifyBookLibraryFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (isbnEdit.getText().toString().equals("") || authorEdit.getText().toString().equals("") || titleEdit.getText().toString().equals("")) {
+                if (isbnEdit.getText().toString().equals("") || authors.size() == 0 || titleEdit.getText().toString().equals("")) {
 
                     Toast toast = Toast.makeText(getActivity(), R.string.toastEmptyField, Toast.LENGTH_SHORT);
                     toast.show();
@@ -167,7 +176,7 @@ public class ModifyBookLibraryFragment extends Fragment {
                         }
 
                         try {
-                            bookManager.modifyBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(), mCurrentPhotoPath), position);
+                            bookManager.modifyBook(new SimpleBook(isbnEdit.getText().toString(), authors, titleEdit.getText().toString(), collectionEdit.getText().toString(), types, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(), mCurrentPhotoPath), position);
 
                             mCallback.updateBookLibraryFragment(view);
 
@@ -176,57 +185,6 @@ public class ModifyBookLibraryFragment extends Fragment {
                             Toast toast = Toast.makeText(getActivity(), R.string.bookAlreadyExist, Toast.LENGTH_SHORT);
                             toast.show();
                         }
-                    }
-                }
-            }
-        });
-
-        getBookInfosButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText isbnEdit = (EditText) v.findViewById(R.id.isbnEdit);
-                EditText authorEdit = (EditText) v.findViewById(R.id.authorEdit);
-                EditText titleEdit = (EditText) v.findViewById(R.id.titleEdit);
-                EditText descriptionEdit = (EditText) v.findViewById(R.id.descriptionEdit);
-                ImageView imageButton = (ImageView) v.findViewById(R.id.imageButton);
-
-                ScanBook scanBook = new ScanBook(isbnEdit.getText().toString(), v.getContext());
-
-                BookLibrary bookLibrary = scanBook.getBooks();
-
-                if(isbnEdit.getText().toString().length() != 13){
-
-                    Toast toast = Toast.makeText(getActivity(), R.string.isbnNotGoodFormat, Toast.LENGTH_SHORT);
-                    toast.show();
-
-
-                }else {
-
-                    if (bookLibrary.size() > 0) {
-                        SimpleBook book = scanBook.getBooks().get(0);
-
-                        authorEdit.setText(book.getAuthor());
-                        titleEdit.setText(book.getTitle());
-                        descriptionEdit.setText(book.getDescription());
-                    /*
-                    //TODO: Faire l'import de photos par ISBN
-                    try
-                    {
-                        Log.e("Salut", book.getPhoto());
-                        InputStream is = (InputStream) new URL(book.getPhoto()).getContent();
-                        Drawable drawable = Drawable.createFromStream(is, "src name");
-                        imageButton.setImageDrawable(drawable);
-
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                */
-                    } else {
-
-                        Toast toast = Toast.makeText(getActivity(), R.string.isbnCantComplet, Toast.LENGTH_SHORT);
-                        toast.show();
                     }
                 }
             }

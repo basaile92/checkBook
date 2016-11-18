@@ -18,6 +18,7 @@ package com.example.basaile92.listelivre.fragment;
     import com.example.basaile92.listelivre.R;
     import com.example.basaile92.listelivre.book.BookLibrary;
     import com.example.basaile92.listelivre.book.BookManager;
+    import com.example.basaile92.listelivre.database.AuthorDatabaseHandler;
     import com.example.basaile92.listelivre.database.BookDatabaseHandler;
 
 public class BookLibraryFragment extends Fragment {
@@ -100,9 +101,9 @@ public class BookLibraryFragment extends Fragment {
 
 
 
-                Cursor cursor = bookManager.getDb().rawQuery("SELECT id as _id, author, title, photo from Book;", new String[]{});
+                Cursor cursor = bookManager.getDb().rawQuery("SELECT "+ BookDatabaseHandler.idBookDb +" as _id, "+ AuthorDatabaseHandler.nameAuthorDb+", "+BookDatabaseHandler.titleBookDb+", "+ BookDatabaseHandler.photoDb+" from "+ BookDatabaseHandler.bookNameDb+" NATURAL JOIN "+ AuthorDatabaseHandler.authorNameDb+";", new String[]{});
 
-                SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(getActivity().getBaseContext(), R.layout.book, cursor ,new String[]{BookDatabaseHandler.authorBookDb, BookDatabaseHandler.titleBookDb}, new int[]{R.id.authorBook, R.id.titleBook}, CursorAdapter.FLAG_AUTO_REQUERY);
+                SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(getActivity().getBaseContext(), R.layout.book, cursor ,new String[]{AuthorDatabaseHandler.nameAuthorDb, BookDatabaseHandler.titleBookDb}, new int[]{R.id.authorBook, R.id.titleBook}, CursorAdapter.FLAG_AUTO_REQUERY);
 
                 bookList.setAdapter(listAdapter);
             }

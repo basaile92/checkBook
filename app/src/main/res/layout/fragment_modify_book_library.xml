@@ -14,21 +14,18 @@
     android:isScrollContainer="true"
     >
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarStyle="insideOverlay">
-
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -52,22 +49,13 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/authorEdit"
-                        android:layout_weight="1"
-                        android:hint="@string/authorText"
-                        android:inputType="textShortMessage" />
-
 
                     <EditText
                         android:layout_width="match_parent"
@@ -76,6 +64,15 @@
                         android:hint="@string/titleText"
                         android:layout_weight="1"
                         android:inputType="textShortMessage" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/collectionEdit"
+                        android:hint="@string/collectionText"
+                        android:inputType="textLongMessage"
+                        android:layout_weight="1" />
+
                 </LinearLayout>
 
                 <ImageView
@@ -90,20 +87,119 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/authorsText"
+                    android:layout_weight="1"
+                    android:text="@string/authorsText"
+                    android:textSize="18sp"
+                    android:gravity="center_vertical|center_horizontal" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="270dp"
+                    android:layout_height="wrap_content">
+
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/authorsListView" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="254dp"
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/addAuthorsEdit"
+                            android:layout_weight="4"
+                            android:hint="@string/addAuthorsText"
+                            android:inputType="textShortMessage" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/addAuthorsButton"
+                            app:srcCompat="@android:drawable/ic_menu_add"
+                            android:adjustViewBounds="false"
+                            android:cropToPadding="false" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/descriptionEdit"
-                    android:hint="@string/descriptionText"
+                    android:id="@+id/publisherEdit"
+                    android:hint="@string/publisherText"
                     android:inputType="textLongMessage" />
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/yearEdit"
+                    android:hint="@string/yearText"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/typeText"
+                    android:layout_weight="1"
+                    android:text="@string/typesText"
+                    android:textSize="18sp"
+                    android:gravity="center_vertical|center_horizontal" />
+
+                <ListView
+                    android:layout_width="270dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/typeListView" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/summaryEdit"
+                    android:hint="@string/summaryText"
+                    android:inputType="textLongMessage" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -111,16 +207,15 @@
                     android:id="@+id/ownerEdit"
                     android:hint="@string/ownerText"
                     android:inputType="textPersonName" />
-
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <CheckBox
-                    android:text="Is Read"
+                    android:text="@string/isReadText"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/isReadCheckBox"
@@ -132,10 +227,10 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <CheckBox
-                    android:text="Is Borrowed"
+                    android:text="@string/isBorrowedText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/isBorrowedCheckBox"
@@ -151,13 +246,12 @@
                     android:hint="@string/borrowerText"
                     android:inputType="textPersonName" />
 
-
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -165,17 +259,21 @@
                     android:id="@+id/commentsEdit"
                     android:hint="@string/commentText"
                     android:inputType="textLongMessage" />
-
             </LinearLayout>
+
+
+
+
+
             <Button
                 android:text="Modify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/modifyButton"
                 android:layout_weight="1" />
-
         </LinearLayout>
     </ScrollView>
+
 
 
 </LinearLayout>

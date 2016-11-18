@@ -18,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
@@ -30,10 +31,12 @@ import com.example.basaile92.listelivre.book.SimpleBook;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class AddBookLibraryActivity extends AppCompatActivity {
@@ -51,15 +54,26 @@ public class AddBookLibraryActivity extends AppCompatActivity {
         CheckBox isBorrowedCheckBox = (CheckBox) findViewById(R.id.isBorrowedCheckBox);
         ImageView imageButton = (ImageView) findViewById(R.id.imageButton);
 
+        ListView authorsListView = (ListView) findViewById(R.id.authorsListView);
+        EditText addAuthorsEdit = (EditText) findViewById(R.id.addAuthorsEdit);
+        ImageView addAuthorsButton = (ImageView) findViewById(R.id.addAuthorsButton);
+        final ArrayList<String> authorsList = new ArrayList<String>();
+
+        ListView typeListView = (ListView) findViewById(R.id.typeListView);
+        ImageView typEditButton = (ImageView) findViewById(R.id.typeEditButton);
+        final ArrayList<String> typesList = new ArrayList<String>();
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 BookManager bookManager = new BookManager(getBaseContext());
                 EditText isbnEdit = (EditText) findViewById(R.id.isbnEdit);
-                EditText authorEdit = (EditText) findViewById(R.id.authorEdit);
                 EditText titleEdit = (EditText) findViewById(R.id.titleEdit);
-                EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
+                EditText collectionEdit = (EditText) findViewById(R.id.collectionEdit);
+                EditText publisherEdit = (EditText) findViewById(R.id.publisherEdit);
+                EditText yearEdit = (EditText) findViewById(R.id.yearEdit);
+                EditText summaryEdit = (EditText) findViewById(R.id.summaryEdit);
                 CheckBox isReadCheckBox = (CheckBox) findViewById(R.id.isReadCheckBox);
                 CheckBox isBorrowedCheckBox = (CheckBox) findViewById(R.id.isBorrowedCheckBox);
                 EditText borrowerEdit = (EditText) findViewById(R.id.borrowerEdit);
@@ -69,7 +83,7 @@ public class AddBookLibraryActivity extends AppCompatActivity {
 
 
 
-                if(isbnEdit.getText().toString().equals("")|| authorEdit.getText().toString().equals("") || titleEdit.getText().toString().equals("")){
+                if(isbnEdit.getText().toString().equals("")|| authorsList.size() == 0 || titleEdit.getText().toString().equals("")){
 
                     Toast toast = Toast.makeText(AddBookLibraryActivity.this, R.string.toastEmptyField, Toast.LENGTH_SHORT);
                     toast.show();
@@ -115,7 +129,7 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                         try {
 
 
-                            bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorEdit.getText().toString(), titleEdit.getText().toString(), descriptionEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(),mCurrentPhotoPath));
+                            bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), collectionEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(),mCurrentPhotoPath));
                             Intent intent = new Intent(AddBookLibraryActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
@@ -154,13 +168,14 @@ public class AddBookLibraryActivity extends AppCompatActivity {
 
             }
         });
-        getBookInfosButton.setOnClickListener(new View.OnClickListener() {
+     /*   getBookInfosButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText isbnEdit = (EditText) findViewById(R.id.isbnEdit);
-                EditText authorEdit = (EditText) findViewById(R.id.authorEdit);
                 EditText titleEdit = (EditText) findViewById(R.id.titleEdit);
-                EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
+                EditText publisherEdit = (EditText) findViewById(R.id.publisherEdit);
+                EditText yearEdit = (EditText) findViewById(R.id.yearEdit);
+                EditText summary = (EditText) findViewById(R.id.summaryEdit);
                 ImageView imageButton = (ImageView) findViewById(R.id.imageButton);
 
                 ScanBook scanBook = new ScanBook(isbnEdit.getText().toString(), v.getContext());
@@ -178,10 +193,22 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                     if (bookLibrary.size() > 0) {
                         SimpleBook book = scanBook.getBooks().get(0);
 
-                        authorEdit.setText(book.getAuthor());
+                        for(String authors : authorsList) {
+
+                            authorsList.remove(authors);
+
+                        }
+                        for(String authors : book.getAuthors()){
+
+                            authorsList.add(authors);
+                        }
+
                         titleEdit.setText(book.getTitle());
-                        descriptionEdit.setText(book.getDescription());
-                    /*
+                        publisherEdit.setText(book.getPublisher());
+                        yearEdit.setText(book.getYear());
+                        summary.setText(book.getSummary());
+
+                        /*
                     //TODO: Faire l'import de photos par ISBN
                     try
                     {
@@ -195,7 +222,7 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                */
+
                     } else {
 
                         Toast toast = Toast.makeText(AddBookLibraryActivity.this, R.string.isbnCantComplet, Toast.LENGTH_SHORT);
@@ -203,7 +230,7 @@ public class AddBookLibraryActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
+        }); */
 
     }
 
