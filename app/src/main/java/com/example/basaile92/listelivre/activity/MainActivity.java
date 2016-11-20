@@ -1,8 +1,8 @@
 package com.example.basaile92.listelivre.activity;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -10,91 +10,71 @@ import android.widget.LinearLayout;
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragmentCallBack;
-import com.example.basaile92.listelivre.fragment.ModifyBookLibraryFragment;
+import com.example.basaile92.listelivre.fragment.DisplayBookFragment;
+import com.example.basaile92.listelivre.fragment.Fab;
+import com.gordonwong.materialsheetfab.MaterialSheetFab;
 
 
 public class MainActivity extends FragmentActivity implements BookLibraryFragmentCallBack{
-
-    private int id = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initLabel();
 
+        // Title of the Activity
+        setTitle(R.string.mainActivity);
 
-        LinearLayout modifyBookLibraryLayout =(LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
-        if(modifyBookLibraryLayout != null){
-            ModifyBookLibraryFragment modifyBookLibraryFragment = new ModifyBookLibraryFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.modifyBookLibraryLayout, modifyBookLibraryFragment).commit();
+        // We define the Fab button right down
+        Fab fab = (Fab) findViewById(R.id.fab);
+        View sheetView = findViewById(R.id.fab_sheet);
+        View overlay = findViewById(R.id.overlay);
+        int sheetColor = getResources().getColor(R.color.brownie_top);
+        int fabColor = getResources().getColor(R.color.brownie_top);
+        MaterialSheetFab materialSheetFab = new MaterialSheetFab<>(fab, sheetView, overlay, sheetColor, fabColor);
+
+        LinearLayout displayBookLayout =(LinearLayout) findViewById(R.id.displayBookLayout);
+
+        //If the modifyBookLibraryLayout is null, it means that you're in portrait view, and if it's not you're in landscape view
+        if(displayBookLayout != null){
+            // We add a new fragment in fragment manager
+            DisplayBookFragment displayBookFragment = new DisplayBookFragment();
+            getSupportFragmentManager().beginTransaction().add(displayBookLayout, displayBookFragment).commit();
         }
 
+        // Assignate function of add button
         Button addBookButton = (Button) findViewById(R.id.addBookButton);
-
-
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, AddBookLibraryActivity.class);
+                // Change activity to add book library activity
+                Intent intent = new Intent(MainActivity.this, AddBookActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-
-
     }
 
-    private void initLabel(){
+    public void updateDisplayBookFragment(int position, View viewLibrary){
 
-        Button addBookButton = (Button) findViewById(R.id.addBookButton);
-        Button searchBookButton = (Button) findViewById(R.id.searchBookButton);
-        Button myLibraryButton = (Button) findViewById(R.id.myLibraryButton);
-        addBookButton.setText(R.string.addBookButton);
-        searchBookButton.setText(R.string.searchBookButton);
-        myLibraryButton.setText(R.string.myLibraryButton);
+        LinearLayout displayBookLayout = (LinearLayout) findViewById(R.id.displayBookLayout);
 
-        setTitle(R.string.mainActivity);
-    }
+        //if we are in Landscape mode
+        if(displayBookLayout != null) {
 
-
-    public void updateModifyBookLibraryFragment(int position, View viewLibrary){
-
-        LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
-        if(modifyBookLibraryLayout != null) {
-
-            LinearLayout layout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
-            layout.setVisibility(View.VISIBLE);
-            ModifyBookLibraryFragment modifyBookLibraryFragment = new ModifyBookLibraryFragment();
-            View viewModif = findViewById(R.id.fragment_modify_book_library);
-            modifyBookLibraryFragment.updateView(position, viewModif, viewLibrary);
+            //We update the view of the displaybookfragment with the new position
+            DisplayBookFragment displayBookFragment = new DisplayBookFragment();
+            View viewDisplay = findViewById(R.id.fragment_display_book);
+            displayBookFragment.updateView(position, viewDisplay , viewLibrary);
         }else{
 
-            Intent intent = new Intent(MainActivity.this, ModifyBookLibraryActivity.class);
-            intent.putExtra(ModifyBookLibraryFragment.POSITION, position);
+            //We change the activity and send the position by an intent to the DisplayBookActivity
+            Intent intent = new Intent(MainActivity.this, DisplayBookActivity.class);
+            intent.putExtra(BookLibraryFragment.POSITION, position);
             startActivity(intent);
             finish();
-
-
         }
-
     }
-
-    @Override
-    public void updateBookLibraryFragment(View view) {
-
-        LinearLayout modifyBookLibraryLayout = (LinearLayout) findViewById(R.id.modifyBookLibraryLayout);
-        if(modifyBookLibraryLayout != null) {
-
-            BookLibraryFragment bookLibraryFragment = (BookLibraryFragment) getSupportFragmentManager().findFragmentById(R.id.bookLibraryFragment);
-
-            bookLibraryFragment.updateView(view);
-
-        }
-
-    }
-
-
 
 }

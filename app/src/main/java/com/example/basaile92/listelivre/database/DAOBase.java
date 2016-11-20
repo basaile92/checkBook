@@ -3,22 +3,17 @@ package com.example.basaile92.listelivre.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.basaile92.listelivre.database.BookDatabaseHandler;
-
 /**
  * Created by Basile on 02/11/2016.
  */
 
 public abstract class DAOBase {
 
-    protected final static int VERSION = 1;
-    protected final static String NOM = "database.db";
-
     protected SQLiteDatabase db = null;
-    protected BookDatabaseHandler handler = null;
+    protected MySQLHelper handler = null;
 
     public DAOBase(Context pContext) {
-        this.handler = new BookDatabaseHandler(pContext, NOM, null, VERSION);
+        this.handler = new MySQLHelper(pContext);
         open();
     }
 

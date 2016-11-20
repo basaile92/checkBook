@@ -1,6 +1,7 @@
 package com.example.basaile92.listelivre.book;
 
-import java.util.HashMap;
+import com.example.basaile92.listelivre.entity.BookLibrary;
+import com.example.basaile92.listelivre.entity.SimpleBook;
 
 /**
  * Created by Mercier on 27/10/2016.

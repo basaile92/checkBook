@@ -1,30 +1,29 @@
 package com.example.basaile92.listelivre.fragment;
 
-    import android.content.Context;
-    import android.content.DialogInterface;
-    import android.content.Intent;
-    import android.database.Cursor;
-    import android.support.v4.app.Fragment;
-    import android.support.v4.widget.CursorAdapter;
-    import android.support.v4.widget.SimpleCursorAdapter;
-    import android.support.v7.app.AlertDialog;
-    import android.os.Bundle;
-    import android.view.LayoutInflater;
-    import android.view.View;
-    import android.view.ViewGroup;
-    import android.widget.AdapterView;
-    import android.widget.ListView;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
-    import com.example.basaile92.listelivre.R;
-    import com.example.basaile92.listelivre.book.BookLibrary;
-    import com.example.basaile92.listelivre.book.BookManager;
-    import com.example.basaile92.listelivre.database.AuthorDatabaseHandler;
-    import com.example.basaile92.listelivre.database.BookDatabaseHandler;
+import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.entity.BookLibrary;
+import com.example.basaile92.listelivre.book.BookManager;
+import com.example.basaile92.listelivre.entity.SimpleBook;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BookLibraryFragment extends Fragment {
 
+        public static final String POSITION = "itemId";
         private BookLibraryFragmentCallBack mCallback;
-        private ListView bookList;
 
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -34,83 +33,47 @@ public class BookLibraryFragment extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle b) {
             View view = inflater.inflate(R.layout.fragment_book_library, container, false);
 
+            //We create the view of the book library
             updateView(view);
-
-
             return view;
         }
 
         public void updateView(final View view){
 
-
-            bookList = (ListView) view.findViewById(R.id.bookList);
+            ListView bookList = (ListView) view.findViewById(R.id.bookList);
             BookManager bookManager = new BookManager(getContext());
             BookLibrary bookLibrary = bookManager.readBookLibrary();
 
+            // Assignate the click function of each items of the bookList.
             bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                    mCallback.updateModifyBookLibraryFragment(position, getView());
+                    // We update the display book fragment with the good position
+                    mCallback.updateDisplayBookFragment(position, getView());
                 }
             });
 
-
-            bookList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int position, long l) {
-
-                    View deleteBookButton = adapterView.getChildAt(position).findViewById(R.id.deleteBookButton);
-                    deleteBookButton.setVisibility(View.VISIBLE);
-                    deleteBookButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setMessage(R.string.deleteQuestion);
-                            builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    BookManager bookManager = new BookManager(getContext());
-
-                                    bookManager.deleteBook(position);
-                                    dialogInterface.cancel();
-                                    Intent intent = new Intent(getActivity(), getActivity().getClass());
-                                    startActivity(intent);
-                                    getActivity().finish();
-                                }
-                            });
-
-                            builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.cancel();
-                                }
-                            });
-
-                            AlertDialog alert = builder.create();
-                            alert.show();
-                        }
-                    });
-
-                    return true;
-                }
-            });
+            // if the booklibrary is well assignate
             if(bookLibrary != null) {
 
+                List<Map<String,String>> listOfBook = new ArrayList<Map<String, String>>();
+                for(SimpleBook book : bookLibrary){
 
+                    // We fill the 4 fields for each view of the list view.
+                    Map<String, String> bookMap = new HashMap<String, String>();
+                    //TODO add the photo here
+                    bookMap.put("img", "");
+                    bookMap.put("authors", book.getAuthors().toString());
+                    bookMap.put("title", book.getTitle());
+                    listOfBook.add(bookMap);
+                }
 
-                Cursor cursor = bookManager.getDb().rawQuery("SELECT "+ BookDatabaseHandler.idBookDb +" as _id, "+ AuthorDatabaseHandler.nameAuthorDb+", "+BookDatabaseHandler.titleBookDb+", "+ BookDatabaseHandler.photoDb+" from "+ BookDatabaseHandler.bookNameDb+" NATURAL JOIN "+ AuthorDatabaseHandler.authorNameDb+";", new String[]{});
-
-                SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(getActivity().getBaseContext(), R.layout.book, cursor ,new String[]{AuthorDatabaseHandler.nameAuthorDb, BookDatabaseHandler.titleBookDb}, new int[]{R.id.authorBook, R.id.titleBook}, CursorAdapter.FLAG_AUTO_REQUERY);
-
+                //We assignate the listview
+                SimpleAdapter listAdapter = new SimpleAdapter(view.getContext(), listOfBook, R.layout.book, new String[]{"img", "authors", "title"}, new int[]{R.id.imageButton, R.id.authorBook, R.id.titleBook});
                 bookList.setAdapter(listAdapter);
             }
-
-
-
-
         }
 
         @Override

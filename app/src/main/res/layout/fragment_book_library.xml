@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_book_library"
     android:layout_width="match_parent"
@@ -7,34 +8,15 @@
     tools:context="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
     android:orientation="horizontal">
 
+
     <ListView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/bookList"
-    />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-    <com.github.alexkolpa.fabtoolbar.FabToolbar
-        android:id="@+id/fab_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        tb:tb_anim_duration="500"
-        tb:tb_button_gravity="end"
-        tb:tb_container_gravity="center"
-        >
-
-        <ImageView
-            android:id="@+id/attach"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_attachment_white_48dp"
-            android:layout_marginLeft="@dimen/icon_margin"
-            android:layout_marginRight="@dimen/icon_margin"
-            />
-
-        <!-- More buttons can be added here -->
-
-    </com.github.alexkolpa.fabtoolbar.FabToolbar>
 
 
 </LinearLayout>

@@ -8,8 +8,5 @@ import android.view.View;
 
 public interface BookLibraryFragmentCallBack {
 
-    public void updateModifyBookLibraryFragment(int position, View view);
-    public void updateBookLibraryFragment(View view);
-
-
+    public void updateDisplayBookFragment(int position, View view);
 }

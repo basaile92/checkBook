@@ -1,23 +1,21 @@
 package com.example.basaile92.listelivre.book;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.basaile92.listelivre.entity.Author;
+import com.example.basaile92.listelivre.entity.AuthorList;
+import com.example.basaile92.listelivre.entity.BookLibrary;
+import com.example.basaile92.listelivre.entity.SimpleBook;
+import com.example.basaile92.listelivre.entity.Type;
+import com.example.basaile92.listelivre.entity.TypeList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Created by dyment on 10/11/16.
@@ -28,9 +26,10 @@ public class ScanBook{
 
     protected String isbn;
     protected static JSONObject jsonObject;
-    protected static boolean status = false;
 
     public ScanBook(String isbn, Context context){
+
+        //We are getting the JSON thanks to the isbn that we got and with a JSON OBjectRequest (Method.GET).
 
         this.isbn = isbn;
         String bookSearchString = "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn;
@@ -40,7 +39,6 @@ public class ScanBook{
 
             @Override
             public void onResponse(JSONObject response) {
-                status = true;
                 jsonObject = response;
             }
         }, new Response.ErrorListener(){
@@ -58,18 +56,20 @@ public class ScanBook{
 
         BookLibrary list = new BookLibrary();
 
-        if(this.status) {
+        //If the JsonObject that we got isn't null
+        if(jsonObject != null) {
 
             try {
                 JSONArray items = jsonObject.getJSONArray("items");
 
+                // We get all field of JsonObject and we add it in a library.
                 for (int i = 0; i < jsonObject.getInt("totalItems"); i++) {
 
                     JSONObject book = items.getJSONObject(i).getJSONObject("volumeInfo");
                     String isbn = this.isbn;
                     String summary = book.getString("description");
-                    ArrayList<String> authors = parseArrayString(book.getJSONArray("authors"));
-                    ArrayList<String> types = parseArrayString(book.getJSONArray("categories"));
+                    AuthorList authors = parseArrayAuthor(book.getJSONArray("authors"), this.isbn);
+                    TypeList types = parseArrayType(book.getJSONArray("categories"));
                     String publisher = book.getString("publisher");
                     String year = parseYear(book.getString("publisherDate"));
                     String title = book.getString("title");
@@ -86,8 +86,8 @@ public class ScanBook{
         return list;
     }
 
+    //We parse the Date to have only the year.
     private String parseYear(String publisherDate) {
-
         int i = 0;
         while(publisherDate.charAt(i) != '-'){
             i++;
@@ -98,18 +98,34 @@ public class ScanBook{
 
     }
 
-    private ArrayList<String> parseArrayString(JSONArray array) throws JSONException {
+    //We parse the JSONArray to get an AuthorList
+    private AuthorList parseArrayAuthor(JSONArray array, String isbn) throws JSONException {
 
-        ArrayList<String> res = new ArrayList<String>();
+        AuthorList res = new AuthorList();
 
 
 
         for (int i = 0; i < array.length(); i++) {
-            res.add(array.getString(i));
+            res.addAuthor(new Author(array.getString(i), isbn));
         }
 
         return res;
     }
+
+    //We parse the JSONArray to get a TypeList
+    private TypeList parseArrayType(JSONArray array) throws JSONException {
+
+        TypeList res = new TypeList();
+
+
+
+        for (int i = 0; i < array.length(); i++) {
+            res.addType(new Type(array.getString(i)));
+        }
+
+        return res;
+    }
+
 
 }
 
