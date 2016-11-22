@@ -1,6 +1,6 @@
 package com.example.basaile92.listelivre.fragment;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.basaile92.listelivre.R;
@@ -31,7 +30,6 @@ import java.util.ArrayList;
 public class DisplayBookFragment extends Fragment{
 
     private BookLibraryFragmentCallBack mCallback;
-    private ListView bookList;
     public static String SIMPLEBOOK = "SimpleBook";
 
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,8 @@ public class DisplayBookFragment extends Fragment{
             position = -1;
         }
 
-        updateView(position, view, view);
+        if(position != -1)
+            updateView(position, view, view);
 
         return view;
     }

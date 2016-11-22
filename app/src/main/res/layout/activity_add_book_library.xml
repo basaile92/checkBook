@@ -185,9 +185,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <Spinner
+                        <com.satsuware.usefulviews.LabelledSpinner
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:id="@+id/addTypesSpinner"
                             android:layout_weight="4" />
 

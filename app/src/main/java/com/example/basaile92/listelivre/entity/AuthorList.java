@@ -18,6 +18,7 @@ public class AuthorList extends ArrayList<Author> {
         this.remove(author);
     }
 
+
     public String toString(){
 
         String res = "";
@@ -30,4 +31,5 @@ public class AuthorList extends ArrayList<Author> {
         }
         return res;
     }
+
 }

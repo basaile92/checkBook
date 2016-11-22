@@ -42,5 +42,6 @@
     <string name="read">Read</string>
     <string name="notRead">Not Read</string>
     <string name="borrowed">Borrowed by </string>
+    <string name="typesSpinnerText">Choose a type</string>
 
 </resources>

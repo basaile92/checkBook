@@ -23,7 +23,7 @@ public class DisplayBookActivity extends FragmentActivity{
         //We put an intent and give it to the fragment and we add the fragment
         DisplayBookFragment displayBookFragment = new DisplayBookFragment();
         Bundle args = new Bundle();
-        args.putInt(DisplayBookFragment.POSITION, itemId);
+        args.putInt(BookLibraryFragment.POSITION, itemId);
         displayBookFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction().add(R.id.activity_display_book, displayBookFragment).commit();
 

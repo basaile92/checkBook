@@ -1,89 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.basaile92.listelivre.activity.MainActivity"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout
+        android:id="@+id/fabtoolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        app:showDuration="600"
+        app:hideDuration="200"
+        app:horizontalMargin="30dp"
+        app:verticalMargin="30dp"
+        app:fadeInFraction="0.2"
+        app:fabId="@+id/fabtoolbar_fab"
+        app:containerId="@+id/fabtoolbar_container"
+        app:fabToolbarId="@+id/fabtoolbar_toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        <Button
-            android:text="@string/addBookButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:layout_weight="1"
-            android:id="@+id/addBookButton"
-            android:background="@android:drawable/btn_default"
-            android:textColor="#ddb692"
-            android:textColorHighlight="@color/pagecolor"
-            android:backgroundTint="@color/brownie" />
 
-        <Button
-            android:text="@string/searchBookButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:layout_weight="1"
-            android:id="@+id/searchBookButton"
-            android:textColor="@color/pagecolor"
-            android:background="@android:drawable/btn_default"
-            android:backgroundTint="@color/brownie" />
-
-        <Button
-            android:text="@string/myLibraryButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:layout_weight="1"
-            android:id="@+id/myLibraryButton"
-            android:textColorLink="?attr/colorControlActivated"
-            android:background="@android:drawable/btn_default"
-            android:textColor="@color/pagecolor"
-            android:backgroundTint="@color/brownie" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:id="@+id/bookLibraryLayout">
-
-            <fragment
-                android:id="@+id/bookLibraryFragment"
-                class="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
-                android:name="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:id="@+id/bookLibraryLayout">
+
+                <fragment
+                    android:id="@+id/bookLibraryFragment"
+                    class="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
+                    android:name="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    tools:layout="@layout/fragment_book_library">
+                </fragment>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:orientation="horizontal"
-                tools:layout="@layout/fragment_book_library">
-            </fragment>
+                android:id="@+id/displayBookLayout"
+                android:visibility="invisible">
+
+            </LinearLayout>
         </LinearLayout>
-        <LinearLayout
+
+        <RelativeLayout
+            android:id="@id/fabtoolbar_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="horizontal"
-            android:id="@+id/displayBookLayout"
-            android:visibility="invisible">
+            android:layout_height="wrap_content"
+            android:gravity="right">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@id/fabtoolbar_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabSize="normal"
+                app:borderWidth="0dp"
+                android:src="@drawable/abc_ic_menu_share_mtrl_alpha"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginRight="10dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@id/fabtoolbar_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/addBookButton"
+                android:text="@string/addBookFormButton"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@android:color/background_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/addBookFormIsbnButton"
+                android:text="@string/addBookFormIsbnButton"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@android:color/background_light" />
+
+            <TextView
+                android:text="@string/addBookScanIsbnButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/addBookScanIsbnButton"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@android:color/background_light" />
 
         </LinearLayout>
-    </LinearLayout>
 
+    </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>
 
-</LinearLayout>
+</RelativeLayout>

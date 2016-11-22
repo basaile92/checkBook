@@ -4,15 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.fragment.DisplayBookFragment;
-import com.example.basaile92.listelivre.fragment.Fab;
-import com.gordonwong.materialsheetfab.MaterialSheetFab;
+import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 
 
 public class MainActivity extends FragmentActivity implements BookLibraryFragmentCallBack{
@@ -25,13 +24,17 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
         // Title of the Activity
         setTitle(R.string.mainActivity);
 
-        // We define the Fab button right down
-        Fab fab = (Fab) findViewById(R.id.fab);
-        View sheetView = findViewById(R.id.fab_sheet);
-        View overlay = findViewById(R.id.overlay);
-        int sheetColor = getResources().getColor(R.color.brownie_top);
-        int fabColor = getResources().getColor(R.color.brownie_top);
-        MaterialSheetFab materialSheetFab = new MaterialSheetFab<>(fab, sheetView, overlay, sheetColor, fabColor);
+        final FABToolbarLayout fabToolbarLayout = (FABToolbarLayout) findViewById(R.id.fabtoolbar);
+        View fab = findViewById(R.id.fabtoolbar_fab);
+
+        //We assignate the function of the fab button
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fabToolbarLayout.show();
+            }
+        });
 
         LinearLayout displayBookLayout =(LinearLayout) findViewById(R.id.displayBookLayout);
 
@@ -39,11 +42,11 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
         if(displayBookLayout != null){
             // We add a new fragment in fragment manager
             DisplayBookFragment displayBookFragment = new DisplayBookFragment();
-            getSupportFragmentManager().beginTransaction().add(displayBookLayout, displayBookFragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.displayBookLayout, displayBookFragment).commit();
         }
 
         // Assignate function of add button
-        Button addBookButton = (Button) findViewById(R.id.addBookButton);
+        TextView addBookButton = (TextView) findViewById(R.id.addBookButton);
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +77,17 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
             intent.putExtra(BookLibraryFragment.POSITION, position);
             startActivity(intent);
             finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        FABToolbarLayout fabToolbarLayout = (FABToolbarLayout) findViewById(R.id.fabtoolbar);
+
+        if(fabToolbarLayout.isToolbar()) {
+            fabToolbarLayout.hide();
+        }else{
+            super.onBackPressed();
         }
     }
 
