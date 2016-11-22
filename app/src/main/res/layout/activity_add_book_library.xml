@@ -86,20 +86,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/authorsText"
-                    android:layout_weight="1"
                     android:text="@string/authorsText"
                     android:textSize="18sp"
                     android:gravity="center_vertical|center_horizontal" />
 
                 <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="270dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content">
 
 
                     <ListView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:id="@+id/authorsListView" />
 
                     <LinearLayout
@@ -169,46 +168,23 @@
                     />
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <ListView
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/typeListView"
-                        android:layout_weight="1"/>
+                        android:id="@+id/typesText"
+                        android:layout_weight="4" />
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.satsuware.usefulviews.LabelledSpinner
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/addTypesSpinner"
-                            android:layout_weight="4" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/addTypesButton"
-                            app:srcCompat="@android:drawable/ic_menu_add"
-                            android:adjustViewBounds="false"
-                            android:cropToPadding="false" />
-
-                    </LinearLayout>
-
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@android:drawable/ic_menu_edit"
+                        android:gravity="center_vertical|center_horizontal|center"
+                        android:id="@+id/addTypesButton" />
                 </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@android:drawable/ic_menu_edit"
-                    android:gravity="center_vertical|center_horizontal|center"
-                    android:id="@+id/typeEditButton" />
 
             </LinearLayout>
 

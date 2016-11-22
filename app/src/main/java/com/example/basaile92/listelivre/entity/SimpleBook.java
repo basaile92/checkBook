@@ -1,6 +1,6 @@
 package com.example.basaile92.listelivre.entity;
 
-import com.example.basaile92.listelivre.book.TypeManager;
+import com.example.basaile92.listelivre.manager.TypeManager;
 
 import java.io.Serializable;
 import java.util.List;

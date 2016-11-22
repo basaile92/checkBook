@@ -1,4 +1,4 @@
-package com.example.basaile92.listelivre.book;
+package com.example.basaile92.listelivre.manager;
 
 import android.content.Context;
 
@@ -82,5 +82,52 @@ public class TypeManager extends DAOBase{
         }
 
         return typeList;
+    }
+
+    public static String[] toStringArray(TypeList typeList){
+
+        String[] res = new String[typeList.size()];
+        int i = 0;
+        for(Type type: typeList){
+
+            res[i] = type.getName();
+            i++;
+        }
+
+        return res;
+
+    }
+
+    public static boolean[] elementsFromSecondInFirstList(TypeList typeList, ArrayList<String> typeNameList) {
+
+        boolean[] res = new boolean[typeList.size()];
+        int i = 0;
+
+        for(Type type: typeList){
+
+            if((typeNameList.contains(type.getName()))) {
+                res[i] = true;
+            }else {
+                res[i] = false;
+            }
+            i++;
+        }
+
+        return res;
+    }
+
+
+    public static ArrayList<String> elementsTrueFromTwoArrays(String[] typeListString, boolean[] onCheckedItems) {
+
+            ArrayList<String> res = new ArrayList<String>();
+            for(int i = 0; i < typeListString.length; i++){
+
+                if(onCheckedItems[i]){
+
+                    res.add(typeListString[i]);
+                }
+            }
+
+            return res;
     }
 }

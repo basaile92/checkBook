@@ -29,7 +29,7 @@
             android:label="Add a book" />
         <activity android:name=".activity.DisplayBookActivity" />
         <activity android:name=".activity.ListBookCollectionActivity" />
-        <activity android:name=".activity.CollectionActivity"></activity>
+        <activity android:name=".activity.CollectionActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -41,6 +41,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".activity.TypeManagerActivity"></activity>
     </application>
 
 </manifest>

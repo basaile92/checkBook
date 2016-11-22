@@ -13,7 +13,7 @@ public class TypeList extends ArrayList<Type> {
         this.add(type);
     }
 
-    public void removeAuthor(Type type){
+    public void removeType(Type type){
 
         this.remove(type);
     }

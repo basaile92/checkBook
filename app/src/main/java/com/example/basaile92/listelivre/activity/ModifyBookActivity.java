@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.book.BookManager;
+import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.entity.AuthorList;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.TypeList;

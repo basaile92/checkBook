@@ -12,7 +12,7 @@ import android.widget.SimpleAdapter;
 
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.entity.BookLibrary;
-import com.example.basaile92.listelivre.book.BookManager;
+import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 
 import java.util.ArrayList;

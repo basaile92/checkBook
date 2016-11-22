@@ -1,7 +1,8 @@
-package com.example.basaile92.listelivre.book;
+package com.example.basaile92.listelivre.manager;
 
 import android.content.Context;
 
+import com.example.basaile92.listelivre.exception.BookNotInDatabaseException;
 import com.example.basaile92.listelivre.data.AuthorData;
 import com.example.basaile92.listelivre.data.BookData;
 import com.example.basaile92.listelivre.data.TypebookData;
@@ -75,7 +76,7 @@ public class BookManager extends DAOBase {
 
 
 
-    public int getSimpleBookPosition(SimpleBook book) throws BookNotInDatabase {
+    public int getSimpleBookPosition(SimpleBook book) throws BookNotInDatabaseException {
 
         BookData bookData = new BookData(handler);
         List<Book> books = bookData.getAllBook();
@@ -87,7 +88,7 @@ public class BookManager extends DAOBase {
         }
 
         if(res == books.size()){
-            throw new BookNotInDatabase();
+            throw new BookNotInDatabaseException();
         }
 
         return res;

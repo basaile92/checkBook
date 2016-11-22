@@ -43,5 +43,8 @@
     <string name="notRead">Not Read</string>
     <string name="borrowed">Borrowed by </string>
     <string name="typesSpinnerText">Choose a type</string>
+    <string name="pickSomeTypes">Pick some types</string>
+    <string name="validate">Validate</string>
+    <string name="createNewType">Create New Type</string>
 
 </resources>

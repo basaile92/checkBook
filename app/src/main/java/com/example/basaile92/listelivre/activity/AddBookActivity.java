@@ -1,8 +1,10 @@
 package com.example.basaile92.listelivre.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,12 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.book.AuthorManager;
-import com.example.basaile92.listelivre.book.BookManager;
-import com.example.basaile92.listelivre.book.TypeManager;
+import com.example.basaile92.listelivre.manager.AuthorManager;
+import com.example.basaile92.listelivre.manager.BookManager;
+import com.example.basaile92.listelivre.manager.TypeManager;
 import com.example.basaile92.listelivre.entity.AuthorList;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.Type;
@@ -61,18 +64,14 @@ public class AddBookActivity extends AppCompatActivity {
 
         final AuthorList authorsList = new AuthorList();
 
-        ListView typeListView = (ListView) findViewById(R.id.typeListView);
-        LabelledSpinner addTypesSpinner = (LabelledSpinner) findViewById(R.id.addTypesSpinner);
-        ImageView addTypesButton = (ImageView) findViewById(R.id.addTypesButton);
         final TypeList typesList = new TypeList();
-
-        ImageView typeEditButton = (ImageView) findViewById(R.id.typeEditButton);
+        TextView typesText = (TextView) findViewById(R.id.typesText);
+        ImageView addTypesButton = (ImageView) findViewById(R.id.addTypesButton);
 
         setBorrowingFieldDisplay(isBorrowedCheckBox, borrowerEdit);
         setPhotoButton(imageButton);
         setAuthorsListView(authorsListView, addAuthorsEdit, addAuthorsButton, AddBookActivity.this);
-        setTypeListView(typeListView, addTypesSpinner, addTypesButton, AddBookActivity.this);
-        setTypeEditButton(typeEditButton);
+        setTypeListView(typesText, addTypesButton, AddBookActivity.this);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
 
@@ -96,41 +95,56 @@ public class AddBookActivity extends AppCompatActivity {
         });
     }
 
-    //TODO create a Fragment with the add and delete of the type
-    private void setTypeEditButton(ImageView typeEditButton) {
-    }
 
-    private void setTypeListView(final ListView typeListView, final LabelledSpinner addTypesSpinner, final ImageView addTypesButton, final Context context) {
+    private void setTypeListView(TextView typesText, final ImageView addTypesButton, final Context context) {
 
-        TypeManager typeManager = new TypeManager(context);
-        final TypeList typeList = typeManager.readTypeList();
+        final TypeManager typeManager = new TypeManager(context);
 
-        //TypeManager.OneListMinusAnOther(typeList, TypeManager.fromStringArray(typeNameList))
-
-        addTypesSpinner.setItemsArray(typeList);
-        addTypesSpinner.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
+        typesText.setText((TypeManager.fromStringArray(typeNameList)).toString());
+        addTypesButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, final int position, long id) {
+                public void onClick(View view) {
 
+                TypeList typeList = typeManager.readTypeList();
+                final boolean[] onCheckedItems = TypeManager.elementsFromSecondInFirstList(typeList, typeNameList);
+                final String[] typeListString = TypeManager.toStringArray(typeList);
+                final ArrayList<String> typeArrayStringDisplayed = TypeManager.elementsTrueFromTwoArrays(typeListString, onCheckedItems );
 
-                addTypesButton.setOnClickListener(new View.OnClickListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(R.string.pickSomeTypes);
+                builder.setMultiChoiceItems( typeListString , onCheckedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
 
-                        typeNameList.add(typeList.get(position).getName());
-                        typeList.remove(position);
-                        addTypesSpinner.setItemsArray(typeList);
+                        if(b){
 
-                        updateTypeListView(typeListView, typeList, addTypesSpinner, context);
+                            typeArrayStringDisplayed.add(typeListString[i]);
+                        }else
+                        {
 
-                        addTypesSpinner.setSelection(0);
+                            typeArrayStringDisplayed.remove(typeListString[i]);
+                        }
 
                     }
                 });
-            }
 
-            @Override
-            public void onNothingChosen(View labelledSpinner, AdapterView<?> adapterView) {
+                builder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        typeNameList= new ArrayList<String>();
+                        typeNameList.addAll(typeArrayStringDisplayed);
+                    }
+                });
+
+                builder.setNegativeButton(R.string.createNewType, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        Intent intent = new Intent(AddBookActivity.this, TypeManagerActivity.class);
+                        startActivity(intent);
+                    }
+                });
 
             }
         });

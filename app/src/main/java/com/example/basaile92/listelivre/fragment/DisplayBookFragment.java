@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.activity.DisplayBookActivity;
 import com.example.basaile92.listelivre.activity.MainActivity;
-import com.example.basaile92.listelivre.book.BookManager;
+import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.entity.Author;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.Type;
