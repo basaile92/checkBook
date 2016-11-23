@@ -50,11 +50,9 @@ public class ModifyBookActivity extends AppCompatActivity {
         final AuthorList authorsList = new AuthorList();
 
         ListView typeListView = (ListView) findViewById(R.id.typeListView);
-        Spinner addTypesSpinner = (Spinner) findViewById(R.id.addTypesSpinner);
         ImageView addTypesButton = (ImageView) findViewById(R.id.addTypesButton);
         final TypeList typesList = new TypeList();
 
-        ImageView typeEditButton = (ImageView) findViewById(R.id.typeEditButton);
 
         //we get the simple book with the Intent
         Intent intent = getIntent();
@@ -83,8 +81,8 @@ public class ModifyBookActivity extends AppCompatActivity {
         setBorrowingFieldDisplay(isBorrowedCheckBox, borrowerEdit);
         setPhotoButton(imageButton);
         setAuthorsListView(authorsListView, addAuthorsEdit, addAuthorsButton);
-        setTypeListView(typeListView, addTypesSpinner, addTypesButton);
-        setTypeEditButton(typeEditButton);
+        //TODO setTypeListView(typeListView, addTypesSpinner, addTypesButton);
+        //TODO setTypeEditButton(typeEditButton);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
 

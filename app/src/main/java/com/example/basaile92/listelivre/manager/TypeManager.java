@@ -25,6 +25,13 @@ public class TypeManager extends DAOBase{
 
     }
 
+
+    public void saveType(Type type){
+
+        TypeData typeData = new TypeData(handler);
+        typeData.createType(type);
+    }
+
     public TypeList readTypeList(){
 
         TypeData typeData = new TypeData(handler);
@@ -32,6 +39,29 @@ public class TypeManager extends DAOBase{
         return typeList;
     }
 
+    public boolean existName(String name){
+
+        TypeData typeData = new TypeData(handler);
+        boolean res = typeData.getTypeByName(name) != null;
+
+        return res;
+    }
+
+    public void deleteType(Type type){
+
+        TypeData typeData = new TypeData(handler);
+        typeData.deleteTypeByName(type.getName());
+    }
+
+    public Type getTypeAtPosition(int position){
+
+        TypeData bookData = new TypeData(handler);
+        List<Type> types = bookData.getAllType();
+        Type type = types.get(position);
+
+        return type;
+
+    }
 
 
     public static TypeList fromTypebookListToTypeList(List<Typebook> typebooks){
@@ -129,5 +159,17 @@ public class TypeManager extends DAOBase{
             }
 
             return res;
+    }
+
+    public static ArrayList<String> toStringList(TypeList types) {
+
+        ArrayList<String> res = new ArrayList<String>();
+
+        for(Type type : types){
+
+            res.add(type.getName());
+        }
+
+        return res;
     }
 }

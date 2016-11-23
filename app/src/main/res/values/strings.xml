@@ -46,5 +46,6 @@
     <string name="pickSomeTypes">Pick some types</string>
     <string name="validate">Validate</string>
     <string name="createNewType">Create New Type</string>
+    <string name="addTypeText">Add Type</string>
 
 </resources>

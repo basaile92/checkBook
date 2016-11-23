@@ -38,23 +38,28 @@ public class BookData {
     
     public Book fromCursor(Cursor c) {
 
-        String isbn = c.getString(c.getColumnIndex(KEY_ISBN));
-        String title = c.getString(c.getColumnIndex(KEY_TITLE));
-        String collection = c.getString(c.getColumnIndex(KEY_COLLECTION));
-        String publisher = c.getString(c.getColumnIndex(KEY_PUBLISHER));
-        String year = c.getString(c.getColumnIndex(KEY_YEAR));
-        String summary = c.getString(c.getColumnIndex(KEY_SUMMARY));
-        int isRead = c.getInt(c.getColumnIndex(KEY_ISREAD));
-        int isBorrowed = c.getInt(c.getColumnIndex(KEY_ISBORROWED));
-        String borrower = c.getString(c.getColumnIndex(KEY_BORROWER));
-        String owner = c.getString(c.getColumnIndex(KEY_OWNER));
-        String comment = c.getString(c.getColumnIndex(KEY_COMMENT));
-        String photo = c.getString(c.getColumnIndex(KEY_PHOTO));
+        if(c.moveToFirst()) {
+            String isbn = c.getString(c.getColumnIndex(KEY_ISBN));
+            String title = c.getString(c.getColumnIndex(KEY_TITLE));
+            String collection = c.getString(c.getColumnIndex(KEY_COLLECTION));
+            String publisher = c.getString(c.getColumnIndex(KEY_PUBLISHER));
+            String year = c.getString(c.getColumnIndex(KEY_YEAR));
+            String summary = c.getString(c.getColumnIndex(KEY_SUMMARY));
+            int isRead = c.getInt(c.getColumnIndex(KEY_ISREAD));
+            int isBorrowed = c.getInt(c.getColumnIndex(KEY_ISBORROWED));
+            String borrower = c.getString(c.getColumnIndex(KEY_BORROWER));
+            String owner = c.getString(c.getColumnIndex(KEY_OWNER));
+            String comment = c.getString(c.getColumnIndex(KEY_COMMENT));
+            String photo = c.getString(c.getColumnIndex(KEY_PHOTO));
+            Book entry = new Book(isbn, title, collection, publisher, year, summary, isRead, isBorrowed, borrower, owner, comment, photo);
 
+            return entry;
 
-        Book entry = new Book(isbn, title, collection, publisher, year, summary, isRead, isBorrowed, borrower, owner, comment, photo);
+        }else
+        {
+            return null;
+        }
 
-        return entry;
     }
     
     public ContentValues toContentValues(Book arg) {

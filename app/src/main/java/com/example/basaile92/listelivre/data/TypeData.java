@@ -26,10 +26,14 @@ public class TypeData {
     public Type fromCursor(Cursor c) {
  
         Type entry = new Type();
-        
-        entry.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-        
-        return entry;
+
+        if(c.moveToFirst()) {
+            entry.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+            return entry;
+        }else
+        {
+            return null;
+        }
     }
     
     public ContentValues toContentValues(Type arg) {

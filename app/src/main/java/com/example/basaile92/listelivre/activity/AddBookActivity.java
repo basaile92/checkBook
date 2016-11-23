@@ -19,14 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.entity.AuthorList;
+import com.example.basaile92.listelivre.entity.SimpleBook;
+import com.example.basaile92.listelivre.entity.TypeList;
 import com.example.basaile92.listelivre.manager.AuthorManager;
 import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.manager.TypeManager;
-import com.example.basaile92.listelivre.entity.AuthorList;
-import com.example.basaile92.listelivre.entity.SimpleBook;
-import com.example.basaile92.listelivre.entity.Type;
-import com.example.basaile92.listelivre.entity.TypeList;
-import com.satsuware.usefulviews.LabelledSpinner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,6 +135,7 @@ public class AddBookActivity extends AppCompatActivity {
                     }
                 });
 
+
                 builder.setNegativeButton(R.string.createNewType, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -146,43 +145,16 @@ public class AddBookActivity extends AppCompatActivity {
                     }
                 });
 
+                builder.create();
+                builder.show();
+
             }
         });
 
 
-    }
-
-    private void updateTypeListView(final ListView typeListView, final TypeList typeList, final LabelledSpinner addTypesSpinner, final Context context) {
-
-        List<Map<String, String>> listOfType = new ArrayList<Map<String, String>>();
-
-        for(String typeName : typeNameList){
-
-            Map<String, String> typeMap = new HashMap<String, String>();
-            typeMap.put("name", typeName);
-            listOfType.add(typeMap);
-
-        }
-        SimpleAdapter listAdapter = new SimpleAdapter(context, listOfType, R.layout.type, new String[]{"name"}, new int[]{R.id.typeText});
-        typeListView.setAdapter(listAdapter);
-
-        typeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                ImageView typeDeleteButton = (ImageView) findViewById(R.id.typeDeleteButton);
-
-                String type = typeNameList.get(i);
-                typeNameList.remove(i);
-                typeList.add(new Type(type));
-                addTypesSpinner.setItemsArray(typeList);
-
-
-                updateTypeListView(typeListView, typeList, addTypesSpinner, context);
-            }
-        });
 
     }
+
 
     private void setAuthorsListView(final ListView authorsListView, final EditText addAuthorsEdit, ImageView addAuthorsButton, final Context context) {
 
@@ -214,7 +186,6 @@ public class AddBookActivity extends AppCompatActivity {
             Map<String, String> authorMap = new HashMap<String, String>();
             authorMap.put("name", authorName);
             listOfAuthor.add(authorMap);
-
         }
         SimpleAdapter listAdapter = new SimpleAdapter(context, listOfAuthor, R.layout.author, new String[]{"name"}, new int[]{R.id.authorText});
         authorsListView.setAdapter(listAdapter);
