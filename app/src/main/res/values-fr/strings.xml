@@ -37,5 +37,7 @@
     <string name="yearText">Année</string>
     <string name="addAuthorsText">Ajouter Auteur</string>
     <string name="publisherText">Editeur</string>
+    <string name="collectionButton">Collections</string>
+    <string name="activityCollectionTitle">Liste Des Collections</string>
 
 </resources>

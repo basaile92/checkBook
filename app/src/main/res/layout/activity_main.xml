@@ -93,4 +93,10 @@
 
     </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>
 
+    <Button
+        android:id="@+id/collectionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/collectionButton"/>
+
 </RelativeLayout>

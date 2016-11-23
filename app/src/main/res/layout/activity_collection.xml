@@ -59,17 +59,5 @@
             android:backgroundTint="@color/brownie" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/mainLibraryLayout">
-        <fragment
-            android:id="@+id/bookLibraryFragment"
-            class="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
-            android:name="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_book_library">
-        </fragment>
-    </LinearLayout>
+
 </LinearLayout>

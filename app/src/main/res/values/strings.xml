@@ -47,5 +47,7 @@
     <string name="validate">Validate</string>
     <string name="createNewType">Create New Type</string>
     <string name="addTypeText">Add Type</string>
+    <string name="collectionButton">Book Collections</string>
+    <string name="activityCollectionTitle">Collections List</string>
 
 </resources>

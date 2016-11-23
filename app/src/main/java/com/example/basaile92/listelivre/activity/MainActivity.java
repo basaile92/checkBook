@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.fragment.DisplayBookFragment;
@@ -53,6 +55,20 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
 
                 // Change activity to add book library activity
                 Intent intent = new Intent(MainActivity.this, AddBookActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+        // Assignate function of collection button
+        Button collectionButton = (Button) findViewById(R.id.collectionButton);
+        collectionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Transition to CollectionActivity
+                Intent intent = new Intent(MainActivity.this, CollectionActivity.class);
                 startActivity(intent);
                 finish();
             }
