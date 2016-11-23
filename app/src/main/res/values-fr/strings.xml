@@ -39,5 +39,7 @@
     <string name="publisherText">Editeur</string>
     <string name="collectionButton">Collections</string>
     <string name="activityCollectionTitle">Liste Des Collections</string>
+    <string name="addCollection">Ajouter collection</string>
+
 
 </resources>

@@ -12,6 +12,6 @@ public class CollectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
 
-        setTitle(R.string.activityCollectionTitle);
+
     }
 }

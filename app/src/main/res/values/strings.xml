@@ -49,5 +49,6 @@
     <string name="addTypeText">Add Type</string>
     <string name="collectionButton">Book Collections</string>
     <string name="activityCollectionTitle">Collections List</string>
+    <string name="addCollection">Add Collection</string>
 
 </resources>

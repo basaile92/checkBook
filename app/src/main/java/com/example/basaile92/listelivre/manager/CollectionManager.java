@@ -13,6 +13,7 @@ import com.example.basaile92.listelivre.entity.CollectionList;
 public class CollectionManager extends DAOBase {
 
     public CollectionManager(Context pContext) {
+
         super(pContext);
     }
 

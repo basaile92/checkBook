@@ -67,8 +67,8 @@ public class MainActivity extends FragmentActivity implements BookLibraryFragmen
             @Override
             public void onClick(View view) {
 
-                // Transition to CollectionActivity
-                Intent intent = new Intent(MainActivity.this, CollectionActivity.class);
+                // Transition to ListBookCollectionActivity
+                Intent intent = new Intent(MainActivity.this, ListBookCollectionActivity.class);
                 startActivity(intent);
                 finish();
             }

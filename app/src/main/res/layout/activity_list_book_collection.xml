@@ -18,7 +18,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:text="Add Collection"
+            android:text="@string/addCollection"
             android:textAlignment="center"
             android:id="@+id/addCollectionButton"
             android:layout_width="wrap_content"
@@ -30,20 +30,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <fragment
-            android:id="@+id/collectionListFragment"
-            class="com.example.basaile92.listelivre.fragment.CollectionListFragment"
-            android:name="com.example.basaile92.listelivre.fragment.CollectionListFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_list_collection">
-        </fragment>
-    </LinearLayout>
 
 
 
