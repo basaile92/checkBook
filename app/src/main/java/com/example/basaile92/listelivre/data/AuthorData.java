@@ -27,17 +27,11 @@ public class AuthorData {
     
     public Author fromCursor(Cursor c) {
 
-        if(c.moveToFirst()) {
-
-            Author entry = new Author();
-            entry.setId(c.getLong(c.getColumnIndex(KEY_ID)));
-            entry.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-            entry.setIsbn(c.getString(c.getColumnIndex(KEY_ISBN)));
-            return entry;
-        }else{
-
-            return null;
-        }
+        Author entry = new Author();
+        entry.setId(c.getLong(c.getColumnIndex(KEY_ID)));
+        entry.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+        entry.setIsbn(c.getString(c.getColumnIndex(KEY_ISBN)));
+        return entry;
     }
     
     public ContentValues toContentValues(Author arg) {

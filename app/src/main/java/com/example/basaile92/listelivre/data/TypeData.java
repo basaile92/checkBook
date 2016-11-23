@@ -26,14 +26,8 @@ public class TypeData {
     public Type fromCursor(Cursor c) {
  
         Type entry = new Type();
-
-        if(c.moveToFirst()) {
-            entry.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-            return entry;
-        }else
-        {
-            return null;
-        }
+        entry.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+        return entry;
     }
     
     public ContentValues toContentValues(Type arg) {

@@ -135,7 +135,6 @@ public class AddBookActivity extends AppCompatActivity {
                     }
                 });
 
-
                 builder.setNegativeButton(R.string.createNewType, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -150,9 +149,6 @@ public class AddBookActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 
 

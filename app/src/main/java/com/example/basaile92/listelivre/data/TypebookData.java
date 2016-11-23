@@ -32,18 +32,10 @@ public class TypebookData {
     public Typebook fromCursor(Cursor c) {
  
         Typebook entry = new Typebook();
-
-
-        if(c.moveToFirst()) {
-            entry.setId(c.getLong(c.getColumnIndex(KEY_ID)));
-            entry.setNametype(c.getString(c.getColumnIndex(KEY_NAMETYPE)));
-            entry.setIsbn(c.getString(c.getColumnIndex(KEY_ISBN)));
-            return entry;
-
-        }else{
-
-            return null;
-        }
+        entry.setId(c.getLong(c.getColumnIndex(KEY_ID)));
+        entry.setNametype(c.getString(c.getColumnIndex(KEY_NAMETYPE)));
+        entry.setIsbn(c.getString(c.getColumnIndex(KEY_ISBN)));
+        return entry;
     }
     
     public ContentValues toContentValues(Typebook arg) {
