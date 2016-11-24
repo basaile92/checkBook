@@ -49,7 +49,7 @@ public class BookCollectionListFragment extends Fragment {
         CollectionList collectionList = collectionManager.readCollectionList();
 
         // To be able to click on each Book collection
-        collectionListView.setOnClickListener(new AdapterView.OnItemClickListener() {
+        /* collectionListView.setOnClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -57,7 +57,7 @@ public class BookCollectionListFragment extends Fragment {
                 // We update the display book fragment with the good position
                 mCallback.updateDisplayCollectionFragment(position, getView()); //TODO
             }
-        });
+        });*/
 
         // Check if the list is initialized to add collections into a listView
         if(collectionList != null) {
@@ -73,8 +73,8 @@ public class BookCollectionListFragment extends Fragment {
             }
 
             //TODO collection.xml
-            SimpleAdapter listAdapter = new SimpleAdapter(view.getContext(), listOfCollections, R.layout.collection, new String[]{"name"}, new int[]{R.id.collectionName});
-            collectionListView.setAdapter(listAdapter);
+            //SimpleAdapter listAdapter = new SimpleAdapter(view.getContext(), listOfCollections, R.layout.collection, new String[]{"name"}, new int[]{R.id.collectionName});
+            //collectionListView.setAdapter(listAdapter);
         }
     }
 }

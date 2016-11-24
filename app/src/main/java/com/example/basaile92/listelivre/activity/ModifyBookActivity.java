@@ -95,7 +95,7 @@ public class ModifyBookActivity extends AppCompatActivity {
                     // We save the book in the Database
                     BookManager bookManager = new BookManager(view.getContext());
                     bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), collectionEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(), ""));
-                    Intent intent = new Intent(ModifyBookActivity.this, MainActivity.class);
+                    Intent intent = new Intent(ModifyBookActivity.this, BookLibraryActivity.class);
                     startActivity(intent);
                     finish();
                 }

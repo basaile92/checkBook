@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.activity.DisplayBookActivity;
-import com.example.basaile92.listelivre.activity.MainActivity;
+import com.example.basaile92.listelivre.activity.BookLibraryActivity;
 import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.entity.Author;
 import com.example.basaile92.listelivre.entity.SimpleBook;
@@ -141,7 +141,7 @@ public class DisplayBookFragment extends Fragment{
                         BookManager bookManager = new BookManager(view.getContext());
                         bookManager.deleteBook(bookManager.getSimpleBookAtPosition(position));
 
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        Intent intent = new Intent(getActivity(), BookLibraryActivity.class);
                         startActivity(intent);
                         getActivity().finish();
                     }

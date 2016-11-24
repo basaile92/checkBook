@@ -3,7 +3,6 @@ package com.example.basaile92.listelivre.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
@@ -29,10 +28,10 @@ public class DisplayBookActivity extends FragmentActivity{
 
     }
 
-    //When the back button is pressed we go back to the MainActivity
+    //When the back button is pressed we go back to the BookLibraryActivity
     public void onBackPressed()
     {
-        Intent intent = new Intent(DisplayBookActivity.this, MainActivity.class);
+        Intent intent = new Intent(DisplayBookActivity.this, BookLibraryActivity.class);
         startActivity(intent);
         finish();
     }

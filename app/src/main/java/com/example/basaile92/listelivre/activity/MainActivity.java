@@ -26,7 +26,7 @@ public class MainActivity extends TabActivity {
         String collectionTitle = getString(R.string.collectionTitle);
         TabHost.TabSpec spec1 = tabHost.newTabSpec(collectionTitle);
         spec1.setIndicator(collectionTitle);
-        spec1.setContent(new Intent(this, CollectionActivity.class));
+        spec1.setContent(new Intent(this, ListBookCollectionActivity.class));
         tabHost.addTab(spec1);
 
 

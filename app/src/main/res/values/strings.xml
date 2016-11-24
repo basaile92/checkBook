@@ -50,5 +50,7 @@
     <string name="collectionButton">Book Collections</string>
     <string name="activityCollectionTitle">Collections List</string>
     <string name="addCollection">Add Collection</string>
+    <string name="bookLibraryTitle">Book Library</string>
+    <string name="collectionTitle">Collection</string>
 
 </resources>
