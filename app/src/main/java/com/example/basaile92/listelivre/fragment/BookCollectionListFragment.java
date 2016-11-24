@@ -1,12 +1,14 @@
 package com.example.basaile92.listelivre.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -23,7 +25,8 @@ import java.util.Map;
 
 public class BookCollectionListFragment extends Fragment {
 
-    private BookCollectionListFragmentCallBack mCallback; // TODO
+    private BookCollectionListFragmentCallBack mCallback;
+    private CollectionAdapter mCollectionAdapter;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -42,14 +45,14 @@ public class BookCollectionListFragment extends Fragment {
 
     public void updateView(View view) {
 
-        ListView collectionListView = (ListView) view.findViewById(R.id.collectionList);
+        final ExpandableListView collectionListView = (ExpandableListView) view.findViewById(R.id.collectionList);
         CollectionManager collectionManager = new CollectionManager(getContext());
 
         // Load all collections inside a CollectionList
         CollectionList collectionList = collectionManager.readCollectionList();
 
-        // To be able to click on each Book collection
-        /* collectionListView.setOnClickListener(new AdapterView.OnItemClickListener() {
+        // To be able to click on each collection
+        collectionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -57,7 +60,7 @@ public class BookCollectionListFragment extends Fragment {
                 // We update the display book fragment with the good position
                 mCallback.updateDisplayCollectionFragment(position, getView()); //TODO
             }
-        });*/
+        });
 
         // Check if the list is initialized to add collections into a listView
         if(collectionList != null) {
@@ -72,9 +75,37 @@ public class BookCollectionListFragment extends Fragment {
                 listOfCollections.add(collectionInfos);
             }
 
-            //TODO collection.xml
-            //SimpleAdapter listAdapter = new SimpleAdapter(view.getContext(), listOfCollections, R.layout.collection, new String[]{"name"}, new int[]{R.id.collectionName});
-            //collectionListView.setAdapter(listAdapter);
+            //todo implémenter adapter
+            mCollectionAdapter = new CollectionAdapter(this,collectionList);
+            collectionListView.setAdapter(mCollectionAdapter);
+
+            collectionListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+                int previousGroup = -1;
+
+                @Override
+                public void onGroupExpand(int groupPosition) {
+                    if ((previousGroup != -1) && (groupPosition != previousGroup)) {
+                        collectionListView.collapseGroup(previousGroup);
+                    }
+                    previousGroup = groupPosition;
+                }
+            });
+
+        }
+    }
+
+    @Override
+    public void onAttach(Context context){
+
+        super.onAttach(context);
+
+        try{
+
+            mCallback = (BookCollectionListFragmentCallBack) context;
+
+        }catch (ClassCastException e){
+
+            throw new ClassCastException(context.toString() + " must implement BookCollectionListFragmentCallBack");
         }
     }
 }
