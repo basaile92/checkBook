@@ -75,7 +75,7 @@ public class BookCollectionListFragment extends Fragment {
                 listOfCollections.add(collectionInfos);
             }
 
-            //todo implémenter adapter
+
             mCollectionAdapter = new CollectionAdapter(this,collectionList);
             collectionListView.setAdapter(mCollectionAdapter);
 
