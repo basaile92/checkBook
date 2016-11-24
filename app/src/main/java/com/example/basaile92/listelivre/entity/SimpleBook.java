@@ -155,4 +155,9 @@ public class SimpleBook implements Serializable{
         this.book.setPhoto(photo);
     }
 
+    public String toString(){
+
+        return(getTitle() + " - " + getAuthors().toString() + " - " + getPublisher());
+    }
+
 }

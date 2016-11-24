@@ -52,5 +52,11 @@
     <string name="addCollection">Add Collection</string>
     <string name="bookLibraryTitle">Book Library</string>
     <string name="collectionTitle">Collection</string>
+    <string name="addBookByIsbnText">Add a Book by ISBN</string>
+    <string name="findBook">Find book(s)</string>
+    <string name="cancel">Cancel</string>
+    <string name="founded">founded</string>
+    <string name="addBookQuestion">Which one do you want to add?</string>
+    <string name="scanFailed">The scan didn\'t work properly.</string>
 
 </resources>

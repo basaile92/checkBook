@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.adapter.CollectionAdapter;
 import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.entity.CollectionList;
 import com.example.basaile92.listelivre.manager.CollectionManager;

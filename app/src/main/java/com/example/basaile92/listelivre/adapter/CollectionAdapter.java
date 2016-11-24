@@ -30,6 +30,11 @@ public class CollectionAdapter implements ExpandableListAdapter {
 
     }
 
+    @Override
+    public void unregisterDataSetObserver(DataSetObserver observer) {
+
+    }
+
     // Return number of collection inside the list
     @Override
     public int getGroupCount() {
@@ -81,6 +86,46 @@ public class CollectionAdapter implements ExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         //todo
+    }
+
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        return null;
+    }
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return false;
+    }
+
+    @Override
+    public boolean areAllItemsEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public void onGroupExpanded(int groupPosition) {
+
+    }
+
+    @Override
+    public void onGroupCollapsed(int groupPosition) {
+
+    }
+
+    @Override
+    public long getCombinedChildId(long groupId, long childId) {
+        return 0;
+    }
+
+    @Override
+    public long getCombinedGroupId(long groupId) {
+        return 0;
     }
 
 

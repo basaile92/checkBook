@@ -266,7 +266,7 @@ public class AddBookActivity extends AppCompatActivity {
     //When we push the back button, come back to the main activity
     public void onBackPressed()
     {
-        Intent intent = new Intent(AddBookActivity.this, BookLibraryActivity.class);
+        Intent intent = new Intent(AddBookActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
