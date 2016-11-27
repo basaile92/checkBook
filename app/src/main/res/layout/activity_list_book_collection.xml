@@ -24,15 +24,15 @@
             android:textColor="@color/pagecolor"
             android:backgroundTint="@color/brownie"/>
 
+        <fragment
+            android:id="@+id/collection_list_fragment"
+            android:name="com.example.basaile92.listelivre.fragment.BookCollectionListFragment"
+            class="com.example.basaile92.listelivre.fragment.BookCollectionListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_book_collection_list" />
 
     </LinearLayout>
 
-    <fragment
-        android:id="@+id/collection_list_fragment"
-        android:name="com.example.basaile92.listelivre.fragment.BookCollectionListFragment"
-        class="com.example.basaile92.listelivre.fragment.BookCollectionListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_book_collection_list" />
 
 </RelativeLayout>

@@ -40,6 +40,11 @@
     <string name="collectionButton">Collections</string>
     <string name="activityCollectionTitle">Liste Des Collections</string>
     <string name="addCollection">Ajouter collection</string>
+    <string name="addCollectionActivityTitle">Nouvelle Collection</string>
+    <string name="createCollectionButton">Créer</string>
+    <string name="nameCollectionCreation">Nom</string>
+    <string name="collectionNameEmpty">Veuillez choisir un nom</string>
+
 
 
 </resources>

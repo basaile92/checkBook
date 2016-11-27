@@ -61,5 +61,9 @@
     <string name="isbnNotFound">No books were found for this ISBN.</string>
     <string name="emptyTypeList">The type list is empty.</string>
     <string name="editTypes">Edit types</string>
+    <string name="addCollectionActivityTitle">New Collection</string>
+    <string name="createCollectionButton">Create</string>
+    <string name="nameCollectionCreation">Name</string>
+    <string name="collectionNameEmpty">Please choose a name</string>
 
 </resources>
