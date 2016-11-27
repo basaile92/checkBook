@@ -4,11 +4,12 @@
     android:id="@+id/activity_list_book_collection"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context="com.example.basaile92.listelivre.activity.ListBookCollectionActivity"
 >
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -23,10 +24,15 @@
             android:textColor="@color/pagecolor"
             android:backgroundTint="@color/brownie"/>
 
+        <fragment
+            android:id="@+id/collection_list_fragment"
+            android:name="com.example.basaile92.listelivre.fragment.BookCollectionListFragment"
+            class="com.example.basaile92.listelivre.fragment.BookCollectionListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_book_collection_list" />
+
     </LinearLayout>
-
-
-
 
 
 </RelativeLayout>

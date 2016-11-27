@@ -10,12 +10,12 @@
 
 
     <ExpandableListView
-        android:id="@+id/collectionList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:groupIndicator="@null"
-        android:dividerHeight="5dp" />
+    android:id="@+id/collectionList"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@null"
+    android:groupIndicator="@null"
+    android:dividerHeight="5dp" />
 
 
 </LinearLayout>

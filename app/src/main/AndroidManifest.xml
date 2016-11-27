@@ -8,9 +8,9 @@
         android:maxSdkVersion="18" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
-
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -18,8 +18,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.BookLibraryActivity"/>
-        <activity android:name=".activity.AddBookActivity"
+        <activity android:name=".activity.BookLibraryActivity" />
+        <activity
+            android:name=".activity.AddBookActivity"
             android:label="Add a book" />
         <activity android:name=".activity.DisplayBookActivity" />
         <activity android:name=".activity.ListBookCollectionActivity" />
@@ -28,14 +29,16 @@
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
-            tools:replace="android:screenOrientation"
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="user"
-            android:stateNotNeeded="true">
-        </activity>
+            android:stateNotNeeded="true"
+            tools:replace="android:screenOrientation"></activity>
+        <activity android:name=".activity.AddCollectionActivity"></activity>
     </application>
 
 </manifest>
