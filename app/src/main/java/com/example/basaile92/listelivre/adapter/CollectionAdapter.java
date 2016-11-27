@@ -2,6 +2,7 @@ package com.example.basaile92.listelivre.adapter;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -129,21 +130,47 @@ public class CollectionAdapter implements ExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        return null;
+
+        ChildHolder childHolder = null;
+
+        if (convertView == null) {
+
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.group_books_collection, parent, false);
+
+            childHolder = new ChildHolder();
+            convertView.setTag(childHolder);
+        } else {
+
+            childHolder = (ChildHolder) convertView.getTag();
+        }
+
+        childHolder.horizontalListView = (RecyclerView) convertView.findViewById(R.id.booksOfCollection);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        childHolder.horizontalListView.setLayoutManager(layoutManager);
+
+        //Add a bookAdapter to display all books inside the collection
+        BookAdapter bookAdapter = new BookAdapter(context, collectionList.get(groupPosition).books);
+        childHolder.horizontalListView.setAdapter(bookAdapter);
+
+        return convertView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
+
         return false;
     }
 
     @Override
     public boolean areAllItemsEnabled() {
+
         return false;
     }
 
     @Override
     public boolean isEmpty() {
+
         return false;
     }
 
@@ -159,11 +186,13 @@ public class CollectionAdapter implements ExpandableListAdapter {
 
     @Override
     public long getCombinedChildId(long groupId, long childId) {
+
         return 0;
     }
 
     @Override
     public long getCombinedGroupId(long groupId) {
+
         return 0;
     }
 
