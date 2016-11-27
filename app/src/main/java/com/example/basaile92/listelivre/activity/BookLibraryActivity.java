@@ -1,35 +1,29 @@
 package com.example.basaile92.listelivre.activity;
 
+import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.book.ScanBook;
+import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.entity.BookLibrary;
-import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
-import com.example.basaile92.listelivre.fragment.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.fragment.DisplayBookFragment;
-import com.example.basaile92.listelivre.manager.BookManager;
+import com.example.basaile92.listelivre.fragment.NoticeDialogFragment;
+import com.example.basaile92.listelivre.scanbook.ScanBook;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 
 public class BookLibraryActivity extends FragmentActivity implements BookLibraryFragmentCallBack{
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +52,11 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
             // We add a new fragment in fragment manager
             DisplayBookFragment displayBookFragment = new DisplayBookFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.displayBookLayout, displayBookFragment).commit();
+
         }
 
         // Assignate function of add button
-        TextView addBookButton = (TextView) findViewById(R.id.addBookButton);
+        ImageView addBookButton = (ImageView) findViewById(R.id.addBookButton);
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,49 +68,25 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
             }
         });
 
-        TextView addBookScanIsbnButton = (TextView) findViewById(R.id.addBookScanIsbnButton);
+        ImageView addBookScanIsbnButton = (ImageView) findViewById(R.id.addBookScanIsbnButton);
         addBookScanIsbnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 IntentIntegrator scanIntegrator = new IntentIntegrator(BookLibraryActivity.this);
                 scanIntegrator.initiateScan();
+
             }
         });
 
-        TextView addBookFormIsbnButton = (TextView) findViewById(R.id.addBookFormIsbnButton);
+        ImageView addBookFormIsbnButton = (ImageView) findViewById(R.id.addBookFormIsbnButton);
         addBookFormIsbnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(BookLibraryActivity.this);
+                DialogFragment dialog = new NoticeDialogFragment();
+                dialog.show(getFragmentManager(), "NoticeDialogFragment");
 
-                LayoutInflater factory = LayoutInflater.from(BookLibraryActivity.this);
-                final View alertDialogView = factory.inflate(R.layout.addbookformisbn, null);
-
-                builder.setTitle(R.string.addBookByIsbnText);
-                builder.setView(R.layout.addbookformisbn);
-                builder.setPositiveButton(R.string.findBook, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        final EditText isbnEdit = (EditText) alertDialogView.findViewById(R.id.isbnEdit);
-
-                        dialog.cancel();
-                        createBookListAddPopUp(isbnEdit.getText().toString(), BookLibraryActivity.this);
-                    }
-                });
-
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.cancel();
-                    }
-                });
-
-                builder.create();
-                builder.show();
             }
         });
 
@@ -126,28 +97,9 @@ private void createBookListAddPopUp(String s, Context context) {
 
     if(s.length() == 13){
 
-        ScanBook scanBook = new ScanBook(s, BookLibraryActivity.this);
-        final BookLibrary bookLibrary = scanBook.getBooks();
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.addBookQuestion);
-        String[] stringOfBooks = new String[bookLibrary.size()];
-        int i = 0;
+        final BookLibrary bookLibrary = new BookLibrary();
+        ScanBook scanBook = new ScanBook(s, bookLibrary, BookLibraryActivity.this);
 
-        for(SimpleBook book : bookLibrary){
-
-            stringOfBooks[i] = (book.toString());
-            i++;
-        }
-
-        builder.setItems(stringOfBooks, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                BookManager bookManager = new BookManager(BookLibraryActivity.this);
-                bookManager.saveSimpleBook(bookLibrary.get(which));
-                dialog.cancel();
-            }
-        });
 
     }else{
 
@@ -168,6 +120,7 @@ public void updateDisplayBookFragment(int position, View viewLibrary){
             DisplayBookFragment displayBookFragment = new DisplayBookFragment();
             View viewDisplay = findViewById(R.id.fragment_display_book);
             displayBookFragment.updateView(position, viewDisplay , viewLibrary);
+            displayBookLayout.setVisibility(View.VISIBLE);
         }else{
 
             //We change the activity and send the position by an intent to the DisplayBookActivity
@@ -177,6 +130,21 @@ public void updateDisplayBookFragment(int position, View viewLibrary){
             finish();
         }
     }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, String isbn) {
+
+        createBookListAddPopUp( isbn , BookLibraryActivity.this);
+
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+        dialog.dismiss();
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -200,8 +168,7 @@ public void updateDisplayBookFragment(int position, View viewLibrary){
             String scanFormat = scanningResult.getFormatName();
             if (scanContent != null && scanFormat != null) {
 
-                ScanBook scanBook = new ScanBook(scanContent, BookLibraryActivity.this);
-                BookLibrary bookLibrary = scanBook.getBooks();
+
                 createBookListAddPopUp(scanContent, BookLibraryActivity.this);
 
             }else{

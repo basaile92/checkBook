@@ -10,52 +10,40 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_add"
         android:id="@+id/imageButton"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:src="@drawable/puzzle"
+        android:tint="@color/brownie"
+        android:scaleType="center" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/frame"
-        android:layout_weight="6">
+        android:layout_weight="4"
+        android:gravity="right">
 
         <TextView
             android:text="Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/titleBook"
-            android:gravity="center_horizontal"
-            android:textColor="@android:color/background_dark"
-            android:textStyle="normal|bold"/>
+            android:gravity="right|center_horizontal"
+            android:layout_margin="@dimen/activity_vertical_margin" />
 
         <TextView
             android:text="Author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:gravity="right|center_horizontal"
             android:id="@+id/authorBook"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black"
+            android:layout_margin="@dimen/activity_vertical_margin" />
 
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="right|center_vertical">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/deleteBookButton"
-            android:visibility="invisible"
-            android:backgroundTint="@color/brownie"
-            app:srcCompat="@android:drawable/ic_menu_delete"
-            android:background="@android:drawable/ic_menu_delete" />
     </LinearLayout>
 
 </LinearLayout>

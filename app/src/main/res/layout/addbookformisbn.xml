@@ -12,6 +12,6 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/isbnEdit"
+        android:id="@+id/isbnEditForm"
         android:hint="@string/isbnText" />
 </LinearLayout>

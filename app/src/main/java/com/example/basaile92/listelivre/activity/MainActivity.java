@@ -2,7 +2,6 @@ package com.example.basaile92.listelivre.activity;
 
 import android.app.TabActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TabHost;
 
@@ -20,7 +19,8 @@ public class MainActivity extends TabActivity {
         String bookLibraryTitle = getString(R.string.bookLibraryTitle);
         TabHost.TabSpec spec = tabHost.newTabSpec(bookLibraryTitle);
         spec.setIndicator(bookLibraryTitle);
-        spec.setContent(new Intent(this, BookLibraryActivity.class));
+        Intent intent = new Intent(this, BookLibraryActivity.class);
+        spec.setContent(intent);
         tabHost.addTab(spec);
 
         String collectionTitle = getString(R.string.collectionTitle);
@@ -28,7 +28,5 @@ public class MainActivity extends TabActivity {
         spec1.setIndicator(collectionTitle);
         spec1.setContent(new Intent(this, ListBookCollectionActivity.class));
         tabHost.addTab(spec1);
-
-
     }
 }

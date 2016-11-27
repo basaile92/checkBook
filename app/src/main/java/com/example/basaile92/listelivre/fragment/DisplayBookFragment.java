@@ -1,11 +1,11 @@
 package com.example.basaile92.listelivre.fragment;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.activity.DisplayBookActivity;
 import com.example.basaile92.listelivre.activity.BookLibraryActivity;
-import com.example.basaile92.listelivre.manager.BookManager;
+import com.example.basaile92.listelivre.activity.DisplayBookActivity;
+import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.entity.Author;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.Type;
+import com.example.basaile92.listelivre.manager.BookManager;
 
 import java.util.ArrayList;
 
@@ -71,8 +72,8 @@ public class DisplayBookFragment extends Fragment{
         TextView isBorrowedText = (TextView) viewModif.findViewById(R.id.isBorrowedText);
         TextView borrowerText = (TextView) viewModif.findViewById(R.id.borrowerText);
         LinearLayout borrowedLayout = (LinearLayout) viewModif.findViewById(R.id.borrowedLayout);
-        TextView ownerText = (TextView) viewModif.findViewById(R.id.ownerEdit);
-        TextView commentsText = (TextView) viewModif.findViewById(R.id.commentsEdit);
+        TextView ownerText = (TextView) viewModif.findViewById(R.id.ownerText);
+        TextView commentsText = (TextView) viewModif.findViewById(R.id.commentsText);
         ImageView imageButton = (ImageView) viewModif.findViewById(R.id.imageButton);
 
         ImageView editButton = (ImageView) viewModif.findViewById(R.id.editButton);
@@ -210,7 +211,5 @@ public class DisplayBookFragment extends Fragment{
             throw new ClassCastException(context.toString() + " must implement BookLibraryFragmentCallBack");
         }
     }
-
-
 
 }

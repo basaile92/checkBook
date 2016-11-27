@@ -1,17 +1,24 @@
-package com.example.basaile92.listelivre.book;
+package com.example.basaile92.listelivre.scanbook;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.entity.Author;
 import com.example.basaile92.listelivre.entity.AuthorList;
 import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.Type;
 import com.example.basaile92.listelivre.entity.TypeList;
+import com.example.basaile92.listelivre.manager.BookManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,22 +31,52 @@ import org.json.JSONObject;
 
 public class ScanBook{
 
-    protected String isbn;
-    protected static JSONObject jsonObject;
 
-    public ScanBook(String isbn, Context context){
+    public ScanBook(final String isbn, final BookLibrary bookLibrary, final Context context){
 
         //We are getting the JSON thanks to the isbn that we got and with a JSON OBjectRequest (Method.GET).
-
-        this.isbn = isbn;
         String bookSearchString = "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn;
 
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET,bookSearchString, null,  new Response.Listener<JSONObject>(){
 
             @Override
             public void onResponse(JSONObject response) {
-                jsonObject = response;
+                final BookLibrary bookLibrary = getBooks(response, isbn);
+
+                if(bookLibrary.size()>0) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(R.string.addBookQuestion);
+                    String[] stringOfBooks = new String[bookLibrary.size()];
+                    int i = 0;
+
+                    for (SimpleBook book : bookLibrary) {
+
+                        stringOfBooks[i] = (book.toString());
+                        i++;
+                    }
+
+                    builder.setItems(stringOfBooks, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            BookManager bookManager = new BookManager(context);
+                            bookManager.saveSimpleBook(bookLibrary.get(which));
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.create();
+                    builder.show();
+                }else{
+
+                    Toast toast = Toast.makeText(context, R.string.isbnNotFound, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+
             }
         }, new Response.ErrorListener(){
 
@@ -49,33 +86,33 @@ public class ScanBook{
             }
         });
 
-        MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
+        requestQueue.add(jsonObjectRequest);
     }
 
-    public BookLibrary getBooks(){
+    private BookLibrary getBooks(JSONObject jsonObject, String isbn){
 
         BookLibrary list = new BookLibrary();
 
-        //If the JsonObject that we got isn't null
-        if(jsonObject != null) {
+        if (jsonObject != null) {
 
+            //If the JsonObject that we got isn't null
             try {
                 JSONArray items = jsonObject.getJSONArray("items");
-
                 // We get all field of JsonObject and we add it in a library.
+
                 for (int i = 0; i < jsonObject.getInt("totalItems"); i++) {
 
                     JSONObject book = items.getJSONObject(i).getJSONObject("volumeInfo");
-                    String isbn = this.isbn;
                     String summary = book.getString("description");
-                    AuthorList authors = parseArrayAuthor(book.getJSONArray("authors"), this.isbn);
+                    AuthorList authors = parseArrayAuthor(book.getJSONArray("authors"), isbn);
                     TypeList types = parseArrayType(book.getJSONArray("categories"));
                     String publisher = book.getString("publisher");
-                    String year = parseYear(book.getString("publisherDate"));
+                    String year = parseYear(book.getString("publishedDate"));
                     String title = book.getString("title");
                     String photo = book.getJSONObject("imageLinks").getString("thumbnail");
 
-                    list.addBook(new SimpleBook(isbn, authors, title, "", types, publisher, year,  summary, false, false, "", "", "", photo));
+                    SimpleBook simpleBook = new SimpleBook(isbn, authors, title, "", types, publisher, year, summary, false, false, "", "", "", photo);
+                    list.addBook(simpleBook);
                 }
 
 
@@ -83,6 +120,7 @@ public class ScanBook{
 
             }
         }
+
         return list;
     }
 
@@ -102,8 +140,6 @@ public class ScanBook{
     private AuthorList parseArrayAuthor(JSONArray array, String isbn) throws JSONException {
 
         AuthorList res = new AuthorList();
-
-
 
         for (int i = 0; i < array.length(); i++) {
             res.addAuthor(new Author(array.getString(i), isbn));
@@ -125,7 +161,6 @@ public class ScanBook{
 
         return res;
     }
-
 
 }
 

@@ -4,4 +4,9 @@
     android:layout_height="match_parent"
     android:id="@+id/activity_display_book">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/isPortrait"
+        android:layout_height="1dp"
+        android:layout_width="1dp"></LinearLayout>
 </LinearLayout>

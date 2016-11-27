@@ -86,6 +86,7 @@ public class CollectionAdapter implements ExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         //todo
+        return null;
     }
 
     @Override

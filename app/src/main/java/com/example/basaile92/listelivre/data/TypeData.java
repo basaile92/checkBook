@@ -26,8 +26,13 @@ public class TypeData {
     public Type fromCursor(Cursor c) {
  
         Type entry = new Type();
-        entry.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-        return entry;
+
+        if(c.getCount() > 0){
+            String res = c.getString(c.getColumnIndex(KEY_NAME));
+            entry.setName(res);
+            return entry;
+        }
+        return null;
     }
     
     public ContentValues toContentValues(Type arg) {
@@ -88,11 +93,13 @@ public class TypeData {
     
     public Type getTypeByName(String name) {
 
-        String selectQuery = "SELECT  * FROM " + TABLE_TYPE + " WHERE "
-            + KEY_NAME + " = " + "'" + name + "'"
-            ;
+        if(name != null) {
+            String selectQuery = "SELECT  * FROM " + TABLE_TYPE + " WHERE "
+                    + KEY_NAME + " = " + "'" + name + "'";
 
-        return getTypeByQuery(selectQuery);
+            return getTypeByQuery(selectQuery);
+        }else
+            return null;
     }
     
     

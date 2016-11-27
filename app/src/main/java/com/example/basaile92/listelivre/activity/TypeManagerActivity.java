@@ -2,6 +2,7 @@ package com.example.basaile92.listelivre.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -42,11 +43,11 @@ public class TypeManagerActivity extends AppCompatActivity {
         typeNameList.addAll(TypeManager.toStringList(typeManager.readTypeList()));
 
 
-        setAddTypeButton(typesEdit, addTypeButton, typeManager);
+        setAddTypeButton(typesEdit, addTypeButton, typeManager, typeListView, TypeManagerActivity.this);
         setTypeListView(typeListView, typeManager, TypeManagerActivity.this);
     }
 
-    private void setAddTypeButton(final EditText typesEdit, ImageView addTypeButton, final TypeManager typeManager) {
+    private void setAddTypeButton(final EditText typesEdit, ImageView addTypeButton, final TypeManager typeManager, final ListView typeListView, final Context context) {
 
         addTypeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +59,8 @@ public class TypeManagerActivity extends AppCompatActivity {
 
                     typeManager.saveType(new Type(typeName));
                     typeNameList.add(typeName);
+                    setTypeListView(typeListView, typeManager, context);
+                    typesEdit.setText("");
 
                 }else{
 
@@ -85,7 +88,7 @@ public class TypeManagerActivity extends AppCompatActivity {
 
         typeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setMessage(R.string.deleteQuestion);
@@ -93,8 +96,8 @@ public class TypeManagerActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        typeManager.deleteType(typeManager.getTypeAtPosition(i));
-                        typeNameList.remove(i);
+                        typeManager.deleteType(typeManager.getTypeAtPosition(position));
+                        typeNameList.remove(position);
                         setTypeListView(typeListView, typeManager, context);
                     }
                 });
@@ -106,7 +109,19 @@ public class TypeManagerActivity extends AppCompatActivity {
                         dialogInterface.cancel();
                     }
                 });
+
+                builder.create();
+                builder.show();
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(TypeManagerActivity.this, AddBookActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

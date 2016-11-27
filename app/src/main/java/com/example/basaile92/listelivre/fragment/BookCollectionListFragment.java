@@ -9,11 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.adapter.CollectionAdapter;
+import com.example.basaile92.listelivre.callback.BookCollectionListFragmentCallBack;
 import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.entity.CollectionList;
 import com.example.basaile92.listelivre.manager.CollectionManager;
@@ -77,7 +76,7 @@ public class BookCollectionListFragment extends Fragment {
             }
 
 
-            mCollectionAdapter = new CollectionAdapter(this,collectionList);
+            mCollectionAdapter = new CollectionAdapter(getContext(),collectionList);
             collectionListView.setAdapter(mCollectionAdapter);
 
             collectionListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {

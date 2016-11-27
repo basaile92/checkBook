@@ -17,8 +17,8 @@
         app:verticalMargin="30dp"
         app:fadeInFraction="0.2"
         app:fabId="@+id/fabtoolbar_fab"
-        app:containerId="@+id/fabtoolbar_container"
-        app:fabToolbarId="@+id/fabtoolbar_toolbar"
+        app:containerId="@id/fabtoolbar_container"
+        app:fabToolbarId="@id/fabtoolbar_toolbar"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -77,7 +77,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="20dp"
+                app:srcCompat="@drawable/plus" />
 
         </RelativeLayout>
 
@@ -85,38 +86,39 @@
             android:id="@id/fabtoolbar_toolbar"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:orientation="horizontal"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:background="@color/brownie">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <ImageView
+                android:layout_height="wrap_content"
                 android:id="@+id/addBookButton"
-                android:text="@string/addBookFormButton"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:textColor="@android:color/background_light" />
+                android:scaleType="centerInside"
+                android:layout_width="wrap_content"
+                android:foregroundGravity="center"
+                android:src="@drawable/formatfloatright" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/addBookFormIsbnButton"
-                android:text="@string/addBookFormIsbnButton"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:textColor="@android:color/background_light" />
+                android:scaleType="centerInside"
+                android:foregroundGravity="center"
+                android:src="@drawable/numeric" />
 
-            <TextView
-                android:text="@string/addBookScanIsbnButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/addBookScanIsbnButton"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:textColor="@android:color/background_light" />
+                android:foregroundGravity="center"
+                android:src="@drawable/barcodescan"
+                android:scaleType="centerInside" />
 
         </LinearLayout>
 

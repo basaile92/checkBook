@@ -24,7 +24,7 @@ public class TypeList extends ArrayList<Type> {
         for(Type type : this){
 
             res += type.getName();
-            if(this.size()>0){
+            if(this.size()>1){
                 res += " , ";
             }
         }

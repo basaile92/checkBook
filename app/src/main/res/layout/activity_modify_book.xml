@@ -69,10 +69,12 @@
 
                 <ImageView
                     android:layout_height="match_parent"
-                    app:srcCompat="@android:drawable/ic_menu_add"
                     android:id="@+id/imageButton"
                     android:layout_width="match_parent"
-                    android:layout_weight="3"/>
+                    android:layout_weight="3"
+                    android:src="@drawable/puzzle"
+                    android:tint="@color/brownie"
+                    android:scaleType="center" />
 
             </LinearLayout>
 
@@ -117,9 +119,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:id="@+id/addAuthorsButton"
-                            app:srcCompat="@android:drawable/ic_menu_add"
                             android:adjustViewBounds="false"
-                            android:cropToPadding="false" />
+                            android:cropToPadding="false"
+                            android:src="@drawable/plusoutline"
+                            android:tint="@color/brownie"
+                            android:scaleType="center" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -180,9 +184,11 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        app:srcCompat="@android:drawable/ic_menu_edit"
                         android:gravity="center_vertical|center_horizontal|center"
-                        android:id="@+id/addTypesButton" />
+                        android:id="@+id/addTypesButton"
+                        android:tint="@color/brownie"
+                        android:src="@android:drawable/ic_menu_edit"
+                        android:scaleType="center" />
                 </LinearLayout>
 
             </LinearLayout>

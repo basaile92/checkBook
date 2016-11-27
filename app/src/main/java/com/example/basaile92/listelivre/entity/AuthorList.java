@@ -25,7 +25,7 @@ public class AuthorList extends ArrayList<Author> {
         for(Author author : this){
 
             res += author.getName();
-            if(this.size()>0){
+            if(this.size()>1){
                 res += " , ";
             }
         }

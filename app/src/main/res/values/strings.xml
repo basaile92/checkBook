@@ -58,5 +58,8 @@
     <string name="founded">founded</string>
     <string name="addBookQuestion">Which one do you want to add?</string>
     <string name="scanFailed">The scan didn\'t work properly.</string>
+    <string name="isbnNotFound">No books were found for this ISBN.</string>
+    <string name="emptyTypeList">The type list is empty.</string>
+    <string name="editTypes">Edit types</string>
 
 </resources>

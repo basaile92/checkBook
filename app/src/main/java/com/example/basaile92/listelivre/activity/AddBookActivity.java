@@ -94,7 +94,7 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
 
-    private void setTypeListView(TextView typesText, final ImageView addTypesButton, final Context context) {
+    private void setTypeListView(final TextView typesText, final ImageView addTypesButton, final Context context) {
 
         final TypeManager typeManager = new TypeManager(context);
 
@@ -107,9 +107,17 @@ public class AddBookActivity extends AppCompatActivity {
                 final boolean[] onCheckedItems = TypeManager.elementsFromSecondInFirstList(typeList, typeNameList);
                 final String[] typeListString = TypeManager.toStringArray(typeList);
                 final ArrayList<String> typeArrayStringDisplayed = TypeManager.elementsTrueFromTwoArrays(typeListString, onCheckedItems );
-
+                int editButtonString = R.string.editTypes;
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                if(!(typeList.size() > 0)){
+
+                    builder.setMessage(R.string.emptyTypeList);
+                    editButtonString = R.string.createNewType;
+                }
+
                 builder.setTitle(R.string.pickSomeTypes);
+
                 builder.setMultiChoiceItems( typeListString , onCheckedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
@@ -132,15 +140,17 @@ public class AddBookActivity extends AppCompatActivity {
 
                         typeNameList= new ArrayList<String>();
                         typeNameList.addAll(typeArrayStringDisplayed);
+                        typesText.setText((TypeManager.fromStringArray(typeNameList)).toString());
                     }
                 });
 
-                builder.setNegativeButton(R.string.createNewType, new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(editButtonString, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         Intent intent = new Intent(AddBookActivity.this, TypeManagerActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 });
 
@@ -241,7 +251,7 @@ public class AddBookActivity extends AppCompatActivity {
                 toast.show();
             }else{
 
-                //We check that the ISBN doesn't alread exist in database
+                //We check that the ISBN doesn't already exist in database
                 BookManager bookManager = new BookManager(context);
                 if(bookManager.existIsbn(isbnEdit.getText().toString())){
 
