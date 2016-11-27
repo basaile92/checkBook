@@ -32,20 +32,24 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_edit"
                     android:id="@+id/editButton"
                     android:layout_weight="1"
                     android:adjustViewBounds="false"
-                    android:cropToPadding="false" />
+                    android:cropToPadding="false"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:scaleType="center"
+                    android:tint="@color/brownie" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_delete"
                     android:id="@+id/deleteButton"
                     android:layout_weight="1"
                     android:adjustViewBounds="false"
-                    android:cropToPadding="false" />
+                    android:cropToPadding="false"
+                    android:src="@android:drawable/ic_menu_delete"
+                    android:tint="@color/brownie"
+                    android:scaleType="center" />
             </LinearLayout>
 
             <LinearLayout
@@ -95,10 +99,12 @@
 
                 <ImageView
                     android:layout_height="match_parent"
-                    app:srcCompat="@android:drawable/ic_menu_add"
                     android:id="@+id/imageButton"
                     android:layout_width="match_parent"
-                    android:layout_weight="3" />
+                    android:layout_weight="3"
+                    android:src="@drawable/puzzle"
+                    android:tint="@color/brownie"
+                    android:scaleType="center" />
 
             </LinearLayout>
 
