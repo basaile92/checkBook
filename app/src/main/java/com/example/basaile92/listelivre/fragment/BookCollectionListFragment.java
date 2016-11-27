@@ -58,7 +58,7 @@ public class BookCollectionListFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 // We update the display book fragment with the good position
-                mCallback.updateDisplayCollectionFragment(position, getView()); //TODO
+                mCallback.updateDisplayCollectionFragment(position, getView());
             }
         });
 
