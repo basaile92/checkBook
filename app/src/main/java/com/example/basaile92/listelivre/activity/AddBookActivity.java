@@ -150,7 +150,6 @@ public class AddBookActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(AddBookActivity.this, TypeManagerActivity.class);
                         startActivity(intent);
-                        finish();
                     }
                 });
 
@@ -253,7 +252,7 @@ public class AddBookActivity extends AppCompatActivity {
 
                 //We check that the ISBN doesn't already exist in database
                 BookManager bookManager = new BookManager(context);
-                if(bookManager.existIsbn(isbnEdit.getText().toString())){
+                if(!bookManager.existIsbn(isbnEdit.getText().toString())){
 
                     return true;
                 }else{

@@ -30,4 +30,16 @@ public class AuthorManager extends DAOBase{
         return authorList;
 
     }
+
+    public static ArrayList<String> toStringList(AuthorList authorList) {
+
+        ArrayList<String> listNameList = new ArrayList<String>();
+
+        for(Author author : authorList){
+
+            listNameList.add(author.getName());
+        }
+
+        return listNameList;
+    }
 }

@@ -70,7 +70,7 @@ public class TypeManager extends DAOBase{
 
         for(Typebook typebook : typebooks){
 
-            types.add(new Type(typebook.getIsbn()));
+            types.add(new Type(typebook.getNametype()));
         }
         return types;
     }

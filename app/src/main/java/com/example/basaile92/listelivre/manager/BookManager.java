@@ -107,6 +107,7 @@ public class BookManager extends DAOBase {
         TypebookData typebookData = new TypebookData(handler);
         List<Typebook> typebooks = typebookData.getAllTypebookByIsbn(book.getIsbn());
 
+
         return new SimpleBook(book, authors, typebooks);
 
     }

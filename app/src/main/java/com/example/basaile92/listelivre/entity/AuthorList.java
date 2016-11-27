@@ -22,12 +22,15 @@ public class AuthorList extends ArrayList<Author> {
     public String toString(){
 
         String res = "";
+        int i = 0;
         for(Author author : this){
 
-            res += author.getName();
-            if(this.size()>1){
+            if(i != 0){
                 res += " , ";
             }
+            res += author.getName();
+            i++;
+
         }
         return res;
     }

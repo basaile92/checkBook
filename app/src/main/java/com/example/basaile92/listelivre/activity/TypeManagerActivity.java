@@ -2,7 +2,6 @@ package com.example.basaile92.listelivre.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +24,7 @@ import java.util.Map;
 
 public class TypeManagerActivity extends AppCompatActivity {
 
+    //TODO faire le retour sur la bonne activité( De modifybookactivity ou de addbookactivity)
     ArrayList<String> typeNameList;
 
     @Override
@@ -118,9 +118,6 @@ public class TypeManagerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-        Intent intent = new Intent(TypeManagerActivity.this, AddBookActivity.class);
-        startActivity(intent);
         finish();
     }
 

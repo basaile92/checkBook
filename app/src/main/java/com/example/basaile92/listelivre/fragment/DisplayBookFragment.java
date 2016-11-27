@@ -112,9 +112,11 @@ public class DisplayBookFragment extends Fragment{
             public void onClick(View view) {
 
                 //We send the book at the position in the intent to the modify book activity
-                Intent intent = new Intent(getActivity(), ModifyBookActivity.class);
+                //TODO probleme quand c'est en paysage
+                Intent intent = new Intent( getContext(), ModifyBookActivity.class);
                 BookManager bookManager = new BookManager(view.getContext());
                 SimpleBook book = bookManager.getSimpleBookAtPosition(position);
+                intent.putExtra(BookLibraryFragment.POSITION, position);
                 intent.putExtra(SIMPLEBOOK, book);
                 startActivity(intent);
                 getActivity().finish();

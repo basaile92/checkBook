@@ -21,12 +21,15 @@ public class TypeList extends ArrayList<Type> {
     public String toString(){
 
         String res = "";
+        int i = 0;
         for(Type type : this){
 
-            res += type.getName();
-            if(this.size()>1){
+            if(i != 0){
                 res += " , ";
             }
+
+            res += type.getName();
+            i++;
         }
         return res;
     }

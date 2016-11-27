@@ -19,6 +19,7 @@ import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.Type;
 import com.example.basaile92.listelivre.entity.TypeList;
 import com.example.basaile92.listelivre.manager.BookManager;
+import com.example.basaile92.listelivre.manager.TypeManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,7 +64,12 @@ public class ScanBook{
                         public void onClick(DialogInterface dialog, int which) {
 
                             BookManager bookManager = new BookManager(context);
-                            bookManager.saveSimpleBook(bookLibrary.get(which));
+                            TypeManager typeManager = new TypeManager(context);
+                            SimpleBook book = bookLibrary.get(which);
+                            for(Type type: book.getTypes()){
+                                typeManager.saveType(type);
+                            }
+                            bookManager.saveSimpleBook(book);
                             dialog.cancel();
                         }
                     });
