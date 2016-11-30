@@ -44,6 +44,7 @@
     <string name="createCollectionButton">Créer</string>
     <string name="nameCollectionCreation">Nom</string>
     <string name="collectionNameEmpty">Veuillez choisir un nom</string>
+    <string name="modifyCollectionActivity">Modifier Collection</string>
 
 
 

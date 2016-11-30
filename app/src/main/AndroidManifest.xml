@@ -26,10 +26,9 @@
         <activity android:name=".activity.ListBookCollectionActivity" />
         <activity android:name=".activity.CollectionActivity" />
         <activity android:name=".activity.TypeManagerActivity" />
-        <activity android:name=".activity.ModifyBookActivity"/>
+        <activity android:name=".activity.ModifyBookActivity" />
         <activity android:name=".activity.MainActivity">
-
-        <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -39,8 +38,9 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="user"
             android:stateNotNeeded="true"
-            tools:replace="android:screenOrientation"></activity>
-        <activity android:name=".activity.AddCollectionActivity"></activity>
+            tools:replace="android:screenOrientation" />
+        <activity android:name=".activity.AddCollectionActivity" />
+        <activity android:name=".activity.ModifyCollectionActivity"></activity>
     </application>
 
 </manifest>
