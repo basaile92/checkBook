@@ -1,6 +1,7 @@
 package com.example.basaile92.listelivre.activity;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,7 @@ public class ListBookCollectionActivity extends FragmentActivity implements Book
 
 
         //Add function to the button Create a new Collection
-        Button createCollectionButton = (Button) findViewById(R.id.addCollectionButton);
+        FloatingActionButton createCollectionButton = (FloatingActionButton) findViewById(R.id.addCollectionButton);
 
         createCollectionButton.setOnClickListener(new View.OnClickListener() {
             @Override

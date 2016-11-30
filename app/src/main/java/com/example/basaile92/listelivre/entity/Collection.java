@@ -8,6 +8,15 @@ public class Collection {
     private String name;
     private BookLibrary books = new BookLibrary();
 
+    public Collection() {
+        this.books = new BookLibrary();
+    }
+
+    public Collection(String name, BookLibrary books){
+        this.name = name;
+        this.books = books;
+    }
+
     public void setName(String name) {
 
         this.name = name;

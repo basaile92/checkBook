@@ -10,6 +10,8 @@ import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.entity.BookLibrary;
+import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.manager.CollectionManager;
 
 public class AddCollectionActivity extends AppCompatActivity {
@@ -32,7 +34,7 @@ public class AddCollectionActivity extends AppCompatActivity {
                 if(checkName(nameEdit)) {
 
                     CollectionManager collectionManager = new CollectionManager(view.getContext());
-                    //collectionManager.saveCollection(nameEdit.getText().toString());
+                    collectionManager.saveCollection(new Collection(nameEdit.getText().toString(), new BookLibrary()));
 
                     Intent intent = new Intent(AddCollectionActivity.this, MainActivity.class);
                     startActivity(intent);

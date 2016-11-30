@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.basaile92.listelivre.data.CollectionData;
 import com.example.basaile92.listelivre.database.DAOBase;
+import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.entity.CollectionList;
 
 /**
@@ -25,5 +26,10 @@ public class CollectionManager extends DAOBase {
     }
 
 
+    public void saveCollection(Collection collection){
+
+        CollectionData collectionData = new CollectionData(handler);
+        collectionData.createCollection(collection);
+    }
 
 }
