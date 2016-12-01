@@ -66,5 +66,6 @@
     <string name="nameCollectionCreation">Name</string>
     <string name="collectionNameEmpty">Please choose a name</string>
     <string name="modifyCollectionActivity">Modify Collection</string>
+    <string name="deleteCollectionButton">Delete Collection</string>
 
 </resources>
