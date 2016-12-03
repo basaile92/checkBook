@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "761536221815",
+    "firebase_url": "https://check-book-2138f.firebaseio.com",
+    "project_id": "check-book-2138f",
+    "storage_bucket": "check-book-2138f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761536221815:android:41a84111bee3c69a",
+        "android_client_info": {
+          "package_name": "com.example.basaile92.listelivre"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761536221815-9vo0j2jrgfaoepgn51svd7ce0tb75a4c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.basaile92.listelivre",
+            "certificate_hash": "E4D32F024F093EE32495A99003ECE1DACCDC459B"
+          }
+        },
+        {
+          "client_id": "761536221815-1d35qiml5nd99mip0aahrjhhq2ndhtud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMuw1XpWZ3CxWINFnJmIelPJK3sz3FU-w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761536221815-1d35qiml5nd99mip0aahrjhhq2ndhtud.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
