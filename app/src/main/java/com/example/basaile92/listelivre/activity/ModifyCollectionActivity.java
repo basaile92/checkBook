@@ -13,5 +13,9 @@ public class ModifyCollectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modify_collection);
 
         setTitle(R.string.modifyCollectionActivity);
+
+
+        //Assignate function to a collection. With a long click, we can edit the collection
+
     }
 }
