@@ -46,7 +46,7 @@
     <string name="collectionNameEmpty">Veuillez choisir un nom</string>
     <string name="modifyCollectionActivity">Modifier Collection</string>
     <string name="deleteCollectionButton">Delete Collection</string>
-
+    <string name="deleteCollectionQuestion">Voulez vous vraiment supprimer la collection ?</string>
 
 
 </resources>

@@ -13,8 +13,16 @@ import android.widget.ExpandableListView;
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.adapter.CollectionAdapter;
 import com.example.basaile92.listelivre.callback.BookCollectionListFragmentCallBack;
+import com.example.basaile92.listelivre.entity.Author;
+import com.example.basaile92.listelivre.entity.AuthorList;
+import com.example.basaile92.listelivre.entity.Book;
+import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.entity.CollectionList;
+import com.example.basaile92.listelivre.entity.SimpleBook;
+import com.example.basaile92.listelivre.entity.Type;
+import com.example.basaile92.listelivre.entity.TypeList;
+import com.example.basaile92.listelivre.entity.Typebook;
 import com.example.basaile92.listelivre.manager.CollectionManager;
 
 import java.util.ArrayList;
@@ -46,19 +54,21 @@ public class BookCollectionListFragment extends Fragment {
     public void updateView(View view) {
 
         final ExpandableListView collectionListView = (ExpandableListView) view.findViewById(R.id.collectionList);
+
         CollectionManager collectionManager = new CollectionManager(getContext());
 
         // Load all collections inside a CollectionList
         CollectionList collectionList = collectionManager.readCollectionList();
 
         // To be able to click on each collection
-        collectionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        collectionListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 // We update the display book fragment with the good position
                 mCallback.updateDisplayCollectionFragment(position, getView());
+                return true;
             }
         });
 
@@ -74,7 +84,6 @@ public class BookCollectionListFragment extends Fragment {
 
                 listOfCollections.add(collectionInfos);
             }
-
 
             mCollectionAdapter = new CollectionAdapter(getContext(),collectionList);
             collectionListView.setAdapter(mCollectionAdapter);

@@ -7,6 +7,8 @@ import com.example.basaile92.listelivre.database.DAOBase;
 import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.entity.CollectionList;
 
+import java.util.List;
+
 /**
  * Created by Basile on 22/11/2016.
  */
@@ -32,4 +34,21 @@ public class CollectionManager extends DAOBase {
         collectionData.createCollection(collection);
     }
 
+
+    public Collection getCollectionAtPosition (int position) {
+
+        CollectionData collectionData = new CollectionData(handler);
+        List<Collection> collectionList = collectionData.getAllCollection();
+
+        Collection collection = collectionList.get(position);
+
+        return collection;
+    }
+
+
+    public void deleteCollection(Collection collection) {
+
+        CollectionData collectionData = new CollectionData(handler);
+        collectionData.deleteCollectionByName(collection.getName());
+    }
 }

@@ -67,7 +67,6 @@ public class AddCollectionActivity extends AppCompatActivity {
     public void onBackPressed()
     {
         Intent intent = new Intent(AddCollectionActivity.this, MainActivity.class);
-        intent.setAction("tabHost.setCurrentTab(1);");
         startActivity(intent);
         finish();
     }

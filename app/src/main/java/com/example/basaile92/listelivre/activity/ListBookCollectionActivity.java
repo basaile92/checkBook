@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.callback.BookCollectionListFragmentCallBack;
+import com.example.basaile92.listelivre.fragment.BookCollectionListFragment;
 
 public class ListBookCollectionActivity extends FragmentActivity implements BookCollectionListFragmentCallBack{
 
@@ -37,6 +38,10 @@ public class ListBookCollectionActivity extends FragmentActivity implements Book
     }
 
     public void updateDisplayCollectionFragment(int position, View viewLibrary){
-        //todo
+
+        Intent intent = new Intent(ListBookCollectionActivity.this, ModifyCollectionActivity.class);
+        intent.putExtra("collectionID", position);
+        startActivity(intent);
+        finish();
     }
 }
