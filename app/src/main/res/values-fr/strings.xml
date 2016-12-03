@@ -47,6 +47,8 @@
     <string name="modifyCollectionActivity">Modifier Collection</string>
     <string name="deleteCollectionButton">Delete Collection</string>
     <string name="deleteCollectionQuestion">Voulez vous vraiment supprimer la collection ?</string>
+    <string name="alreadyExistCollection">La collection existe déjà, choisissez un autre nom</string>
+
 
 
 </resources>

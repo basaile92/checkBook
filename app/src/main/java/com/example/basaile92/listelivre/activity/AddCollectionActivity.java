@@ -30,10 +30,11 @@ public class AddCollectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // Test if the name of the new collection respects conditions
-                if(checkName(nameEdit)) {
+                CollectionManager collectionManager = new CollectionManager(view.getContext());
 
-                    CollectionManager collectionManager = new CollectionManager(view.getContext());
+                // Test if the name of the new collection respects conditions
+                if(checkName(nameEdit, collectionManager)) {
+
                     collectionManager.saveCollection(new Collection(nameEdit.getText().toString(), new BookLibrary()));
 
                     Intent intent = new Intent(AddCollectionActivity.this, MainActivity.class);
@@ -46,7 +47,7 @@ public class AddCollectionActivity extends AppCompatActivity {
     }
 
 
-    private boolean checkName(EditText nameText) {
+    private boolean checkName(EditText nameText, CollectionManager collectionManager) {
 
         String name = nameText.getText().toString();
 
@@ -56,10 +57,13 @@ public class AddCollectionActivity extends AppCompatActivity {
             toast.show();
             return false;
         }
-        else {
+        if(collectionManager.existCollection(name)){
 
-            return true;
+            Toast toast = Toast.makeText(AddCollectionActivity.this, R.string.alreadyExistCollection, Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
         }
+        return true;
     }
 
 

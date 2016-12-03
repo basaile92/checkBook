@@ -24,10 +24,15 @@ public class CollectionData {
     }
     
     public Collection fromCursor(Cursor c) {
- 
-        Collection entry = new Collection();
-        entry.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-        return entry;
+
+        if(c.getCount() > 0) {
+
+
+            Collection entry = new Collection();
+            entry.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+            return entry;
+        }
+        return null;
     }
     
     public ContentValues toContentValues(Collection arg) {

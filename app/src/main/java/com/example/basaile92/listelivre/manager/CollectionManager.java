@@ -51,4 +51,15 @@ public class CollectionManager extends DAOBase {
         CollectionData collectionData = new CollectionData(handler);
         collectionData.deleteCollectionByName(collection.getName());
     }
+
+
+    public boolean existCollection(String name){
+
+        boolean exist;
+
+        CollectionData collectionData = new CollectionData(handler);
+        exist = (collectionData.getCollectionByName(name) != null);
+
+        return exist;
+    }
 }
