@@ -3,10 +3,14 @@ package com.example.basaile92.listelivre.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -41,9 +45,10 @@ public class BookLibraryFragment extends Fragment {
 
         public void updateView(final View view){
 
-            ListView bookList = (ListView) view.findViewById(R.id.bookList);
+            final ListView bookList = (ListView) view.findViewById(R.id.bookList);
             BookManager bookManager = new BookManager(getContext());
-            BookLibrary bookLibrary = bookManager.readBookLibrary();
+            final BookLibrary bookLibrary = bookManager.readBookLibrary();
+
 
             // Assignate the click function of each items of the bookList.
             bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,28 +61,10 @@ public class BookLibraryFragment extends Fragment {
                 }
             });
 
-            // if the booklibrary is well assignate
-            if(bookLibrary != null) {
-
-                List<Map<String,String>> listOfBook = new ArrayList<Map<String, String>>();
-                for(SimpleBook book : bookLibrary){
-
-                    // We fill the 4 fields for each view of the list view.
-                    Map<String, String> bookMap = new HashMap<String, String>();
-                    //TODO add the photo here
-                    bookMap.put("img", "");
-                    bookMap.put("authors", book.getAuthors().toString());
-                    bookMap.put("title", book.getTitle());
-                    listOfBook.add(bookMap);
-                }
-
-                //We assignate the listview
-                SimpleAdapter listAdapter = new SimpleAdapter(view.getContext(), listOfBook, R.layout.book, new String[]{"img", "authors", "title"}, new int[]{R.id.imageButton, R.id.authorBook, R.id.titleBook});
-                bookList.setAdapter(listAdapter);
-            }
         }
 
-        @Override
+
+    @Override
         public void onAttach(Context context){
 
             super.onAttach(context);

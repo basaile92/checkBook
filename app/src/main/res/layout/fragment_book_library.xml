@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
 
     <ListView
@@ -15,8 +15,8 @@
     android:id="@+id/bookList"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
+        android:layout_alignParentStart="true" >
+    </ListView>
 
 
 </LinearLayout>

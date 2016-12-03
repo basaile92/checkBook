@@ -62,8 +62,8 @@ public class DisplayBookFragment extends Fragment{
 
         TextView isbnText = (TextView) viewModif.findViewById(R.id.isbnText);
         TextView titleText = (TextView) viewModif.findViewById(R.id.titleText);
-        ArrayList<Author> authors = new ArrayList<Author>();
-        ArrayList<Type> types = new ArrayList<Type>();
+        TextView authorText = (TextView) viewModif.findViewById(R.id.authorText);
+        TextView typeText = (TextView) viewModif.findViewById(R.id.typeText);
         TextView collectionText = (TextView) viewModif.findViewById(R.id.collectionText);
         TextView publisherText = (TextView) viewModif.findViewById(R.id.publisherText);
         TextView yearText = (TextView) viewModif.findViewById(R.id.yearText);
@@ -86,8 +86,8 @@ public class DisplayBookFragment extends Fragment{
         //We set all field of the view with the informations of the book
         isbnText.setText(book.getIsbn());
         titleText.setText(book.getTitle());
-        authors.addAll(book.getAuthors());
-        types.addAll(book.getTypes());
+        authorText.setText(book.getAuthors().toString());
+        typeText.setText(book.getTypes().toString());
         collectionText.setText(book.getCollection());
         publisherText.setText(book.getPublisher());
         yearText.setText(book.getYear());
@@ -96,6 +96,7 @@ public class DisplayBookFragment extends Fragment{
         setBorrowerTextDisplay( borrowedLayout,isBorrowedText, book.isBorrowed(), borrowerText, book.getBorrower() );
         ownerText.setText(book.getOwner());
         commentsText.setText(book.getComment());
+
         setImageButton(imageButton, book.getPhoto());
 
         setButtonEdit(editButton, position);

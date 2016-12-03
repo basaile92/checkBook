@@ -21,7 +21,7 @@ import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
  * implement this interface in order to receive event callbacks.
  * Each method passes the DialogFragment in case the host needs to query it. */
 
-public class NoticeDialogFragment extends DialogFragment {
+public class AddBookByIsbnDialogFragment extends DialogFragment {
 
     // Use this instance of the interface to deliver action events
     BookLibraryFragmentCallBack mListener;
@@ -45,7 +45,7 @@ public class NoticeDialogFragment extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
 
                 String isbnEditForm = ((EditText) view.findViewById(R.id.isbnEditForm)).getText().toString();
-                mListener.onDialogPositiveClick(NoticeDialogFragment.this, isbnEditForm);
+                mListener.onDialogPositiveClick(AddBookByIsbnDialogFragment.this, isbnEditForm);
             }
         });
 
@@ -53,7 +53,7 @@ public class NoticeDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                mListener.onDialogNegativeClick(NoticeDialogFragment.this);
+                mListener.onDialogNegativeClick(AddBookByIsbnDialogFragment.this);
             }
         });
 

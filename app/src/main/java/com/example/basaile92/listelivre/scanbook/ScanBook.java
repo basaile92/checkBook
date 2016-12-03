@@ -2,6 +2,7 @@ package com.example.basaile92.listelivre.scanbook;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
@@ -12,6 +13,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.activity.BookLibraryActivity;
+import com.example.basaile92.listelivre.activity.MainActivity;
 import com.example.basaile92.listelivre.entity.Author;
 import com.example.basaile92.listelivre.entity.AuthorList;
 import com.example.basaile92.listelivre.entity.BookLibrary;
@@ -71,6 +74,8 @@ public class ScanBook{
                             }
                             bookManager.saveSimpleBook(book);
                             dialog.cancel();
+
+                            //TODO ajouter listview
                         }
                     });
 
@@ -81,6 +86,8 @@ public class ScanBook{
                     Toast toast = Toast.makeText(context, R.string.isbnNotFound, Toast.LENGTH_SHORT);
                     toast.show();
                 }
+
+
 
 
             }

@@ -1,7 +1,6 @@
 package com.example.basaile92.listelivre.activity;
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -15,7 +14,7 @@ import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
 import com.example.basaile92.listelivre.fragment.DisplayBookFragment;
-import com.example.basaile92.listelivre.fragment.NoticeDialogFragment;
+import com.example.basaile92.listelivre.fragment.AddBookByIsbnDialogFragment;
 import com.example.basaile92.listelivre.scanbook.ScanBook;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -84,26 +83,24 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
             @Override
             public void onClick(View v) {
 
-                DialogFragment dialog = new NoticeDialogFragment();
-                dialog.show(getFragmentManager(), "NoticeDialogFragment");
+                DialogFragment dialog = new AddBookByIsbnDialogFragment();
+                dialog.show(getFragmentManager(), "AddBookByIsbnDialogFragment");
 
             }
         });
 
-
 }
 
-private void createBookListAddPopUp(String s, Context context) {
+private void createBookListAddPopUp(String s) {
 
     if(s.length() == 13){
 
         final BookLibrary bookLibrary = new BookLibrary();
         ScanBook scanBook = new ScanBook(s, bookLibrary, BookLibraryActivity.this);
 
-
     }else{
 
-        Toast toast = Toast.makeText(context, R.string.isbnNotGoodFormat, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(BookLibraryActivity.this, R.string.isbnNotGoodFormat, Toast.LENGTH_SHORT);
         toast.show();
     }
 }
@@ -134,7 +131,7 @@ public void updateDisplayBookFragment(int position, View viewLibrary){
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, String isbn) {
 
-        createBookListAddPopUp( isbn , BookLibraryActivity.this);
+        createBookListAddPopUp( isbn);
 
         dialog.dismiss();
     }
@@ -169,7 +166,7 @@ public void updateDisplayBookFragment(int position, View viewLibrary){
             if (scanContent != null && scanFormat != null) {
 
 
-                createBookListAddPopUp(scanContent, BookLibraryActivity.this);
+                createBookListAddPopUp(scanContent);
 
             }else{
 

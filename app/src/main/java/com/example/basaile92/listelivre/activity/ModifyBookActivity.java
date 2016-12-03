@@ -72,7 +72,7 @@ public class ModifyBookActivity extends AppCompatActivity {
 
         //we get the simple book with the Intent
         Intent intent = getIntent();
-        SimpleBook book = (SimpleBook) intent.getSerializableExtra(DisplayBookFragment.SIMPLEBOOK);
+        final SimpleBook book = (SimpleBook) intent.getSerializableExtra(DisplayBookFragment.SIMPLEBOOK);
 
         //if book is not null we assignate all field with the book information
         if(book != null) {
@@ -113,7 +113,7 @@ public class ModifyBookActivity extends AppCompatActivity {
 
                     // We save the book in the Database
                     BookManager bookManager = new BookManager(view.getContext());
-                    bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), collectionEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(), ""));
+                    bookManager.modifyBook(book , new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), collectionEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(), ""));
                     Intent intent = new Intent(ModifyBookActivity.this, DisplayBookActivity.class);
                     int itemId = getIntent().getIntExtra(BookLibraryFragment.POSITION, -1);
                     if(itemId != -1)

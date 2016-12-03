@@ -66,5 +66,9 @@
     <string name="nameCollectionCreation">Name</string>
     <string name="collectionNameEmpty">Please choose a name</string>
     <string name="modifyCollectionActivity">Modify Collection</string>
+    <string name="searchBookText">Search a book</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

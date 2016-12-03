@@ -3,6 +3,7 @@ package com.example.basaile92.listelivre.entity;
 import com.example.basaile92.listelivre.manager.TypeManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -153,6 +154,28 @@ public class SimpleBook implements Serializable{
 
     public void setPhoto(String photo) {
         this.book.setPhoto(photo);
+    }
+
+    public ArrayList<String> searchString(){
+
+        ArrayList<String> res = new ArrayList<String>();
+        res.add(getTitle());
+        res.add(getIsbn());
+        res.add(getCollection());
+        res.add(getPublisher());
+        res.add(getYear());
+        for(Author author : getAuthors()){
+
+            res.add(author.getName());
+        }
+
+        for(Type type : getTypes()){
+
+            res.add(type.getName());
+        }
+
+        return res;
+
     }
 
     public String toString(){
