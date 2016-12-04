@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.manager.CollectionManager;
 
 public class ModifyCollectionActivity extends AppCompatActivity {
@@ -25,9 +28,12 @@ public class ModifyCollectionActivity extends AppCompatActivity {
         position = intent.getIntExtra("collectionID",0);
 
         Button deleteCollectionButton = (Button) findViewById(R.id.deleteCollectionButton);
+        EditText editCollectionName = (EditText) findViewById(R.id.editCollectionName);
+        Button saveCollectionModification = (Button) findViewById(R.id.saveCollectionModification);
 
         setDeleteCollectionButton(deleteCollectionButton, position);
-
+        setCollectionName(editCollectionName, position);
+        saveModification(saveCollectionModification, editCollectionName, position);
     }
 
 
@@ -67,6 +73,37 @@ public class ModifyCollectionActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    public void setCollectionName(EditText editCollectionName, int position) {
+
+        CollectionManager collectionManager = new CollectionManager(editCollectionName.getContext());
+        Collection collection = collectionManager.getCollectionAtPosition(position);
+        String collectionName = collection.getName();
+
+        editCollectionName.setText(collectionName);
+    }
+
+
+    public void saveModification(final Button saveCollectionModification, final EditText editCollectionName, final int position) {
+
+        saveCollectionModification.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(final View view) {
+
+                CollectionManager collectionManager = new CollectionManager((view.getContext()));
+                Collection collection = collectionManager.getCollectionAtPosition(position);
+                String collectionName = editCollectionName.getText().toString();
+
+                collectionManager.modifyCollectionName(collection, collectionName);
+
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
 

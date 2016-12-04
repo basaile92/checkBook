@@ -69,5 +69,6 @@
     <string name="deleteCollectionButton">Delete Collection</string>
     <string name="deleteCollectionQuestion">Do you really want to delete the collection ?</string>
     <string name="alreadyExistCollection">Collection already exist, choose an other name</string>
+    <string name="save">Save</string>
 
 </resources>

@@ -11,6 +11,18 @@
     android:orientation="vertical"
     tools:context="com.example.basaile92.listelivre.activity.ModifyCollectionActivity">
 
+    <EditText
+        android:id="@+id/editCollectionName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CollectionName"/>
+
+    <Button
+        android:id="@+id/saveCollectionModification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"/>
+
     <Button
         android:id="@+id/deleteCollectionButton"
         android:layout_width="200dp"
