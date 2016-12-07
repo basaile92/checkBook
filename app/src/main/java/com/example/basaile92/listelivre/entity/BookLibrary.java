@@ -21,6 +21,4 @@ public class BookLibrary extends ArrayList<SimpleBook> implements Serializable{
 
         this.add(book);
     }
-
-
 }

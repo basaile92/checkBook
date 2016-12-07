@@ -23,6 +23,7 @@ import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.Type;
 import com.example.basaile92.listelivre.entity.TypeList;
 import com.example.basaile92.listelivre.entity.Typebook;
+import com.example.basaile92.listelivre.manager.CollectionBookManager;
 import com.example.basaile92.listelivre.manager.CollectionManager;
 
 import java.util.ArrayList;
@@ -83,6 +84,13 @@ public class BookCollectionListFragment extends Fragment {
                 collectionInfos.put("name", collection.getName());
 
                 listOfCollections.add(collectionInfos);
+            }
+
+            for (int i = 0 ; i < collectionList.size() ; i++) {
+
+                CollectionBookManager collectionBookManager = new CollectionBookManager(view.getContext());
+                BookLibrary bookLibrary = collectionBookManager.getAllSimpleBooksFromCollection(collectionList.get(i));
+                collectionList.get(i).setBooks(bookLibrary);
             }
 
             mCollectionAdapter = new CollectionAdapter(getContext(),collectionList);

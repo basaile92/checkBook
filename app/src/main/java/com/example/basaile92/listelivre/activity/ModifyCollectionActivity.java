@@ -11,8 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.entity.Collection;
+import com.example.basaile92.listelivre.entity.SimpleBook;
+import com.example.basaile92.listelivre.manager.BookManager;
+import com.example.basaile92.listelivre.manager.CollectionBookManager;
 import com.example.basaile92.listelivre.manager.CollectionManager;
+
+import java.util.ArrayList;
 
 public class ModifyCollectionActivity extends AppCompatActivity {
 
@@ -30,10 +36,20 @@ public class ModifyCollectionActivity extends AppCompatActivity {
         Button deleteCollectionButton = (Button) findViewById(R.id.deleteCollectionButton);
         EditText editCollectionName = (EditText) findViewById(R.id.editCollectionName);
         Button saveCollectionModification = (Button) findViewById(R.id.saveCollectionModification);
+        Button addBookToCollection = (Button) findViewById(R.id.addBookToCollectionButton);
 
+        //Set function to the button Delete Collection
         setDeleteCollectionButton(deleteCollectionButton, position);
+
+        //Set function to the EditText to have the default collection name
         setCollectionName(editCollectionName, position);
+
+        //Set function to the button Save to save the new collection name in the database
         saveModification(saveCollectionModification, editCollectionName, position);
+
+        //Set function to the button Add Book to add new books inside the collection
+        addBookInCollection(addBookToCollection, position);
+
     }
 
 
@@ -102,6 +118,75 @@ public class ModifyCollectionActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+    }
+
+
+    public void addBookInCollection(final Button addBookToCollection, final int position){
+
+        addBookToCollection.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(final View view) {
+
+                final BookLibrary booksToAdd = new BookLibrary();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ModifyCollectionActivity.this);
+                builder.setTitle(R.string.selectBook);
+
+                BookManager bookManager = new BookManager(view.getContext());
+                final BookLibrary bookLibrary = bookManager.readBookLibrary();
+                String[] booksDescription = new String[bookLibrary.size() - 1];
+                for(int i = 0 ; i<bookLibrary.size()-1 ; i++) {
+
+                    booksDescription[i] = (bookLibrary.get(i).toString());
+                }
+
+                builder.setMultiChoiceItems(booksDescription, null, new DialogInterface.OnMultiChoiceClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked) {
+                            // If the user checked the book, add it to the selected books
+                            booksToAdd.add(bookLibrary.get(which));
+                        } else if (booksToAdd.contains(bookLibrary.get(which))) {
+                            // Else, if the item is already in the array, we remove it
+                            booksToAdd.remove(Integer.valueOf(which));
+                        }
+                    }
+                });
+
+
+                builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        CollectionManager collectionManager = new CollectionManager(view.getContext());
+                        Collection collection = collectionManager.getCollectionAtPosition(position);
+                        CollectionBookManager collectionBookManager = new CollectionBookManager(view.getContext());
+
+                        for (int i = 0 ; i < booksToAdd.size() ; i++) {
+
+                            SimpleBook book = booksToAdd.get(i);
+                            collectionBookManager.saveCollectionBook(collection, book);
+                        }
+                    }
+                });
+
+
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
     }

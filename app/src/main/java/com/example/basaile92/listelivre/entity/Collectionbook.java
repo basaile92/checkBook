@@ -9,6 +9,18 @@ public class Collectionbook {
     private String namecollection;
     private String isbn;
 
+
+    public Collectionbook(){
+
+    }
+
+    public Collectionbook(String namecollection, String isbn) {
+
+        this.namecollection = namecollection;
+        this.isbn = isbn;
+    }
+
+
     public void setId(long id) {
 
         this.id = id;

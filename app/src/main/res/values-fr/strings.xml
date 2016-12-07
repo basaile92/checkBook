@@ -49,6 +49,9 @@
     <string name="deleteCollectionQuestion">Voulez vous vraiment supprimer la collection ?</string>
     <string name="alreadyExistCollection">La collection existe déjà, choisissez un autre nom</string>
     <string name="save">Enregistrer</string>
+    <string name="addBookToCollection">Ajouter Livre</string>
+    <string name="selectBook">Sélection des livres</string>
+    <string name="add">Ajouter</string>
 
 
 

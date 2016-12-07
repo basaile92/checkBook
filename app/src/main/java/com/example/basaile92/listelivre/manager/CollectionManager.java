@@ -54,6 +54,15 @@ public class CollectionManager extends DAOBase {
     }
 
 
+    public Collection getCollectionByName (String name) {
+
+        CollectionData collectionData = new CollectionData(handler);
+        Collection collection = collectionData.getCollectionByName(name);
+
+        return collection;
+    }
+
+
     public void deleteCollection(Collection collection) {
 
         CollectionData collectionData = new CollectionData(handler);
