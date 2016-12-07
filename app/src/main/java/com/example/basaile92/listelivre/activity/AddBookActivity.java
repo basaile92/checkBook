@@ -3,9 +3,18 @@ package com.example.basaile92.listelivre.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.ContactsContract;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,8 +34,17 @@ import com.example.basaile92.listelivre.entity.TypeList;
 import com.example.basaile92.listelivre.manager.AuthorManager;
 import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.manager.TypeManager;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +53,8 @@ public class AddBookActivity extends AppCompatActivity {
 
     private ArrayList<String> authorNameList = new ArrayList<String>();
     private ArrayList<String> typeNameList = new ArrayList<String>();
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private String mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +73,7 @@ public class AddBookActivity extends AppCompatActivity {
         final EditText borrowerEdit = (EditText) findViewById(R.id.borrowerEdit);
         final EditText ownerEdit = (EditText) findViewById(R.id.ownerEdit);
         final EditText commentsEdit = (EditText) findViewById(R.id.commentsEdit);
-        final ImageView imageButton = (ImageView) findViewById(R.id.imageButton);
+        final CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
         final Button sendButton = (Button) findViewById(R.id.sendButton);
 
         final ListView authorsListView = (ListView) findViewById(R.id.authorsListView);
@@ -82,10 +102,45 @@ public class AddBookActivity extends AppCompatActivity {
                 // If the form is correctly fill
                 if(checkForm(isbnEdit, titleEdit, authorsList, view.getContext())) {
 
+                    if(!mCurrentPhotoPath.equals("")){
+
+                        try {
+                            OutputStream outputStream = new FileOutputStream(new File(mCurrentPhotoPath));
+                            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                            bmOptions.inJustDecodeBounds = true;
+                            BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+                            int photoW = bmOptions.outWidth;
+                            int photoH = bmOptions.outHeight;
+
+                            int targetW = BitmapFactory.decodeFile(mCurrentPhotoPath).getWidth();
+                            int targetH = BitmapFactory.decodeFile(mCurrentPhotoPath).getHeight();
+
+                            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+                            bmOptions.inJustDecodeBounds = false;
+                            bmOptions.inSampleSize = scaleFactor;
+                            bmOptions.inPurgeable = true;
+
+                            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                            outputStream.close();
+
+
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+
                     // We save the book in the Database
                     BookManager bookManager = new BookManager(view.getContext());
-                    bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), collectionEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(), ""));
-                    Intent intent = new Intent(AddBookActivity.this, BookLibraryActivity.class);
+                    bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), collectionEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(), mCurrentPhotoPath));
+                    Intent intent = new Intent(AddBookActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -209,8 +264,53 @@ public class AddBookActivity extends AppCompatActivity {
         });
     }
 
-    //TODO change activity to take a photo
-    private void setPhotoButton(ImageView imageButton) {
+    private File createTempImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+
+
+    private void setPhotoButton(final ImageView imageButton) {
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+
+                    File photoFile = null;
+
+                    try {
+                        photoFile = createTempImageFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(photoFile != null){
+
+                        Uri photoURI = FileProvider.getUriForFile(view.getContext() ,"com.example.android.fileprovider", photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+                    }
+                }
+
+            }
+        });
+
     }
 
 
@@ -269,7 +369,25 @@ public class AddBookActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        //TODO put the photo in the image Button
+        CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
+        imageButton.setImageURI(Uri.fromFile(new File(mCurrentPhotoPath)));
+        int targetW = imageButton.getWidth();
+        int targetH = imageButton.getHeight();
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+        imageButton.setImageBitmap(bitmap);
     }
 
     //When we push the back button, come back to the main activity
