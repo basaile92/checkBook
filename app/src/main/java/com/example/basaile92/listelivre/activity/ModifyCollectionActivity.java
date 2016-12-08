@@ -37,6 +37,7 @@ public class ModifyCollectionActivity extends AppCompatActivity {
         EditText editCollectionName = (EditText) findViewById(R.id.editCollectionName);
         Button saveCollectionModification = (Button) findViewById(R.id.saveCollectionModification);
         Button addBookToCollection = (Button) findViewById(R.id.addBookToCollectionButton);
+        Button deleteBookFromCollectionButton = (Button) findViewById(R.id.deleteBookFromCollection);
 
         //Set function to the button Delete Collection
         setDeleteCollectionButton(deleteCollectionButton, position);
@@ -49,6 +50,9 @@ public class ModifyCollectionActivity extends AppCompatActivity {
 
         //Set function to the button Add Book to add new books inside the collection
         addBookInCollection(addBookToCollection, position);
+
+        //Set function to the button Delete Book to delete books inside the collection
+        deleteBookFromCollection(deleteBookFromCollectionButton, position);
 
     }
 
@@ -137,8 +141,8 @@ public class ModifyCollectionActivity extends AppCompatActivity {
 
                 BookManager bookManager = new BookManager(view.getContext());
                 final BookLibrary bookLibrary = bookManager.readBookLibrary();
-                String[] booksDescription = new String[bookLibrary.size() - 1];
-                for(int i = 0 ; i<bookLibrary.size()-1 ; i++) {
+                String[] booksDescription = new String[bookLibrary.size()];
+                for(int i = 0 ; i<bookLibrary.size() ; i++) {
 
                     booksDescription[i] = (bookLibrary.get(i).toString());
                 }
@@ -191,6 +195,79 @@ public class ModifyCollectionActivity extends AppCompatActivity {
         });
     }
 
+
+    public void deleteBookFromCollection(Button deleteBookFromCollectionButton, final int position) {
+
+        deleteBookFromCollectionButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(final View view) {
+
+                final BookLibrary booksToDelete = new BookLibrary();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ModifyCollectionActivity.this);
+                builder.setTitle(R.string.selectBook);
+
+                CollectionBookManager collectionBookManager = new CollectionBookManager(view.getContext());
+                CollectionManager collectionManager = new CollectionManager(view.getContext());
+                Collection collection = collectionManager.getCollectionAtPosition(position);
+                final BookLibrary booksInCollection = collectionBookManager.getAllSimpleBooksFromCollection(collection);
+
+                String[] booksDescription = new String[booksInCollection.size()];
+                for(int i = 0 ; i<booksInCollection.size() ; i++) {
+
+                    booksDescription[i] = (booksInCollection.get(i).toString());
+                }
+
+
+                builder.setMultiChoiceItems(booksDescription, null, new DialogInterface.OnMultiChoiceClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked) {
+                            // If the user checked the book, add it to the selected books
+                            booksToDelete.add(booksInCollection.get(which));
+                        } else if (booksToDelete.contains(booksInCollection.get(which))) {
+                            // Else, if the item is already in the array, we remove it
+                            booksToDelete.remove(Integer.valueOf(which));
+                        }
+                    }
+                });
+
+
+                builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        CollectionManager collectionManager = new CollectionManager(view.getContext());
+                        Collection collection = collectionManager.getCollectionAtPosition(position);
+                        CollectionBookManager collectionBookManager = new CollectionBookManager(view.getContext());
+
+                        for (int i = 0 ; i < booksToDelete.size() ; i++) {
+
+                            SimpleBook book = booksToDelete.get(i);
+                            collectionBookManager.deleteCollectionBook(collection, book);
+                        }
+                    }
+                });
+
+
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+                    }
+                });
+
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+    }
 
     //When we push the back button, come back to the main activity
     public void onBackPressed()

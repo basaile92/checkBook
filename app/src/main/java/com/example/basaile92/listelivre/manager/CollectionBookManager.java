@@ -40,6 +40,15 @@ public class CollectionBookManager extends DAOBase{
         collectionbookData.createCollectionbook(collectionbook);
     }
 
+    public void deleteCollectionBook (Collection collection, SimpleBook book) {
+
+        String collectionName = collection.getName();
+        String isbn = book.getIsbn();
+
+        CollectionbookData collectionbookData = new CollectionbookData(handler);
+        collectionbookData.deleteCollectionbook(collectionName, isbn);
+    }
+
     public List<Book> getAllBooksFromCollection (Collection collection) {
 
         CollectionbookData collectionbookData = new CollectionbookData(handler);

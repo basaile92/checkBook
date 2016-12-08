@@ -52,6 +52,9 @@
     <string name="addBookToCollection">Ajouter Livre</string>
     <string name="selectBook">Sélection des livres</string>
     <string name="add">Ajouter</string>
+    <string name="deleteBookFromCollection">Supprimer Livre</string>
+    <string name="delete">Supprimer</string>
+
 
 
 

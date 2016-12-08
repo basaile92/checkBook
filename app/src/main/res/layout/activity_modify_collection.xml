@@ -30,6 +30,12 @@
         android:text="@string/addBookToCollection"/>
 
     <Button
+        android:id="@+id/deleteBookFromCollection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/deleteBookFromCollection"/>
+
+    <Button
         android:id="@+id/deleteCollectionButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"

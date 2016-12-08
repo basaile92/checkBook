@@ -144,4 +144,11 @@ public class CollectionbookData {
         db.delete(TABLE_COLLECTIONBOOK, KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
     }
+
+
+    public void deleteCollectionbook(String name, String isbn) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete(TABLE_COLLECTIONBOOK, KEY_NAMECOLLECTION + " = ?" + " AND " + KEY_ISBN + " = ?",
+                new String[] { name, isbn });
+    }
 }
