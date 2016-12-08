@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -74,9 +75,10 @@ public class AddBookActivity extends AppCompatActivity {
         final EditText ownerEdit = (EditText) findViewById(R.id.ownerEdit);
         final EditText commentsEdit = (EditText) findViewById(R.id.commentsEdit);
         final CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
-        final Button sendButton = (Button) findViewById(R.id.sendButton);
+        final ImageView sendButton = (ImageView) findViewById(R.id.sendButton);
 
-        final ListView authorsListView = (ListView) findViewById(R.id.authorsListView);
+        final TextView addAuthorsText = (TextView) findViewById(R.id.addAuthorsText);
+        final ImageView editAuthorsButton = (ImageView) findViewById(R.id.editAuthorsButton);
         final EditText addAuthorsEdit = (EditText) findViewById(R.id.addAuthorsEdit);
         final ImageView addAuthorsButton = (ImageView) findViewById(R.id.addAuthorsButton);
 
@@ -88,7 +90,7 @@ public class AddBookActivity extends AppCompatActivity {
 
         setBorrowingFieldDisplay(isBorrowedCheckBox, borrowerEdit);
         setPhotoButton(imageButton);
-        setAuthorsListView(authorsListView, addAuthorsEdit, addAuthorsButton, AddBookActivity.this);
+        setAuthorsManager(addAuthorsText, editAuthorsButton, addAuthorsEdit, addAuthorsButton, AddBookActivity.this);
         setTypeListView(typesText, addTypesButton, AddBookActivity.this);
 
 
@@ -192,7 +194,7 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
 
-    private void setAuthorsListView(final ListView authorsListView, final EditText addAuthorsEdit, ImageView addAuthorsButton, final Context context) {
+    private void setAuthorsManager(final TextView addAuthorsText, final ImageView editAuthorsButton, final EditText addAuthorsEdit, ImageView addAuthorsButton, final Context context) {
 
         addAuthorsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,41 +205,65 @@ public class AddBookActivity extends AppCompatActivity {
 
                     // We will add in the authorNameList (which is created at the beginning of the activity all the author name that will be added)
                     authorNameList.add(addAuthorsEdit.getText().toString());
-                    updateAuthorsListView(authorsListView, context);
+                    updateAuthorsTextView(addAuthorsText, context);
                     //We empty the addAuthorsEdit field
                     addAuthorsEdit.setText("");
                 }
             }
         });
+
+        editAuthorsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ArrayList<String> toDelete = new ArrayList<String>();
+                final String[] authorListString = (String[]) authorNameList.toArray();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(R.string.deleteAuthors);
+                builder.setMultiChoiceItems(authorListString, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+
+                        if(b){
+
+                            toDelete.add(authorNameList.get(i));
+
+                        }else{
+
+                            toDelete.remove(authorNameList.get(i));
+
+                        }
+                    }
+                });
+
+                builder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        for(String s: toDelete){
+
+                            authorNameList.remove(s);
+                        }
+                        updateAuthorsTextView(addAuthorsText, context);
+
+
+
+                    }
+                });
+
+                builder.create();
+                builder.show();
+            }
+        });
     }
 
     //To update the list view
-    private void updateAuthorsListView(final ListView authorsListView, final Context context){
+    private void updateAuthorsTextView(final TextView addAuthorsText, final Context context){
 
-        // We display the list view
-        List<Map<String, String>> listOfAuthor = new ArrayList<Map<String, String>>();
 
-        for(String authorName: authorNameList) {
 
-            Map<String, String> authorMap = new HashMap<String, String>();
-            authorMap.put("name", authorName);
-            listOfAuthor.add(authorMap);
-        }
-        SimpleAdapter listAdapter = new SimpleAdapter(context, listOfAuthor, R.layout.author, new String[]{"name"}, new int[]{R.id.authorText});
-        authorsListView.setAdapter(listAdapter);
+        addAuthorsText.setText(AuthorManager.StringListToString(authorNameList));
 
-        // We assignate for each item the delete button and his function
-        authorsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-
-                ImageView authorDeleteButton = (ImageView) findViewById(R.id.authorDeleteButton);
-
-                authorNameList.remove(i);
-                updateAuthorsListView(authorsListView, context);
-
-            }
-        });
     }
 
 
@@ -306,13 +332,6 @@ public class AddBookActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.handleResult(requestCode, permissions, grantResults);
-    }
-
-
     //Check the different field of the form
     private boolean checkForm(EditText isbnEdit, EditText titleEdit, AuthorList authorsList, Context context){
 
@@ -346,6 +365,12 @@ public class AddBookActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionManager.handleResult(requestCode, permissions, grantResults);
     }
 
     @Override

@@ -64,11 +64,11 @@ public class ImageManager {
         void onDownload(Bitmap bitmap);
     }
 
-    public static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    public static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
         protected DownloadImageListener listener;
 
-        public DownloadImageTask(DownloadImageListener listener) {
+        public ImageDownloader(DownloadImageListener listener) {
             this.listener = listener;
         }
 

@@ -76,5 +76,7 @@
     <string name="noPermission">The permission are not granted</string>
     <string name="deleteBookFromCollection">Delete Book</string>
     <string name="delete">Delete</string>
+    <string name="deleteButton">Delete</string>
+    <string name="deleteAuthors">Which authors do you want to delete?</string>
 
 </resources>

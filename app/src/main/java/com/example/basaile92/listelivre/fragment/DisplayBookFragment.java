@@ -24,6 +24,8 @@ import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.manager.BookManager;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import org.w3c.dom.Text;
+
 
 /**
  * Created by Basile on 20/11/2016.
@@ -54,13 +56,13 @@ public class DisplayBookFragment extends Fragment{
         if(position != -1)
             updateView(position, view, view);
 
+
         return view;
     }
 
     //This function is used to be able to change the view from an other activity
     public void updateView(int position, View viewModif, View viewLibrary){
 
-        TextView isbnText = (TextView) viewModif.findViewById(R.id.isbnText);
         TextView titleText = (TextView) viewModif.findViewById(R.id.titleText);
         TextView authorText = (TextView) viewModif.findViewById(R.id.authorText);
         TextView typeText = (TextView) viewModif.findViewById(R.id.typeText);
@@ -84,7 +86,6 @@ public class DisplayBookFragment extends Fragment{
         SimpleBook book = bookManager.getSimpleBookAtPosition(position);
 
         //We set all field of the view with the informations of the book
-        isbnText.setText(book.getIsbn());
         titleText.setText(book.getTitle());
         authorText.setText(book.getAuthors().toString());
         typeText.setText(book.getTypes().toString());

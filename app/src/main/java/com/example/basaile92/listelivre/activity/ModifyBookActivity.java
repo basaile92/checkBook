@@ -42,6 +42,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import rebus.permissionutils.FullCallback;
+import rebus.permissionutils.PermissionEnum;
+import rebus.permissionutils.PermissionManager;
+import rebus.permissionutils.PermissionUtils;
+
 public class ModifyBookActivity extends AppCompatActivity {
 
     private ArrayList<String> authorNameList = new ArrayList<String>();
@@ -260,14 +265,14 @@ public class ModifyBookActivity extends AppCompatActivity {
         });
     }
 
-    private void setPhotoButton(ImageView imageButton) {
+    private void setPhotoButton(final CircularImageView imageButton) {
 
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                final Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 
                     File photoFile = null;
@@ -283,7 +288,21 @@ public class ModifyBookActivity extends AppCompatActivity {
 
                         Uri photoURI = FileProvider.getUriForFile(view.getContext() ,"com.example.android.fileprovider", photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                        ArrayList<PermissionEnum> permissionEnumArrayList = new ArrayList<>();
+                        permissionEnumArrayList.add(PermissionEnum.CAMERA);
+                        PermissionManager.with(ModifyBookActivity.this).permissions(permissionEnumArrayList).callback(new FullCallback() {
+                            @Override
+                            public void result(ArrayList<PermissionEnum> permissionsGranted, ArrayList<PermissionEnum> permissionsDenied, ArrayList<PermissionEnum> permissionsDeniedForever, ArrayList<PermissionEnum> permissionsAsked) {
+                                if(PermissionUtils.isGranted(ModifyBookActivity.this, PermissionEnum.CAMERA)) {
+                                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                                }else{
+
+                                    Toast toast = Toast.makeText(ModifyBookActivity.this, R.string.noPermission, Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+
+                            }
+                        }).ask();
 
                     }
                 }
@@ -347,7 +366,11 @@ public class ModifyBookActivity extends AppCompatActivity {
         return false;
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionManager.handleResult(requestCode, permissions, grantResults);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

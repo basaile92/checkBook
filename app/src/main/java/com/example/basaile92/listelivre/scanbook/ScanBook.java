@@ -3,7 +3,9 @@ package com.example.basaile92.listelivre.scanbook;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -22,6 +24,7 @@ import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.Type;
 import com.example.basaile92.listelivre.entity.TypeList;
 import com.example.basaile92.listelivre.manager.BookManager;
+import com.example.basaile92.listelivre.manager.ImageManager;
 import com.example.basaile92.listelivre.manager.TypeManager;
 
 import org.json.JSONArray;
@@ -68,14 +71,21 @@ public class ScanBook{
 
                             BookManager bookManager = new BookManager(context);
                             TypeManager typeManager = new TypeManager(context);
-                            SimpleBook book = bookLibrary.get(which);
+                            final SimpleBook book = bookLibrary.get(which);
+                            String url = book.getPhoto();
+                            new ImageManager.ImageDownloader(new ImageManager.DownloadImageListener() {
+                                @Override
+                                public void onDownload(Bitmap bitmap) {
+
+                                    book.setPhoto(ImageManager.saveBitmap(context, bitmap));
+                                }
+                            }).execute(url);
+
                             for(Type type: book.getTypes()){
                                 typeManager.saveType(type);
                             }
                             bookManager.saveSimpleBook(book);
                             dialog.cancel();
-
-                            //TODO ajouter listview
                         }
                     });
 
@@ -123,6 +133,7 @@ public class ScanBook{
                     String year = parseYear(book.getString("publishedDate"));
                     String title = book.getString("title");
                     String photo = book.getJSONObject("imageLinks").getString("thumbnail");
+
 
                     SimpleBook simpleBook = new SimpleBook(isbn, authors, title, "", types, publisher, year, summary, false, false, "", "", "", photo);
                     list.addBook(simpleBook);
