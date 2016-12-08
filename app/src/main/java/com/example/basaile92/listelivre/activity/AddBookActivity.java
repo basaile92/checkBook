@@ -5,23 +5,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -31,20 +30,15 @@ import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.entity.AuthorList;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.TypeList;
+import com.example.basaile92.listelivre.manager.ImageManager;
 import com.example.basaile92.listelivre.manager.AuthorManager;
 import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.manager.TypeManager;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URI;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +48,7 @@ public class AddBookActivity extends AppCompatActivity {
     private ArrayList<String> authorNameList = new ArrayList<String>();
     private ArrayList<String> typeNameList = new ArrayList<String>();
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private String mCurrentPhotoPath;
+    private String mCurrentPhotoPath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +85,19 @@ public class AddBookActivity extends AppCompatActivity {
         setAuthorsListView(authorsListView, addAuthorsEdit, addAuthorsButton, AddBookActivity.this);
         setTypeListView(typesText, addTypesButton, AddBookActivity.this);
 
+        authorsListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                // Disallow the touch request for parent scroll on touch of child view
+                view.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
+        setListViewHeightBasedOnChildren(authorsListView);
+
+
+
         sendButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -104,36 +111,9 @@ public class AddBookActivity extends AppCompatActivity {
 
                     if(!mCurrentPhotoPath.equals("")){
 
-                        try {
-                            OutputStream outputStream = new FileOutputStream(new File(mCurrentPhotoPath));
                             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                            bmOptions.inJustDecodeBounds = true;
-                            BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-                            int photoW = bmOptions.outWidth;
-                            int photoH = bmOptions.outHeight;
-
-                            int targetW = BitmapFactory.decodeFile(mCurrentPhotoPath).getWidth();
-                            int targetH = BitmapFactory.decodeFile(mCurrentPhotoPath).getHeight();
-
-                            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-                            bmOptions.inJustDecodeBounds = false;
-                            bmOptions.inSampleSize = scaleFactor;
-                            bmOptions.inPurgeable = true;
-
                             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                            outputStream.close();
-
-
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-
+                            ImageManager.saveBitmap(view.getContext(), ImageManager.getNewSizeBitmap(bitmap,10));
                     }
 
 
@@ -264,25 +244,9 @@ public class AddBookActivity extends AppCompatActivity {
         });
     }
 
-    private File createTempImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 
 
-
-    private void setPhotoButton(final ImageView imageButton) {
+    private void setPhotoButton(final CircularImageView imageButton) {
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -294,7 +258,8 @@ public class AddBookActivity extends AppCompatActivity {
                     File photoFile = null;
 
                     try {
-                        photoFile = createTempImageFile();
+                        photoFile = ImageManager.createImageFile(view.getContext());
+                        mCurrentPhotoPath = photoFile.getAbsolutePath();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -371,24 +336,32 @@ public class AddBookActivity extends AppCompatActivity {
 
         CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
         imageButton.setImageURI(Uri.fromFile(new File(mCurrentPhotoPath)));
-        int targetW = imageButton.getWidth();
-        int targetH = imageButton.getHeight();
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-
-        imageButton.setImageBitmap(bitmap);
     }
+
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView  ****/
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ListView.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
+
 
     //When we push the back button, come back to the main activity
     public void onBackPressed()

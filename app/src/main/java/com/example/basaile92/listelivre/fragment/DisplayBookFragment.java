@@ -3,6 +3,8 @@ package com.example.basaile92.listelivre.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,12 +20,10 @@ import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.activity.MainActivity;
 import com.example.basaile92.listelivre.activity.ModifyBookActivity;
 import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
-import com.example.basaile92.listelivre.entity.Author;
 import com.example.basaile92.listelivre.entity.SimpleBook;
-import com.example.basaile92.listelivre.entity.Type;
 import com.example.basaile92.listelivre.manager.BookManager;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
-import java.util.ArrayList;
 
 /**
  * Created by Basile on 20/11/2016.
@@ -74,7 +74,7 @@ public class DisplayBookFragment extends Fragment{
         LinearLayout borrowedLayout = (LinearLayout) viewModif.findViewById(R.id.borrowedLayout);
         TextView ownerText = (TextView) viewModif.findViewById(R.id.ownerText);
         TextView commentsText = (TextView) viewModif.findViewById(R.id.commentsText);
-        ImageView imageButton = (ImageView) viewModif.findViewById(R.id.imageButton);
+        CircularImageView imageButton = (CircularImageView) viewModif.findViewById(R.id.imageButton);
 
         ImageView editButton = (ImageView) viewModif.findViewById(R.id.editButton);
         ImageView deleteButton = (ImageView) viewModif.findViewById(R.id.deleteButton);
@@ -194,9 +194,13 @@ public class DisplayBookFragment extends Fragment{
         }
     }
 
-    //TODO Import the picture from the library and set it
-    private void setImageButton(ImageView imageButton, String path){
+    private void setImageButton(CircularImageView imageButton, String path){
 
+        if(!path.equals("")) {
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);
+            imageButton.setImageBitmap(bitmap);
+        }
 
     }
 

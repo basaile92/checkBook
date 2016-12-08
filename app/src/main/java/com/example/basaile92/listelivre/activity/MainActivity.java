@@ -2,6 +2,7 @@ package com.example.basaile92.listelivre.activity;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.TabHost;
 
@@ -15,6 +16,7 @@ public class MainActivity extends TabActivity {
         setContentView(R.layout.activity_main);
 
         TabHost tabHost = getTabHost();
+
 
         String bookLibraryTitle = getString(R.string.bookLibraryTitle);
         TabHost.TabSpec spec = tabHost.newTabSpec(bookLibraryTitle);

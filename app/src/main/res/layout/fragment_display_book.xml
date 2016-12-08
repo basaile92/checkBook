@@ -98,7 +98,7 @@
 
                 </LinearLayout>
 
-                <android.support.v4.widget.CircleImageView
+                <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/imageButton"
                     android:src="@drawable/puzzle"
                     app:civ_border_color="?attr/colorButtonNormal"

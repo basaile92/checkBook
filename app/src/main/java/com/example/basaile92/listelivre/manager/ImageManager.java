@@ -1,4 +1,4 @@
-package com.example.basaile92.listelivre.image;
+package com.example.basaile92.listelivre.manager;
 
 /**
  * Created by basaile92 on 04/12/2016.
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class Image {
+public class ImageManager {
 
     public static File createImageFile(Context context) throws IOException {
 

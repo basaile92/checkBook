@@ -3,7 +3,12 @@ package com.example.basaile92.listelivre.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,8 +31,12 @@ import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
 import com.example.basaile92.listelivre.fragment.DisplayBookFragment;
 import com.example.basaile92.listelivre.manager.AuthorManager;
 import com.example.basaile92.listelivre.manager.BookManager;
+import com.example.basaile92.listelivre.manager.ImageManager;
 import com.example.basaile92.listelivre.manager.TypeManager;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +46,8 @@ public class ModifyBookActivity extends AppCompatActivity {
 
     private ArrayList<String> authorNameList = new ArrayList<String>();
     private ArrayList<String> typeNameList = new ArrayList<String>();
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private String mCurrentPhotoPath ="";
 
 
     @Override
@@ -56,7 +67,7 @@ public class ModifyBookActivity extends AppCompatActivity {
         final EditText borrowerEdit = (EditText) findViewById(R.id.borrowerEdit);
         final EditText ownerEdit = (EditText) findViewById(R.id.ownerEdit);
         final EditText commentsEdit = (EditText) findViewById(R.id.commentsEdit);
-        final ImageView imageButton = (ImageView) findViewById(R.id.imageButton);
+        final CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
         final Button modifyButton = (Button) findViewById(R.id.modifyButton);
 
         final ListView authorsListView = (ListView) findViewById(R.id.authorsListView);
@@ -94,8 +105,12 @@ public class ModifyBookActivity extends AppCompatActivity {
 
             typesList.addAll(book.getTypes());
             typeNameList = TypeManager.toStringList(typesList);
-            //TODO set image
 
+            if(!book.getPhoto().equals("")) {
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                Bitmap bitmap = BitmapFactory.decodeFile(book.getPhoto(), bmOptions);
+                imageButton.setImageBitmap(bitmap);
+            }
         }
 
         setBorrowingFieldDisplay(isBorrowedCheckBox, borrowerEdit);
@@ -245,8 +260,38 @@ public class ModifyBookActivity extends AppCompatActivity {
         });
     }
 
-    //TODO change activity to take a photo
     private void setPhotoButton(ImageView imageButton) {
+
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+
+                    File photoFile = null;
+
+                    try {
+                        photoFile = ImageManager.createImageFile(view.getContext());
+                        mCurrentPhotoPath = photoFile.getAbsolutePath();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(photoFile != null){
+
+                        Uri photoURI = FileProvider.getUriForFile(view.getContext() ,"com.example.android.fileprovider", photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+                    }
+                }
+
+            }
+        });
+
+
     }
 
 
@@ -304,10 +349,11 @@ public class ModifyBookActivity extends AppCompatActivity {
 
 
 
-    //TODO: Get the photo
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
+        imageButton.setImageURI(Uri.fromFile(new File(mCurrentPhotoPath)));
     }
 
     //When we push the back button, come back to the main activity
