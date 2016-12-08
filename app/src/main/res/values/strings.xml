@@ -73,5 +73,6 @@
     <string name="addBookToCollection">Add Book</string>
     <string name="selectBook">Select Books</string>
     <string name="add">Add</string>
+    <string name="noPermission">The permission are not granted</string>
 
 </resources>

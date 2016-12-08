@@ -43,6 +43,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import rebus.permissionutils.AskagainCallback;
+import rebus.permissionutils.FullCallback;
+import rebus.permissionutils.PermissionEnum;
+import rebus.permissionutils.PermissionManager;
+import rebus.permissionutils.PermissionUtils;
+
 public class AddBookActivity extends AppCompatActivity {
 
     private ArrayList<String> authorNameList = new ArrayList<String>();
@@ -85,16 +91,6 @@ public class AddBookActivity extends AppCompatActivity {
         setAuthorsListView(authorsListView, addAuthorsEdit, addAuthorsButton, AddBookActivity.this);
         setTypeListView(typesText, addTypesButton, AddBookActivity.this);
 
-        authorsListView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                // Disallow the touch request for parent scroll on touch of child view
-                view.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-
-        setListViewHeightBasedOnChildren(authorsListView);
 
 
 
@@ -252,7 +248,7 @@ public class AddBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                final Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 
                     File photoFile = null;
@@ -268,7 +264,21 @@ public class AddBookActivity extends AppCompatActivity {
 
                         Uri photoURI = FileProvider.getUriForFile(view.getContext() ,"com.example.android.fileprovider", photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                        ArrayList<PermissionEnum> permissionEnumArrayList = new ArrayList<>();
+                        permissionEnumArrayList.add(PermissionEnum.CAMERA);
+                        PermissionManager.with(AddBookActivity.this).permissions(permissionEnumArrayList).callback(new FullCallback() {
+                            @Override
+                            public void result(ArrayList<PermissionEnum> permissionsGranted, ArrayList<PermissionEnum> permissionsDenied, ArrayList<PermissionEnum> permissionsDeniedForever, ArrayList<PermissionEnum> permissionsAsked) {
+                                if(PermissionUtils.isGranted(AddBookActivity.this, PermissionEnum.CAMERA)) {
+                                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                                }else{
+
+                                    Toast toast = Toast.makeText(AddBookActivity.this, R.string.noPermission, Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+
+                            }
+                        }).ask();
 
                     }
                 }
@@ -295,6 +305,13 @@ public class AddBookActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionManager.handleResult(requestCode, permissions, grantResults);
+    }
+
 
     //Check the different field of the form
     private boolean checkForm(EditText isbnEdit, EditText titleEdit, AuthorList authorsList, Context context){
@@ -337,31 +354,6 @@ public class AddBookActivity extends AppCompatActivity {
         CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
         imageButton.setImageURI(Uri.fromFile(new File(mCurrentPhotoPath)));
     }
-
-    /**** Method for Setting the Height of the ListView dynamically.
-     **** Hack to fix the issue of not showing all the items of the ListView
-     **** when placed inside a ScrollView  ****/
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ListView.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-    }
-
 
     //When we push the back button, come back to the main activity
     public void onBackPressed()

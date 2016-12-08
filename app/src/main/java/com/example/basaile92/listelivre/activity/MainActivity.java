@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.TabHost;
 
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.database.MySQLHelper;
+import com.example.basaile92.listelivre.manager.BookManager;
 
 public class MainActivity extends TabActivity {
 
@@ -16,7 +18,6 @@ public class MainActivity extends TabActivity {
         setContentView(R.layout.activity_main);
 
         TabHost tabHost = getTabHost();
-
 
         String bookLibraryTitle = getString(R.string.bookLibraryTitle);
         TabHost.TabSpec spec = tabHost.newTabSpec(bookLibraryTitle);

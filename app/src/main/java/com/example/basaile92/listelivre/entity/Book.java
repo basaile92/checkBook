@@ -29,6 +29,7 @@ public class Book implements Serializable {
         this.borrower = borrower;
         this.owner = owner;
         this.comment = comment;
+        this.photo = photo;
     }
 
 

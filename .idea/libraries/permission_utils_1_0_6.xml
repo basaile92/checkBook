@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="permission-utils-1.0.6">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/rebus/permission-utils/1.0.6/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/rebus/permission-utils/1.0.6/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/rebus/permission-utils/1.0.6/6b4412dd2b3f02445c924eae69c23af284694cda/permission-utils-1.0.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

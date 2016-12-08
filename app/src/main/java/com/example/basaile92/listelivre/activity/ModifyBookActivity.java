@@ -47,7 +47,7 @@ public class ModifyBookActivity extends AppCompatActivity {
     private ArrayList<String> authorNameList = new ArrayList<String>();
     private ArrayList<String> typeNameList = new ArrayList<String>();
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private String mCurrentPhotoPath ="";
+    private String mCurrentPhotoPath = "";
 
 
     @Override
