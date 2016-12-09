@@ -123,6 +123,11 @@ public class ModifyBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                authorsList.removeAll(authorsList);
+                authorsList.addAll(AuthorManager.fromString( authorNameList , isbnEdit.getText().toString()));
+                typesList.removeAll(typesList);
+                typesList.addAll(TypeManager.fromString(typeNameList));
+
                 // If the form is correctly fill
                 if(checkForm(isbnEdit, titleEdit,authorsList, view.getContext())) {
 

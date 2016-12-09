@@ -11,14 +11,16 @@
         android:id="@+id/typeText"
         android:layout_weight="3"
         android:textSize="18sp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textColor="@android:color/black" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:srcCompat="@android:drawable/ic_menu_delete"
         android:id="@+id/typeDeleteButton"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:src="@drawable/delete"
+        android:tint="@color/colorAccent" />
 
 
 </LinearLayout>
