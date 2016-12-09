@@ -101,29 +101,6 @@
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/collectionEdit"
-                    android:hint="@string/collectionText"
-                    android:inputType="textLongMessage"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="2.5dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -313,27 +290,6 @@
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/ownerEdit"
-                    android:hint="@string/ownerText"
-                    android:inputType="textPersonName" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="2.5dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp">
-
                 <CheckBox
                     android:text="@string/isReadText"
                     android:layout_width="wrap_content"
@@ -364,15 +320,6 @@
                     android:id="@+id/isBorrowedCheckBox"
                     android:layout_weight="3"
                     android:checked="false" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/borrowerEdit"
-                    android:layout_weight="2"
-                    android:visibility="invisible"
-                    android:hint="@string/borrowerText"
-                    android:inputType="textPersonName" />
 
             </LinearLayout>
 

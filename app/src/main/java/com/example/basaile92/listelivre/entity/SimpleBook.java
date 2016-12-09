@@ -16,8 +16,8 @@ public class SimpleBook implements Serializable{
     AuthorList authors;
     TypeList types;
 
-    public SimpleBook(String isbn, AuthorList authors, String  title, String collection, TypeList types, String publisher, String year, String summary, boolean isRead, boolean isBorrowed, String borrower, String owner, String comment, String photo){
-        this.book = new Book(isbn,  title, collection, publisher, year, summary, (isRead? 1 : 0), (isBorrowed? 1 : 0), borrower, owner, comment, photo);
+    public SimpleBook(String isbn, AuthorList authors, String  title, TypeList types, String publisher, String year, String summary, boolean isRead, boolean isBorrowed, String comment, String photo){
+        this.book = new Book(isbn,  title, publisher, year, summary, (isRead? 1 : 0), (isBorrowed? 1 : 0), comment, photo);
         this.authors = authors;
         this.types = types;
     }
@@ -74,14 +74,6 @@ public class SimpleBook implements Serializable{
         this.book.setTitle(title);
     }
 
-    public String getCollection() {
-        return this.book.getCollection();
-    }
-
-    public void setCollection(String collection) {
-        this.book.setCollection(collection);
-    }
-
     public String getPublisher() {
         return this.book.getPublisher();
     }
@@ -124,22 +116,6 @@ public class SimpleBook implements Serializable{
         this.book.setIsBorrowed(res);
     }
 
-    public String getBorrower() {
-        return this.book.getBorrower();
-    }
-
-    public void setBorrower(String borrower) {
-        this.book.setBorrower(borrower);
-    }
-
-    public String getOwner() {
-        return this.book.getOwner();
-    }
-
-    public void setOwner(String owner) {
-        this.book.setOwner(owner);
-    }
-
     public String getComment() {
         return this.book.getComment();
     }
@@ -154,28 +130,6 @@ public class SimpleBook implements Serializable{
 
     public void setPhoto(String photo) {
         this.book.setPhoto(photo);
-    }
-
-    public ArrayList<String> searchString(){
-
-        ArrayList<String> res = new ArrayList<String>();
-        res.add(getTitle());
-        res.add(getIsbn());
-        res.add(getCollection());
-        res.add(getPublisher());
-        res.add(getYear());
-        for(Author author : getAuthors()){
-
-            res.add(author.getName());
-        }
-
-        for(Type type : getTypes()){
-
-            res.add(type.getName());
-        }
-
-        return res;
-
     }
 
     public String toString(){

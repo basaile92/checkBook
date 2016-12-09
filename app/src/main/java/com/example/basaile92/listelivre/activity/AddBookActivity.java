@@ -65,14 +65,11 @@ public class AddBookActivity extends AppCompatActivity {
 
         final EditText isbnEdit = (EditText) findViewById(R.id.isbnEdit);
         final EditText titleEdit = (EditText) findViewById(R.id.titleEdit);
-        final EditText collectionEdit = (EditText) findViewById(R.id.collectionEdit);
         final EditText publisherEdit = (EditText) findViewById(R.id.publisherEdit);
         final EditText yearEdit = (EditText) findViewById(R.id.yearEdit);
         final EditText summaryEdit = (EditText) findViewById(R.id.summaryEdit);
         final CheckBox isReadCheckBox = (CheckBox) findViewById(R.id.isReadCheckBox);
         final CheckBox isBorrowedCheckBox = (CheckBox) findViewById(R.id.isBorrowedCheckBox);
-        final EditText borrowerEdit = (EditText) findViewById(R.id.borrowerEdit);
-        final EditText ownerEdit = (EditText) findViewById(R.id.ownerEdit);
         final EditText commentsEdit = (EditText) findViewById(R.id.commentsEdit);
         final CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
         final ImageView sendButton = (ImageView) findViewById(R.id.sendButton);
@@ -89,7 +86,6 @@ public class AddBookActivity extends AppCompatActivity {
         TextView typesText = (TextView) findViewById(R.id.typesText);
         ImageView addTypesButton = (ImageView) findViewById(R.id.addTypesButton);
 
-        setBorrowingFieldDisplay(isBorrowedCheckBox, borrowerEdit);
         setPhotoButton(imageButton);
         setAuthorsManager(addAuthorsText, editAuthorsButton, addAuthorsEdit, addAuthorsButton, AddBookActivity.this);
         setTypeListView(typesText, addTypesButton, AddBookActivity.this);
@@ -118,7 +114,7 @@ public class AddBookActivity extends AppCompatActivity {
 
                     // We save the book in the Database
                     BookManager bookManager = new BookManager(view.getContext());
-                    bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), collectionEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(), mCurrentPhotoPath));
+                    bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(),  commentsEdit.getText().toString(), mCurrentPhotoPath));
                     Intent intent = new Intent(AddBookActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -321,23 +317,6 @@ public class AddBookActivity extends AppCompatActivity {
 
     }
 
-
-    //To make visible the borrowerEdit when the isBorrowed checkbox is checked or not
-    private void setBorrowingFieldDisplay(CheckBox isBorrowedCheckBox, final EditText borrowerEdit){
-
-        isBorrowedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(isChecked){
-                    borrowerEdit.setVisibility(View.VISIBLE);
-                }else{
-                    borrowerEdit.setVisibility(View.INVISIBLE);
-                }
-
-            }
-        });
-    }
 
     //Check the different field of the form
     private boolean checkForm(EditText isbnEdit, EditText titleEdit, AuthorList authorsList, Context context){

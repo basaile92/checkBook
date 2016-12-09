@@ -66,17 +66,22 @@ public class DisplayBookFragment extends Fragment{
         TextView titleText = (TextView) viewModif.findViewById(R.id.titleText);
         TextView authorText = (TextView) viewModif.findViewById(R.id.authorText);
         TextView typeText = (TextView) viewModif.findViewById(R.id.typeText);
-        TextView collectionText = (TextView) viewModif.findViewById(R.id.collectionText);
         TextView publisherText = (TextView) viewModif.findViewById(R.id.publisherText);
         TextView yearText = (TextView) viewModif.findViewById(R.id.yearText);
         TextView summaryText = (TextView) viewModif.findViewById(R.id.summaryText);
-        TextView isReadText = (TextView) viewModif.findViewById(R.id.isReadText);
-        TextView isBorrowedText = (TextView) viewModif.findViewById(R.id.isBorrowedText);
-        TextView borrowerText = (TextView) viewModif.findViewById(R.id.borrowerText);
-        LinearLayout borrowedLayout = (LinearLayout) viewModif.findViewById(R.id.borrowedLayout);
-        TextView ownerText = (TextView) viewModif.findViewById(R.id.ownerText);
         TextView commentsText = (TextView) viewModif.findViewById(R.id.commentsText);
         CircularImageView imageButton = (CircularImageView) viewModif.findViewById(R.id.imageButton);
+
+        LinearLayout titleLayout = (LinearLayout) viewModif.findViewById(R.id.titleLayout);
+        LinearLayout authorLayout = (LinearLayout) viewModif.findViewById(R.id.authorLayout);
+        LinearLayout typeLayout = (LinearLayout) viewModif.findViewById(R.id.typeLayout);
+        LinearLayout publisherLayout = (LinearLayout) viewModif.findViewById(R.id.publisherLayout);
+        LinearLayout yearLayout = (LinearLayout) viewModif.findViewById(R.id.yearLayout);
+        LinearLayout summaryLayout = (LinearLayout) viewModif.findViewById(R.id.summaryLayout);
+        LinearLayout commentLayout = (LinearLayout) viewModif.findViewById(R.id.commentLayout);
+        LinearLayout stampLayout = (LinearLayout) viewModif.findViewById(R.id.stampLayout);
+        LinearLayout layout = (LinearLayout) viewModif.findViewById(R.id.layout);
+
 
         ImageView editButton = (ImageView) viewModif.findViewById(R.id.editButton);
         ImageView deleteButton = (ImageView) viewModif.findViewById(R.id.deleteButton);
@@ -89,20 +94,48 @@ public class DisplayBookFragment extends Fragment{
         titleText.setText(book.getTitle());
         authorText.setText(book.getAuthors().toString());
         typeText.setText(book.getTypes().toString());
-        collectionText.setText(book.getCollection());
         publisherText.setText(book.getPublisher());
         yearText.setText(book.getYear());
         summaryText.setText(book.getSummary());
-        setIsReadTextDisplay(isReadText, book.isRead());
-        setBorrowerTextDisplay( borrowedLayout,isBorrowedText, book.isBorrowed(), borrowerText, book.getBorrower() );
-        ownerText.setText(book.getOwner());
         commentsText.setText(book.getComment());
 
         setImageButton(imageButton, book.getPhoto());
 
+        setLayoutVisibility(titleLayout, titleText.getText().toString());
+        setLayoutVisibility(authorLayout, authorText.getText().toString());
+        setLayoutVisibility(typeLayout, typeText.getText().toString());
+        setLayoutVisibility(publisherLayout, publisherText.getText().toString());
+        setLayoutVisibility(yearLayout, yearText.getText().toString());
+        setLayoutVisibility(summaryLayout, summaryText.getText().toString());
+        setLayoutVisibility(commentLayout, commentsText.getText().toString());
+        setPictureVisibility(imageButton, book.getPhoto());
+        setStampVisibility(stampLayout, book.isBorrowed() && book.isRead());
+
         setButtonEdit(editButton, position);
         setButtonDelete(deleteButton, position);
 
+    }
+
+
+    private void setStampVisibility(LinearLayout stampLayout, boolean b) {
+
+        if(!b){
+
+            stampLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private void setPictureVisibility(CircularImageView imageButton, String photo) {
+
+        if(photo.equals("")){
+            imageButton.setVisibility(View.GONE);
+        }
+    }
+
+    private void setLayoutVisibility(LinearLayout layout, String s) {
+
+        if(s.equals(""))
+            layout.setVisibility(View.GONE);
     }
 
     private void setButtonEdit(ImageView editButton, final int position) {
@@ -165,34 +198,6 @@ public class DisplayBookFragment extends Fragment{
                 alert.show();
             }
         });
-    }
-
-    private void setIsReadTextDisplay(TextView isReadTextView, boolean isRead){
-
-        if(isRead){
-
-            isReadTextView.setText(R.string.read);
-            isReadTextView.setTextColor(Color.RED);
-
-        }else
-        {
-            isReadTextView.setText(R.string.notRead);
-            isReadTextView.setTextColor(Color.GREEN);
-        }
-    }
-
-    private void setBorrowerTextDisplay(LinearLayout borrowedLayout, TextView isBorrowedText, boolean isBorrowed, TextView borrowerText, String borrower ){
-
-        if(isBorrowed){
-
-            isBorrowedText.setText(R.string.borrowed);
-            isBorrowedText.setTextColor(Color.RED);
-            borrowerText.setText(borrower);
-            borrowerText.setTextColor(Color.RED);
-        }else{
-
-            borrowedLayout.setVisibility(View.GONE);
-        }
     }
 
     private void setImageButton(CircularImageView imageButton, String path){

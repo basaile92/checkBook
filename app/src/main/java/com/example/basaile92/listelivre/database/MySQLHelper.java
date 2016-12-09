@@ -25,14 +25,11 @@ public class MySQLHelper extends SQLiteOpenHelper {
 
     // Table book columns
     private static final String KEY_TITLE = "title";
-    private static final String KEY_COLLECTION = "collection";
     private static final String KEY_PUBLISHER = "publisher";
     private static final String KEY_YEAR = "year";
     private static final String KEY_SUMMARY = "summary";
     private static final String KEY_ISREAD = "isread";
     private static final String KEY_ISBORROWED = "isborrowed";
-    private static final String KEY_BORROWER = "borrower";
-    private static final String KEY_OWNER = "owner";
     private static final String KEY_COMMENT = "comment";
     private static final String KEY_PHOTO = "photo";
 
@@ -47,14 +44,11 @@ public class MySQLHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_BOOK + " ("
                     +    KEY_ISBN + " TEXT, "
                     +    KEY_TITLE + " TEXT, "
-                    +    KEY_COLLECTION + " TEXT, "
                     +    KEY_PUBLISHER + " TEXT, "
                     +    KEY_YEAR + " TEXT, "
                     +    KEY_SUMMARY + " TEXT, "
                     +    KEY_ISREAD + " INTEGER, "
                     +    KEY_ISBORROWED + " INTEGER, "
-                    +    KEY_BORROWER + " TEXT, "
-                    +    KEY_OWNER + " TEXT, "
                     +    KEY_COMMENT + " TEXT, "
                     +    KEY_PHOTO + " TEXT, "
 

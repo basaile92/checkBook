@@ -135,7 +135,7 @@ public class ScanBook{
                     String photo = book.getJSONObject("imageLinks").getString("thumbnail");
 
 
-                    SimpleBook simpleBook = new SimpleBook(isbn, authors, title, "", types, publisher, year, summary, false, false, "", "", "", photo);
+                    SimpleBook simpleBook = new SimpleBook(isbn, authors, title, types, publisher, year, summary, false, false, "", photo);
                     list.addBook(simpleBook);
                 }
 

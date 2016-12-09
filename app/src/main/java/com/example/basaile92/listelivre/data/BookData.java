@@ -19,14 +19,11 @@ public class BookData {
     
     public static final String KEY_ISBN = "isbn";
     public static final String KEY_TITLE = "title";
-    public static final String KEY_COLLECTION = "collection";
     public static final String KEY_PUBLISHER = "publisher";
     public static final String KEY_YEAR = "year";
     public static final String KEY_SUMMARY = "summary";
     public static final String KEY_ISREAD = "isread";
     public static final String KEY_ISBORROWED = "isborrowed";
-    public static final String KEY_BORROWER = "borrower";
-    public static final String KEY_OWNER = "owner";
     public static final String KEY_COMMENT = "comment";
     public static final String KEY_PHOTO = "photo";
 
@@ -41,17 +38,14 @@ public class BookData {
         if(c.getCount() > 0) {
             String isbn = c.getString(c.getColumnIndex(KEY_ISBN));
             String title = c.getString(c.getColumnIndex(KEY_TITLE));
-            String collection = c.getString(c.getColumnIndex(KEY_COLLECTION));
             String publisher = c.getString(c.getColumnIndex(KEY_PUBLISHER));
             String year = c.getString(c.getColumnIndex(KEY_YEAR));
             String summary = c.getString(c.getColumnIndex(KEY_SUMMARY));
             int isRead = c.getInt(c.getColumnIndex(KEY_ISREAD));
             int isBorrowed = c.getInt(c.getColumnIndex(KEY_ISBORROWED));
-            String borrower = c.getString(c.getColumnIndex(KEY_BORROWER));
-            String owner = c.getString(c.getColumnIndex(KEY_OWNER));
             String comment = c.getString(c.getColumnIndex(KEY_COMMENT));
             String photo = c.getString(c.getColumnIndex(KEY_PHOTO));
-            Book entry = new Book(isbn, title, collection, publisher, year, summary, isRead, isBorrowed, borrower, owner, comment, photo);
+            Book entry = new Book(isbn, title, publisher, year, summary, isRead, isBorrowed, comment, photo);
 
             return entry;
         }
@@ -65,14 +59,11 @@ public class BookData {
         
         values.put(KEY_ISBN, arg.getIsbn());
         values.put(KEY_TITLE, arg.getTitle());
-        values.put(KEY_COLLECTION, arg.getCollection());
         values.put(KEY_PUBLISHER, arg.getPublisher());
         values.put(KEY_YEAR, arg.getYear());
         values.put(KEY_SUMMARY, arg.getSummary());
         values.put(KEY_ISREAD, arg.getIsRead());
         values.put(KEY_ISBORROWED, arg.getIsBorrowed());
-        values.put(KEY_BORROWER, arg.getBorrower());
-        values.put(KEY_OWNER, arg.getOwner());
         values.put(KEY_COMMENT, arg.getComment());
         values.put(KEY_PHOTO, arg.getPhoto());
         

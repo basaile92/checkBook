@@ -63,14 +63,11 @@ public class ModifyBookActivity extends AppCompatActivity {
 
         final EditText isbnEdit = (EditText) findViewById(R.id.isbnEdit);
         final EditText titleEdit = (EditText) findViewById(R.id.titleEdit);
-        final EditText collectionEdit = (EditText) findViewById(R.id.collectionEdit);
         final EditText publisherEdit = (EditText) findViewById(R.id.publisherEdit);
         final EditText yearEdit = (EditText) findViewById(R.id.yearEdit);
         final EditText summaryEdit = (EditText) findViewById(R.id.summaryEdit);
         final CheckBox isReadCheckBox = (CheckBox) findViewById(R.id.isReadCheckBox);
         final CheckBox isBorrowedCheckBox = (CheckBox) findViewById(R.id.isBorrowedCheckBox);
-        final EditText borrowerEdit = (EditText) findViewById(R.id.borrowerEdit);
-        final EditText ownerEdit = (EditText) findViewById(R.id.ownerEdit);
         final EditText commentsEdit = (EditText) findViewById(R.id.commentsEdit);
         final CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
         final ImageView modifyButton = (ImageView) findViewById(R.id.modifyButton);
@@ -96,14 +93,11 @@ public class ModifyBookActivity extends AppCompatActivity {
 
             isbnEdit.setText(book.getIsbn());
             titleEdit.setText(book.getTitle());
-            collectionEdit.setText(book.getCollection());
             publisherEdit.setText(book.getPublisher());
             yearEdit.setText(book.getYear());
             summaryEdit.setText(book.getSummary());
             isReadCheckBox.setChecked(book.isRead());
             isBorrowedCheckBox.setChecked(book.isBorrowed());
-            borrowerEdit.setText(book.getBorrower());
-            ownerEdit.setText(book.getOwner());
             commentsEdit.setText(book.getComment());
 
             authorsList.addAll(book.getAuthors());
@@ -120,7 +114,6 @@ public class ModifyBookActivity extends AppCompatActivity {
         }
 
         updateAuthorsTextView(addAuthorsText, ModifyBookActivity.this);
-        setBorrowingFieldDisplay(isBorrowedCheckBox, borrowerEdit);
         setPhotoButton(imageButton);
         setAuthorsManager(addAuthorsText, editAuthorsButton, addAuthorsEdit, addAuthorsButton, ModifyBookActivity.this);
         setTypeListView(typesText, addTypesButton, ModifyBookActivity.this);
@@ -135,7 +128,7 @@ public class ModifyBookActivity extends AppCompatActivity {
 
                     // We save the book in the Database
                     BookManager bookManager = new BookManager(view.getContext());
-                    bookManager.modifyBook(book , new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), collectionEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), borrowerEdit.getText().toString(), ownerEdit.getText().toString(), commentsEdit.getText().toString(), ""));
+                    bookManager.modifyBook(book , new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), commentsEdit.getText().toString(), ""));
                     Intent intent = new Intent(ModifyBookActivity.this, DisplayBookActivity.class);
                     int itemId = getIntent().getIntExtra(BookLibraryFragment.POSITION, -1);
                     if(itemId != -1)
@@ -345,23 +338,6 @@ public class ModifyBookActivity extends AppCompatActivity {
 
     }
 
-
-    //To make visible the borrowerEdit when the isBorrowed checkbox is checked or not
-    private void setBorrowingFieldDisplay(CheckBox isBorrowedCheckBox, final EditText borrowerEdit){
-
-        isBorrowedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(isChecked){
-                    borrowerEdit.setVisibility(View.VISIBLE);
-                }else{
-                    borrowerEdit.setVisibility(View.INVISIBLE);
-                }
-
-            }
-        });
-    }
 
     //Check the different field of the form
     private boolean checkForm(EditText isbnEdit, EditText titleEdit, AuthorList authorsList, Context context){
