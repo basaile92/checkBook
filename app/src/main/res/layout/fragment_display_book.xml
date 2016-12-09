@@ -5,6 +5,7 @@
     android:id="@+id/fragment_display_book"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.example.basaile92.listelivre.fragment.DisplayBookFragment"
     >
 
@@ -20,7 +21,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark">
+            android:id="@+id/layout">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -93,7 +94,8 @@
                 android:background="@android:color/white"
                 android:layout_marginTop="2.5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:id="@+id/titleLayout">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -125,38 +127,8 @@
                 android:background="@android:color/white"
                 android:layout_marginTop="2.5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/collectionLabel"
-                    android:textSize="15sp"
-                    android:text="@string/collectionText"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/collectionText"
-                    android:textSize="18sp"
-                    android:text="@string/collectionText"
-                    android:textColor="@android:color/black" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="15dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="15dp"
-                android:background="@android:color/white"
-                android:layout_marginTop="2.5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:id="@+id/authorLayout">
 
                 <TextView
                     android:text="@string/authorsText"
@@ -191,7 +163,8 @@
                 android:background="@android:color/white"
                 android:layout_marginTop="2.5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:id="@+id/publisherLayout">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -222,7 +195,8 @@
                 android:background="@android:color/white"
                 android:layout_marginTop="2.5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:id="@+id/yearLayout">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -255,7 +229,8 @@
                 android:background="@android:color/white"
                 android:layout_marginTop="2.5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:id="@+id/typeLayout">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -276,7 +251,6 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -289,7 +263,8 @@
                 android:background="@android:color/white"
                 android:layout_marginTop="2.5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:id="@+id/summaryLayout">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -310,7 +285,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -321,87 +296,25 @@
                 android:background="@android:color/white"
                 android:layout_marginTop="2.5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/ownerLabel"
-                    android:textSize="15sp"
-                    android:text="@string/ownerText"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/ownerText"
-                    android:textSize="18sp"
-                    android:text="@string/ownerText"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="15dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="15dp"
-                android:background="@android:color/white"
-                android:layout_marginTop="2.5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:id="@+id/stampLayout">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/isReadText"
                     android:textSize="20sp"
-                    android:text="@string/isReadText" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:id="@+id/borrowedLayout"
-                android:visibility="visible"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="15dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="15dp"
-                android:background="@android:color/white"
-                android:layout_marginTop="2.5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                    android:text="@string/isReadText"
+                    android:layout_weight="1" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/isBorrowedText"
                     android:textSize="20sp"
-                    android:text="@string/isBorrowedText" />
+                    android:text="@string/isBorrowedText"
+                    android:layout_weight="1" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/borrowerLabel"
-                    android:textSize="15sp"
-                    android:text="@string/borrowerText"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/borrowerText"
-                    android:layout_weight="1"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/black" />
 
             </LinearLayout>
 
@@ -417,7 +330,8 @@
                 android:background="@android:color/white"
                 android:layout_marginTop="2.5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:id="@+id/commentLayout">
 
                 <TextView
                     android:layout_width="match_parent"
