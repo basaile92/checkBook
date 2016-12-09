@@ -21,12 +21,14 @@
         <activity android:name=".activity.BookLibraryActivity" />
         <activity
             android:name=".activity.AddBookActivity"
-            android:label="Add a book" />
+            android:label="Add a book"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activity.DisplayBookActivity" />
         <activity android:name=".activity.ListBookCollectionActivity" />
         <activity android:name=".activity.CollectionActivity" />
         <activity android:name=".activity.TypeManagerActivity" />
-        <activity android:name=".activity.ModifyBookActivity" />
+        <activity android:name=".activity.ModifyBookActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

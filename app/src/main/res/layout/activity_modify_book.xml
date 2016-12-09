@@ -85,7 +85,7 @@
                     android:id="@+id/titleEdit"
                     android:hint="@string/titleText"
                     android:layout_weight="1"
-                    android:inputType="textShortMessage" />
+                    android:inputType="textCapSentences" />
             </LinearLayout>
 
             <LinearLayout
@@ -124,12 +124,12 @@
                         android:paddingLeft="2.5dp">
 
                         <TextView
-                            android:text="Authors"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/addAuthorsText"
                             android:layout_weight="4"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black" />
 
                         <ImageView
                             android:layout_width="40dp"
@@ -152,7 +152,7 @@
                             android:id="@+id/addAuthorsEdit"
                             android:layout_weight="4"
                             android:hint="@string/addAuthorsText"
-                            android:inputType="textShortMessage" />
+                            android:inputType="textCapSentences" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -186,7 +186,7 @@
                     android:layout_height="match_parent"
                     android:id="@+id/publisherEdit"
                     android:hint="@string/publisherText"
-                    android:inputType="textLongMessage" />
+                    android:inputType="textCapSentences" />
             </LinearLayout>
 
             <LinearLayout
@@ -207,7 +207,7 @@
                     android:layout_height="match_parent"
                     android:id="@+id/yearEdit"
                     android:hint="@string/yearText"
-                    android:inputType="number" />
+                    android:inputType="textCapSentences" />
             </LinearLayout>
 
             <LinearLayout
@@ -221,7 +221,8 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="15dp"
-                android:paddingTop="15dp">
+                android:paddingTop="15dp"
+                android:gravity="center">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -235,14 +236,17 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/typesText"
                         android:layout_weight="4"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:textColor="@android:color/black" />
 
                     <ImageView
                         android:layout_width="40dp"
@@ -274,7 +278,7 @@
                     android:layout_height="match_parent"
                     android:id="@+id/summaryEdit"
                     android:hint="@string/summaryText"
-                    android:inputType="textLongMessage" />
+                    android:inputType="textCapSentences" />
             </LinearLayout>
 
             <LinearLayout
@@ -341,7 +345,7 @@
                     android:layout_height="match_parent"
                     android:id="@+id/commentsEdit"
                     android:hint="@string/commentText"
-                    android:inputType="textLongMessage" />
+                    android:inputType="textCapSentences" />
             </LinearLayout>
 
             <LinearLayout
