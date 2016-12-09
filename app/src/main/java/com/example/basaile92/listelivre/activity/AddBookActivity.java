@@ -81,6 +81,7 @@ public class AddBookActivity extends AppCompatActivity {
         final ImageView editAuthorsButton = (ImageView) findViewById(R.id.editAuthorsButton);
         final EditText addAuthorsEdit = (EditText) findViewById(R.id.addAuthorsEdit);
         final ImageView addAuthorsButton = (ImageView) findViewById(R.id.addAuthorsButton);
+        addAuthorsText.setText("");
 
         final AuthorList authorsList = new AuthorList();
 
@@ -216,8 +217,14 @@ public class AddBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final ArrayList<String> toDelete = new ArrayList<String>();
-                final String[] authorListString = (String[]) authorNameList.toArray();
+                final Object[] objectArray = authorNameList.toArray();
+                String[] authorListString = new String[objectArray.length];
+                int i = 0;
+                for(Object object : objectArray){
 
+                    authorListString[i] = (String) object;
+                    i++;
+                }
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle(R.string.deleteAuthors);
                 builder.setMultiChoiceItems(authorListString, null, new DialogInterface.OnMultiChoiceClickListener() {

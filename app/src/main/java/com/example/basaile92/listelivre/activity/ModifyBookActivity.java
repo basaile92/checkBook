@@ -73,9 +73,10 @@ public class ModifyBookActivity extends AppCompatActivity {
         final EditText ownerEdit = (EditText) findViewById(R.id.ownerEdit);
         final EditText commentsEdit = (EditText) findViewById(R.id.commentsEdit);
         final CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
-        final Button modifyButton = (Button) findViewById(R.id.modifyButton);
+        final ImageView modifyButton = (ImageView) findViewById(R.id.modifyButton);
 
-        final ListView authorsListView = (ListView) findViewById(R.id.authorsListView);
+        final TextView addAuthorsText = (TextView) findViewById(R.id.addAuthorsText);
+        final ImageView editAuthorsButton = (ImageView) findViewById(R.id.editAuthorsButton);
         final EditText addAuthorsEdit = (EditText) findViewById(R.id.addAuthorsEdit);
         final ImageView addAuthorsButton = (ImageView) findViewById(R.id.addAuthorsButton);
 
@@ -118,9 +119,10 @@ public class ModifyBookActivity extends AppCompatActivity {
             }
         }
 
+        updateAuthorsTextView(addAuthorsText, ModifyBookActivity.this);
         setBorrowingFieldDisplay(isBorrowedCheckBox, borrowerEdit);
         setPhotoButton(imageButton);
-        setAuthorsListView(authorsListView, addAuthorsEdit, addAuthorsButton, ModifyBookActivity.this);
+        setAuthorsManager(addAuthorsText, editAuthorsButton, addAuthorsEdit, addAuthorsButton, ModifyBookActivity.this);
         setTypeListView(typesText, addTypesButton, ModifyBookActivity.this);
 
         modifyButton.setOnClickListener(new View.OnClickListener() {
@@ -216,9 +218,8 @@ public class ModifyBookActivity extends AppCompatActivity {
 
     }
 
-    private void setAuthorsListView(final ListView authorsListView, final EditText addAuthorsEdit, ImageView addAuthorsButton, final Context context) {
+    private void setAuthorsManager(final TextView addAuthorsText, final ImageView editAuthorsButton, final EditText addAuthorsEdit, ImageView addAuthorsButton, final Context context) {
 
-        updateAuthorsListView(authorsListView, context);
         addAuthorsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -228,42 +229,73 @@ public class ModifyBookActivity extends AppCompatActivity {
 
                     // We will add in the authorNameList (which is created at the beginning of the activity all the author name that will be added)
                     authorNameList.add(addAuthorsEdit.getText().toString());
-                    updateAuthorsListView(authorsListView, context);
+                    updateAuthorsTextView(addAuthorsText, context);
                     //We empty the addAuthorsEdit field
                     addAuthorsEdit.setText("");
                 }
             }
         });
-    }
 
-    //To update the list view
-    private void updateAuthorsListView(final ListView authorsListView, final Context context){
-
-        // We display the list view
-        List<Map<String, String>> listOfAuthor = new ArrayList<Map<String, String>>();
-
-        for(String authorName: authorNameList) {
-
-            Map<String, String> authorMap = new HashMap<String, String>();
-            authorMap.put("name", authorName);
-            listOfAuthor.add(authorMap);
-        }
-        SimpleAdapter listAdapter = new SimpleAdapter(context, listOfAuthor, R.layout.author, new String[]{"name"}, new int[]{R.id.authorText});
-        authorsListView.setAdapter(listAdapter);
-
-        // We assignate for each item the delete button and his function
-        authorsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        editAuthorsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+            public void onClick(View view) {
+                final ArrayList<String> toDelete = new ArrayList<String>();
+                final Object[] objectArray = authorNameList.toArray();
+                String[] authorListString = new String[objectArray.length];
+                int i = 0;
+                for(Object object : objectArray){
 
-                ImageView authorDeleteButton = (ImageView) findViewById(R.id.authorDeleteButton);
+                    authorListString[i] = (String) object;
+                    i++;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(R.string.deleteAuthors);
+                builder.setMultiChoiceItems(authorListString, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
 
-                authorNameList.remove(i);
-                updateAuthorsListView(authorsListView, context);
+                        if(b){
 
+                            toDelete.add(authorNameList.get(i));
+
+                        }else{
+
+                            toDelete.remove(authorNameList.get(i));
+
+                        }
+                    }
+                });
+
+                builder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        for(String s: toDelete){
+
+                            authorNameList.remove(s);
+                        }
+                        updateAuthorsTextView(addAuthorsText, context);
+
+
+
+                    }
+                });
+
+                builder.create();
+                builder.show();
             }
         });
     }
+
+    //To update the list view
+    private void updateAuthorsTextView(final TextView addAuthorsText, final Context context){
+
+
+
+        addAuthorsText.setText(AuthorManager.StringListToString(authorNameList));
+
+    }
+
 
     private void setPhotoButton(final CircularImageView imageButton) {
 
