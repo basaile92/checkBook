@@ -35,11 +35,11 @@ public class CollectionManager extends DAOBase {
     }
 
 
-    public void modifyCollectionName(Collection collection, String newName){
+    public void modifyCollectionName(Collection collection, String Name){
 
         CollectionData collectionData = new CollectionData(handler);
 
-        collectionData.updateCollectionByName(collection, newName);
+        collectionData.updateCollectionByName(collection, Name);
     }
 
 
