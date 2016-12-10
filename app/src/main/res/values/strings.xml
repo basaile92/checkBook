@@ -78,5 +78,6 @@
     <string name="delete">Delete</string>
     <string name="deleteButton">Delete</string>
     <string name="deleteAuthors">Which authors do you want to delete?</string>
+    <string name="typeAlreadyExist">The type already exist</string>
 
 </resources>

@@ -160,12 +160,11 @@ public class ScanBook{
     //We parse the Date to have only the year.
     private static String parseYear(String publisherDate) {
         int i = 0;
-        while(publisherDate.charAt(i) != '-'){
+        while(i < publisherDate.length() && publisherDate.charAt(i) != '-'){
             i++;
         }
 
-        String res = publisherDate.substring(0, 4);
-        return res;
+        return (publisherDate.substring(0, i));
 
     }
 

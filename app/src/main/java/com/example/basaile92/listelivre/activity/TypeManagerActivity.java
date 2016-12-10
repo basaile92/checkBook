@@ -47,6 +47,7 @@ public class TypeManagerActivity extends AppCompatActivity {
         setTypeListView(typeListView, typeManager, TypeManagerActivity.this);
     }
 
+    //Set add type Button
     private void setAddTypeButton(final EditText typesEdit, ImageView addTypeButton, final TypeManager typeManager, final ListView typeListView, final Context context) {
 
         addTypeButton.setOnClickListener(new View.OnClickListener() {
@@ -55,13 +56,22 @@ public class TypeManagerActivity extends AppCompatActivity {
 
                 String typeName = typesEdit.getText().toString();
 
-                if(!typeManager.existName(typeName)){
+                if(!typeName.equals("")){
 
-                    typeManager.saveType(new Type(typeName));
-                    typeNameList.add(typeName);
-                    setTypeListView(typeListView, typeManager, context);
-                    typesEdit.setText("");
+                    //if the type name doesn't already exist, save it in database and add it to the type list.
+                    if(!typeManager.existName(typeName)) {
 
+                        typeManager.saveType(new Type(typeName));
+                        typeNameList.add(typeName);
+                        setTypeListView(typeListView, typeManager, context);
+                        typesEdit.setText("");
+
+                    }else
+                    {
+
+                        Toast toast=Toast.makeText(TypeManagerActivity.this,R.string.typeAlreadyExist,Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }else{
 
                     Toast toast=Toast.makeText(TypeManagerActivity.this,R.string.toastEmptyField,Toast.LENGTH_SHORT);
@@ -73,6 +83,7 @@ public class TypeManagerActivity extends AppCompatActivity {
         });
     }
 
+    //set the Type List View
     private void setTypeListView(final ListView typeListView, final TypeManager typeManager, final Context context){
 
         List<Map<String,String>> listOfType = new ArrayList<Map<String, String>>();

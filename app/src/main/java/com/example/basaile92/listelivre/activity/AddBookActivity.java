@@ -375,7 +375,6 @@ public class AddBookActivity extends AppCompatActivity {
         imageButton.setImageBitmap(ImageManager.getRotateBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath)));
     }
 
-    //When we push the back button, come back to the main activity
     @Override
     public void onBackPressed()
     {

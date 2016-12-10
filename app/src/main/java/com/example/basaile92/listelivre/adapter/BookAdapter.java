@@ -2,7 +2,6 @@ package com.example.basaile92.listelivre.adapter;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.manager.ImageManager;
 
-import java.io.File;
 
 
 /**
@@ -39,17 +37,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View cardView = inflater.inflate(R.layout.book_portrait, parent, false);
-
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                int itemPosition = ((RecyclerView) parent).getChildLayoutPosition(view);
-
-            }
-        });
-
-
 
         return new ViewHolder(cardView);
     }
