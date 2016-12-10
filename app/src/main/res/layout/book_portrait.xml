@@ -14,13 +14,15 @@
     <ImageView
         android:id="@+id/image_book"
         android:layout_width="70dp"
+        android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:layout_height="120dp"
         android:src="@drawable/icone" />
 
     <TextView
         android:id="@+id/text_book_title"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="title"
         android:textStyle="bold|italic"
@@ -30,7 +32,8 @@
 
     <TextView
         android:id="@+id/text_book_author"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="author"
         android:gravity="center"
