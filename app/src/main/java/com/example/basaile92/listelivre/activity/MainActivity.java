@@ -2,13 +2,10 @@ package com.example.basaile92.listelivre.activity;
 
 import android.app.TabActivity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.TabHost;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.database.MySQLHelper;
-import com.example.basaile92.listelivre.manager.BookManager;
 
 public class MainActivity extends TabActivity {
 
@@ -19,6 +16,7 @@ public class MainActivity extends TabActivity {
 
         TabHost tabHost = getTabHost();
 
+        // We had in the tabHost the two activities which will be available on it
         String bookLibraryTitle = getString(R.string.bookLibraryTitle);
         TabHost.TabSpec spec = tabHost.newTabSpec(bookLibraryTitle);
         spec.setIndicator(bookLibraryTitle);

@@ -8,13 +8,13 @@
     tools:context="com.example.basaile92.listelivre.activity.AddBookActivity"
     android:orientation="vertical"
     android:isScrollContainer="true"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@color/colorPrimaryDark">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbarStyle="insideOverlay"
-        android:background="@color/colorPrimary">
+        android:scrollbarStyle="insideOverlay">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

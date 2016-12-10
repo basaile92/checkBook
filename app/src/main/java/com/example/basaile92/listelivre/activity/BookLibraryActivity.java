@@ -69,21 +69,26 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
             }
         });
 
+        // Assignate function of add by scan isbn
         ImageView addBookScanIsbnButton = (ImageView) findViewById(R.id.addBookScanIsbnButton);
         addBookScanIsbnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //Launch the scanner
                 IntentIntegrator scanIntegrator = new IntentIntegrator(BookLibraryActivity.this);
                 scanIntegrator.initiateScan();
 
             }
         });
 
+        //Assignate gunction of add by isbn form
         ImageView addBookFormIsbnButton = (ImageView) findViewById(R.id.addBookFormIsbnButton);
         addBookFormIsbnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Create the dialog form
                 DialogFragment dialog = new AddBookByIsbnDialogFragment();
                 dialog.show(getFragmentManager(), "AddBookByIsbnDialogFragment");
 
@@ -91,32 +96,32 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
         });
 
 }
+    // This function will get an ISBN and if it has 13 characters and it doesn't exist in the library, it will get the isbn in the google API.
+    private void createBookListAddPopUp(String s) {
 
-private void createBookListAddPopUp(String s) {
+        if(s.length() == 13){
 
-    if(s.length() == 13){
+            BookManager bookManager = new BookManager(BookLibraryActivity.this);
+            if(!bookManager.existIsbn(s)){
 
-        BookManager bookManager = new BookManager(BookLibraryActivity.this);
-        if(!bookManager.existIsbn(s)){
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                BookLibraryFragment bookLibraryFragment = (BookLibraryFragment) fragmentManager.findFragmentById(R.id.bookLibraryFragment);
+                ScanBook.showScanBook(s, bookLibraryFragment, findViewById(R.id.bookLibraryFragment) ,BookLibraryActivity.this);
+            }else
+            {
+                Toast toast = Toast.makeText(BookLibraryActivity.this, R.string.bookAlreadyExist, Toast.LENGTH_SHORT);
+                toast.show();
+            }
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            BookLibraryFragment bookLibraryFragment = (BookLibraryFragment) fragmentManager.findFragmentById(R.id.bookLibraryFragment);
-            ScanBook.showScanBook(s, bookLibraryFragment, findViewById(R.id.bookLibraryFragment) ,BookLibraryActivity.this);
-        }else
-        {
-            Toast toast = Toast.makeText(BookLibraryActivity.this, R.string.bookAlreadyExist, Toast.LENGTH_SHORT);
+        }else{
+
+            Toast toast = Toast.makeText(BookLibraryActivity.this, R.string.isbnNotGoodFormat, Toast.LENGTH_SHORT);
             toast.show();
         }
-
-    }else{
-
-        Toast toast = Toast.makeText(BookLibraryActivity.this, R.string.isbnNotGoodFormat, Toast.LENGTH_SHORT);
-        toast.show();
     }
-}
 
 
-public void updateDisplayBookFragment(int position, View viewLibrary){
+    public void updateDisplayBookFragment(int position, View viewLibrary){
 
         LinearLayout displayBookLayout = (LinearLayout) findViewById(R.id.displayBookLayout);
 
@@ -138,7 +143,7 @@ public void updateDisplayBookFragment(int position, View viewLibrary){
         }
     }
 
-
+    //If the positive button of dialog is pushed
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, String isbn) {
 
@@ -147,13 +152,14 @@ public void updateDisplayBookFragment(int position, View viewLibrary){
         dialog.dismiss();
     }
 
+    //If the negative button of dialog is pushed
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
 
         dialog.dismiss();
     }
 
-
+    //If the back button is pressed, the fabtoolbar will hide.
     @Override
     public void onBackPressed() {
         FABToolbarLayout fabToolbarLayout = (FABToolbarLayout) findViewById(R.id.fabtoolbar);
@@ -165,6 +171,7 @@ public void updateDisplayBookFragment(int position, View viewLibrary){
         }
     }
 
+    // Get the result of the scanner
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         //retrieve result of scanning - instantiate ZXing object
@@ -176,7 +183,6 @@ public void updateDisplayBookFragment(int position, View viewLibrary){
             //get format name of data scanned
             String scanFormat = scanningResult.getFormatName();
             if (scanContent != null && scanFormat != null) {
-
 
                 createBookListAddPopUp(scanContent);
 

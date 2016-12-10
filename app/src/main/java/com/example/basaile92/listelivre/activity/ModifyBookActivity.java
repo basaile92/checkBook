@@ -12,14 +12,9 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,9 +32,6 @@ import com.example.basaile92.listelivre.manager.TypeManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import rebus.permissionutils.FullCallback;
 import rebus.permissionutils.PermissionEnum;
@@ -48,9 +40,12 @@ import rebus.permissionutils.PermissionUtils;
 
 public class ModifyBookActivity extends AppCompatActivity {
 
+    //AuthorNameList will keep all author name which is added and will manage all of it while the send button is not pushed
     private ArrayList<String> authorNameList = new ArrayList<String>();
+    //TypeNameList will keep all type name which is added and will manage all of it while the send button is not pushed
     private ArrayList<String> typeNameList = new ArrayList<String>();
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    //The path of the photo of book.
     private String mCurrentPhotoPath = "";
 
 
@@ -99,13 +94,14 @@ public class ModifyBookActivity extends AppCompatActivity {
             isBorrowedCheckBox.setChecked(book.isBorrowed());
             commentsEdit.setText(book.getComment());
 
-            authorsList.addAll(book.getAuthors());
-            authorNameList = AuthorManager.toStringList(authorsList);
+            //We get the author to the authornamelist
+            authorNameList = AuthorManager.toStringList(book.getAuthors());
 
-            typesList.addAll(book.getTypes());
-            typeNameList = TypeManager.toStringList(typesList);
+            //We get the type to the typenamelist
+            typeNameList = TypeManager.toStringList(book.getTypes());
 
             if(!book.getPhoto().equals("")) {
+                //If the photo has a path, we set the photo in it
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                 Bitmap bitmap = BitmapFactory.decodeFile(book.getPhoto(), bmOptions);
                 imageButton.setImageBitmap(bitmap);
@@ -122,23 +118,27 @@ public class ModifyBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                authorsList.removeAll(authorsList);
+                // We get all the authors in a authorlist from the author name list
                 authorsList.addAll(AuthorManager.fromString( authorNameList , isbnEdit.getText().toString()));
-                typesList.removeAll(typesList);
+                // We get all the type in the typelist from the type name list
                 typesList.addAll(TypeManager.fromString(typeNameList));
 
                 // If the form is correctly fill
                 if(checkForm(isbnEdit, titleEdit,authorsList, view.getContext())) {
 
                     String url = book.getPhoto();
+
+                    //If a photo has been taken
                     if(!mCurrentPhotoPath.equals("")){
 
                         try {
+                            //We delete the old photo
                             ImageManager.deletePhoto(url);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
 
+                        //We save the new photo in a file.
                         Bitmap bitmap = ImageManager.getRotateBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
                         url = ImageManager.saveBitmap(view.getContext(), bitmap);
 
@@ -149,6 +149,7 @@ public class ModifyBookActivity extends AppCompatActivity {
                     bookManager.modifyBook(book , new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), commentsEdit.getText().toString(), url));
                     Intent intent = new Intent(ModifyBookActivity.this, DisplayBookActivity.class);
                     int itemId = getIntent().getIntExtra(BookLibraryFragment.POSITION, -1);
+                    //We send the item position to the activity to reopen it directly
                     if(itemId != -1)
                         intent.putExtra(BookLibraryFragment.POSITION, itemId);
                     startActivity(intent);
@@ -160,21 +161,27 @@ public class ModifyBookActivity extends AppCompatActivity {
     }
 
 
+    //We set in this function the role of all type views
     private void setTypeListView(final TextView typesText, ImageView addTypesButton, final Context context) {
         final TypeManager typeManager = new TypeManager(context);
 
+        //We set the text with the already got types.
         typesText.setText((TypeManager.fromStringArray(typeNameList)).toString());
+        // We set the function of the addTypesButton
         addTypesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //We get in a list all existing types
                 TypeList typeList = typeManager.readTypeList();
+                //We get in a boolean array, for the first list, true for the one which are in the second one and false if not.
                 final boolean[] onCheckedItems = TypeManager.elementsFromSecondInFirstList(typeList, typeNameList);
                 final String[] typeListString = TypeManager.toStringArray(typeList);
+                // We put in a list of string all element which has the corresponding boolean true in the onCheckedItems. It will be the list of
                 final ArrayList<String> typeArrayStringDisplayed = TypeManager.elementsTrueFromTwoArrays(typeListString, onCheckedItems );
                 int editButtonString = R.string.editTypes;
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
+                //If there is no type inside the list
                 if(!(typeList.size() > 0)){
 
                     builder.setMessage(R.string.emptyTypeList);
@@ -182,7 +189,7 @@ public class ModifyBookActivity extends AppCompatActivity {
                 }
 
                 builder.setTitle(R.string.pickSomeTypes);
-
+                //if a checkbox is checked, the corresponding element will be in the final list, if it isn't it won't be in the final list
                 builder.setMultiChoiceItems( typeListString , onCheckedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
@@ -199,6 +206,7 @@ public class ModifyBookActivity extends AppCompatActivity {
                     }
                 });
 
+                //if somebody push the positive button it will create a new list with all new types and set it
                 builder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -209,6 +217,7 @@ public class ModifyBookActivity extends AppCompatActivity {
                     }
                 });
 
+                //if somebody push the negative button it will go to the edit type menu
                 builder.setNegativeButton(editButtonString, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -219,6 +228,7 @@ public class ModifyBookActivity extends AppCompatActivity {
                     }
                 });
 
+                //We create and show the alert builder
                 builder.create();
                 builder.show();
 
@@ -246,24 +256,29 @@ public class ModifyBookActivity extends AppCompatActivity {
             }
         });
 
+        //If the edit authorButton is pushed
         editAuthorsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final ArrayList<String> toDelete = new ArrayList<String>();
+                // we get an Object[] array with all author name
                 final Object[] objectArray = authorNameList.toArray();
                 String[] authorListString = new String[objectArray.length];
                 int i = 0;
+                // we parse all of these authors (Object) in String
                 for(Object object : objectArray){
 
                     authorListString[i] = (String) object;
                     i++;
                 }
+                //We create a builder with the list of each authors
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle(R.string.deleteAuthors);
                 builder.setMultiChoiceItems(authorListString, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
 
+                        //if the checkbox is checked, we keep the author in the deletelist, if not we remove it.
                         if(b){
 
                             toDelete.add(authorNameList.get(i));
@@ -276,6 +291,7 @@ public class ModifyBookActivity extends AppCompatActivity {
                     }
                 });
 
+                //If the positive button is pushed we delete all element which are in deleteList in the authorNameList.
                 builder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -291,6 +307,7 @@ public class ModifyBookActivity extends AppCompatActivity {
                     }
                 });
 
+                // the alert builder is created and showed.
                 builder.create();
                 builder.show();
             }
@@ -301,7 +318,7 @@ public class ModifyBookActivity extends AppCompatActivity {
     private void updateAuthorsTextView(final TextView addAuthorsText, final Context context){
 
 
-
+        // We set the list of authors in a string
         addAuthorsText.setText(AuthorManager.StringListToString(authorNameList));
 
     }
@@ -320,7 +337,9 @@ public class ModifyBookActivity extends AppCompatActivity {
                     File photoFile = null;
 
                     try {
+                        // We create a temporary image file to keep the photo
                         photoFile = ImageManager.createImageFile(view.getContext());
+                        // put his path in mCurrentPhotoPath
                         mCurrentPhotoPath = photoFile.getAbsolutePath();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -331,14 +350,17 @@ public class ModifyBookActivity extends AppCompatActivity {
                         Uri photoURI = FileProvider.getUriForFile(view.getContext() ,"com.example.android.fileprovider", photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         ArrayList<PermissionEnum> permissionEnumArrayList = new ArrayList<>();
+                        //We ask the Camera Permission before going to the Camera activity
                         permissionEnumArrayList.add(PermissionEnum.CAMERA);
                         PermissionManager.with(ModifyBookActivity.this).permissions(permissionEnumArrayList).callback(new FullCallback() {
                             @Override
                             public void result(ArrayList<PermissionEnum> permissionsGranted, ArrayList<PermissionEnum> permissionsDenied, ArrayList<PermissionEnum> permissionsDeniedForever, ArrayList<PermissionEnum> permissionsAsked) {
                                 if(PermissionUtils.isGranted(ModifyBookActivity.this, PermissionEnum.CAMERA)) {
+                                    //If it is good we start the camera activity
                                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                                 }else{
 
+                                    //If it is not good a Toas error will be displayed
                                     Toast toast = Toast.makeText(ModifyBookActivity.this, R.string.noPermission, Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
@@ -397,6 +419,7 @@ public class ModifyBookActivity extends AppCompatActivity {
         PermissionManager.handleResult(requestCode, permissions, grantResults);
     }
 
+    //When we take a photo, set the photo in the temporary file.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 

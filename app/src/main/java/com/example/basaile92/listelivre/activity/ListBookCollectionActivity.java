@@ -5,11 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
@@ -17,7 +13,6 @@ import com.example.basaile92.listelivre.callback.BookCollectionListFragmentCallB
 import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.fragment.AddCollectionDialogFragment;
-import com.example.basaile92.listelivre.fragment.BookCollectionListFragment;
 import com.example.basaile92.listelivre.manager.CollectionManager;
 
 public class ListBookCollectionActivity extends FragmentActivity implements BookCollectionListFragmentCallBack{
