@@ -24,7 +24,6 @@ import java.util.Map;
 
 public class TypeManagerActivity extends AppCompatActivity {
 
-    //TODO faire le retour sur la bonne activité( De modifybookactivity ou de addbookactivity)
     ArrayList<String> typeNameList;
 
     @Override

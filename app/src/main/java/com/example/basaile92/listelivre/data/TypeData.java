@@ -63,7 +63,6 @@ public class TypeData {
             do {
                 Type entry = fromCursor(c);
  
-                // adding to todo list
                 list.add(entry);
             } while (c.moveToNext());
         }

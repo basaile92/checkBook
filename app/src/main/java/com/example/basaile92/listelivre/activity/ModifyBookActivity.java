@@ -130,8 +130,14 @@ public class ModifyBookActivity extends AppCompatActivity {
                 // If the form is correctly fill
                 if(checkForm(isbnEdit, titleEdit,authorsList, view.getContext())) {
 
-                    String url = "";
+                    String url = book.getPhoto();
                     if(!mCurrentPhotoPath.equals("")){
+
+                        try {
+                            ImageManager.deletePhoto(url);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
                         Bitmap bitmap = ImageManager.getRotateBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
                         url = ImageManager.saveBitmap(view.getContext(), bitmap);

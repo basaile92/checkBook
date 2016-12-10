@@ -69,26 +69,30 @@ public class ScanBook{
 
                     builder.setItems(stringOfBooks, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(final DialogInterface dialog, int which) {
 
-                            BookManager bookManager = new BookManager(context);
-                            TypeManager typeManager = new TypeManager(context);
+                            final BookManager bookManager = new BookManager(context);
+                            final TypeManager typeManager = new TypeManager(context);
                             final SimpleBook book = bookLibrary.get(which);
                             String url = book.getPhoto();
+                            final String path = "";
                             new ImageManager.ImageDownloader(new ImageManager.DownloadImageListener() {
                                 @Override
                                 public void onDownload(Bitmap bitmap) {
 
                                     book.setPhoto(ImageManager.saveBitmap(context, bitmap));
+
+                                    for(Type type: book.getTypes()){
+                                        typeManager.saveType(type);
+                                    }
+                                    bookManager.saveSimpleBook(book);
+                                    bookLibraryFragment.updateView(view);
+                                    dialog.cancel();
+
+
                                 }
                             }).execute(url);
 
-                            for(Type type: book.getTypes()){
-                                typeManager.saveType(type);
-                            }
-                            bookManager.saveSimpleBook(book);
-                            bookLibraryFragment.updateView(view);
-                            dialog.cancel();
                         }
                     });
 
@@ -136,6 +140,8 @@ public class ScanBook{
                     String year = parseYear(book.getString("publishedDate"));
                     String title = book.getString("title");
                     String photo = book.getJSONObject("imageLinks").getString("thumbnail");
+
+
 
 
                     SimpleBook simpleBook = new SimpleBook(isbn, authors, title, types, publisher, year, summary, false, false, "", photo);

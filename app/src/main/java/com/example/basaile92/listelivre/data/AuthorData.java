@@ -75,7 +75,6 @@ public class AuthorData {
             do {
                 Author entry = fromCursor(c);
  
-                // adding to todo list
                 list.addAuthor(entry);
             } while (c.moveToNext());
         }

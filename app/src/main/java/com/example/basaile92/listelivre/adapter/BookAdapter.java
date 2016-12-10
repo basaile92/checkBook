@@ -67,9 +67,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         ImageView bookImageView = (ImageView) holder.bookImage;
 
         if(!books.get(position).getBook().getPhoto().equals("")) {
-            if (new File(books.get(position).getBook().getPhoto()).exists())
-                //TODO retirer ce bouquin une fois que l'import de photo fonctionne
-
                 bookImageView.setImageBitmap((ImageManager.getNewSizeBitmap(BitmapFactory.decodeFile(books.get(position).getBook().getPhoto()), 1000)));
         }
 

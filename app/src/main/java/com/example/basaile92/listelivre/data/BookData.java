@@ -89,7 +89,6 @@ public class BookData {
             do {
                 Book entry = fromCursor(c);
  
-                // adding to todo list
                 list.add(entry);
             } while (c.moveToNext());
         }
