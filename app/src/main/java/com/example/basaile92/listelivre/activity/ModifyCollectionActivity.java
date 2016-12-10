@@ -2,6 +2,7 @@ package com.example.basaile92.listelivre.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.entity.BookLibrary;
@@ -33,11 +36,11 @@ public class ModifyCollectionActivity extends AppCompatActivity {
         Intent intent = getIntent();
         position = intent.getIntExtra("collectionID",0);
 
-        Button deleteCollectionButton = (Button) findViewById(R.id.deleteCollectionButton);
+        ImageView deleteCollectionButton = (ImageView) findViewById(R.id.deleteCollectionButton);
         EditText editCollectionName = (EditText) findViewById(R.id.editCollectionName);
-        Button saveCollectionModification = (Button) findViewById(R.id.saveCollectionModification);
-        Button addBookToCollection = (Button) findViewById(R.id.addBookToCollectionButton);
-        Button deleteBookFromCollectionButton = (Button) findViewById(R.id.deleteBookFromCollection);
+        ImageView saveCollectionModification = (ImageView) findViewById(R.id.saveCollectionModification);
+        ImageView addBookToCollection = (ImageView) findViewById(R.id.addBookToCollectionButton);
+        ImageView deleteBookFromCollectionButton = (ImageView) findViewById(R.id.deleteBookFromCollection);
 
         //Set function to the button Delete Collection
         setDeleteCollectionButton(deleteCollectionButton, position);
@@ -57,7 +60,7 @@ public class ModifyCollectionActivity extends AppCompatActivity {
     }
 
 
-    public void setDeleteCollectionButton(Button deleteCollectionButton, final int position) {
+    public void setDeleteCollectionButton(ImageView deleteCollectionButton, final int position) {
 
         deleteCollectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +109,7 @@ public class ModifyCollectionActivity extends AppCompatActivity {
     }
 
 
-    public void saveModification(final Button saveCollectionModification, final EditText editCollectionName, final int position) {
+    public void saveModification(final ImageView saveCollectionModification, final EditText editCollectionName, final int position) {
 
         saveCollectionModification.setOnClickListener(new View.OnClickListener(){
 
@@ -116,19 +119,39 @@ public class ModifyCollectionActivity extends AppCompatActivity {
                 CollectionManager collectionManager = new CollectionManager((view.getContext()));
                 Collection collection = collectionManager.getCollectionAtPosition(position);
                 String collectionName = collection.getName();
-                collection.setName(editCollectionName.getText().toString());
+                String newCollectionName = editCollectionName.getText().toString();
 
-                collectionManager.modifyCollectionName(collection, collectionName);
+                if(!collectionName.equals(newCollectionName) && checkName(newCollectionName, collectionManager)) {
 
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
+                    collection.setName(newCollectionName);
+                    collectionManager.modifyCollectionName(collection, collectionName);
+                }
+                    Intent intent = new Intent(view.getContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
             }
         });
     }
 
+    private boolean checkName(String nameEdit, CollectionManager collectionManager) {
 
-    public void addBookInCollection(final Button addBookToCollection, final int position){
+        if(nameEdit.length() == 0) {
+
+            Toast toast = Toast.makeText(ModifyCollectionActivity.this, R.string.collectionNameEmpty, Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        if(collectionManager.existCollection(nameEdit)){
+
+            Toast toast = Toast.makeText(ModifyCollectionActivity.this, R.string.alreadyExistCollection, Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        return true;
+    }
+
+
+    public void addBookInCollection(final ImageView addBookToCollection, final int position){
 
         addBookToCollection.setOnClickListener(new View.OnClickListener() {
 
@@ -200,7 +223,7 @@ public class ModifyCollectionActivity extends AppCompatActivity {
     }
 
 
-    public void deleteBookFromCollection(Button deleteBookFromCollectionButton, final int position) {
+    public void deleteBookFromCollection(ImageView deleteBookFromCollectionButton, final int position) {
 
         deleteBookFromCollectionButton.setOnClickListener(new View.OnClickListener() {
 
