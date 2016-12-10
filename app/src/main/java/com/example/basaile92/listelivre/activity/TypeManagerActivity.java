@@ -26,6 +26,7 @@ public class TypeManagerActivity extends AppCompatActivity {
 
     ArrayList<String> typeNameList;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
