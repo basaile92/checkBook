@@ -15,7 +15,8 @@
     android:layout_height="match_parent"
     android:divider="@null"
     android:groupIndicator="@null"
-    android:dividerHeight="5dp" />
+    android:dividerHeight="5dp"
+        android:paddingBottom="70dp" />
 
 
 </LinearLayout>
