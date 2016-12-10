@@ -29,5 +29,13 @@ public class MainActivity extends TabActivity {
         spec1.setIndicator(collectionTitle);
         spec1.setContent(new Intent(this, ListBookCollectionActivity.class));
         tabHost.addTab(spec1);
+
+        Intent intentLocation = getIntent();
+        String tabHostLocation = (String) intentLocation.getSerializableExtra("tabHostLocation");
+        if(tabHostLocation != null) {
+            if (tabHostLocation.equals("collection")) {
+                tabHost.setCurrentTab(1);
+            }
+        }
     }
 }

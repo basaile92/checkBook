@@ -78,6 +78,7 @@ public class ModifyCollectionActivity extends AppCompatActivity {
                         collectionManager.deleteCollection(collectionManager.getCollectionAtPosition(position));
 
                         Intent intent = new Intent(ModifyCollectionActivity.this, MainActivity.class);
+                        intent.putExtra("tabHostLocation", "collection");
                         startActivity(intent);
                         finish();
                     }
@@ -125,10 +126,12 @@ public class ModifyCollectionActivity extends AppCompatActivity {
 
                     collection.setName(newCollectionName);
                     collectionManager.modifyCollectionName(collection, collectionName);
-                }
+
                     Intent intent = new Intent(view.getContext(), MainActivity.class);
+                    intent.putExtra("tabHostLocation", "collection");
                     startActivity(intent);
                     finish();
+                }
             }
         });
     }
@@ -300,6 +303,7 @@ public class ModifyCollectionActivity extends AppCompatActivity {
     public void onBackPressed()
     {
         Intent intent = new Intent(ModifyCollectionActivity.this, MainActivity.class);
+        intent.putExtra("tabHostLocation", "collection");
         startActivity(intent);
         finish();
     }
