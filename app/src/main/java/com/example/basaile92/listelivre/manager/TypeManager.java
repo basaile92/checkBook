@@ -85,21 +85,6 @@ public class TypeManager extends DAOBase{
         return typeList;
     }
 
-    public static TypeList OneListMinusAnOther(TypeList typeList, TypeList types) {
-
-        TypeList typeListRes = new TypeList();
-
-        for(Type type : typeList){
-
-            if(!types.contains(type)){
-
-                typeListRes.add(type);
-            }
-        }
-
-        return typeListRes;
-    }
-
     public static TypeList fromString(ArrayList<String> typeNameList) {
 
 

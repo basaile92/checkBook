@@ -67,4 +67,14 @@ public class AuthorManager extends DAOBase{
     }
 
 
+    public boolean existAuthor(String s, ArrayList<String> authorNameList) {
+
+        for(String str : authorNameList){
+
+            if(str.equals(s)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

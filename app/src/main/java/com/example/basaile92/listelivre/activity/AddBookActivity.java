@@ -194,12 +194,25 @@ public class AddBookActivity extends AppCompatActivity {
 
                 // If the field addAuthorEdit is not empty
                 if(!addAuthorsEdit.getText().toString().equals("")) {
+                    AuthorManager authorManager = new AuthorManager(AddBookActivity.this);
+                    if(!authorManager.existAuthor( addAuthorsEdit.getText().toString(), authorNameList))
+                    {
+                        // We will add in the authorNameList (which is created at the beginning of the activity all the author name that will be added)
+                        authorNameList.add(addAuthorsEdit.getText().toString());
+                        updateAuthorsTextView(addAuthorsText, context);
+                        //We empty the addAuthorsEdit field
+                        addAuthorsEdit.setText("");
 
-                    // We will add in the authorNameList (which is created at the beginning of the activity all the author name that will be added)
-                    authorNameList.add(addAuthorsEdit.getText().toString());
-                    updateAuthorsTextView(addAuthorsText, context);
-                    //We empty the addAuthorsEdit field
-                    addAuthorsEdit.setText("");
+                    }else{
+
+                        Toast toast = Toast.makeText(AddBookActivity.this, R.string.authorAlreadyExist, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }else{
+
+                    Toast toast = Toast.makeText(AddBookActivity.this, R.string.toastEmptyField, Toast.LENGTH_SHORT);
+                    toast.show();
+
                 }
             }
         });

@@ -3,6 +3,8 @@ package com.example.basaile92.listelivre.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+
 /**
  * Created by Basile on 02/11/2016.
  */
@@ -29,5 +31,6 @@ public abstract class DAOBase {
     public SQLiteDatabase getDb() {
         return db;
     }
+
 
 }
