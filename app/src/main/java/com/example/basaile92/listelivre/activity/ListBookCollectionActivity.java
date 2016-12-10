@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
@@ -52,8 +53,18 @@ public class ListBookCollectionActivity extends FragmentActivity implements Book
 
     public void updateDisplayCollectionFragment(int position, View viewLibrary){
 
+        ExpandableListView elv = (ExpandableListView) findViewById(R.id.collectionList);
+        int pos, i;
+        pos = position;
+        for (i = 0 ; i < elv.getCount(); i++){
+
+            if(elv.isGroupExpanded(i) && position > i){
+                pos = position - 1;
+            }
+        }
+
         Intent intent = new Intent(ListBookCollectionActivity.this, ModifyCollectionActivity.class);
-        intent.putExtra("collectionID", position);
+        intent.putExtra("collectionID", pos);
         startActivity(intent);
         finish();
     }
