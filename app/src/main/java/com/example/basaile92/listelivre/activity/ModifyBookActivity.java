@@ -33,7 +33,6 @@ import com.example.basaile92.listelivre.manager.AuthorManager;
 import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.manager.ImageManager;
 import com.example.basaile92.listelivre.manager.TypeManager;
-import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +68,7 @@ public class ModifyBookActivity extends AppCompatActivity {
         final CheckBox isReadCheckBox = (CheckBox) findViewById(R.id.isReadCheckBox);
         final CheckBox isBorrowedCheckBox = (CheckBox) findViewById(R.id.isBorrowedCheckBox);
         final EditText commentsEdit = (EditText) findViewById(R.id.commentsEdit);
-        final CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
+        final ImageView imageButton = (ImageView) findViewById(R.id.imageButton);
         final ImageView modifyButton = (ImageView) findViewById(R.id.modifyButton);
 
         final TextView addAuthorsText = (TextView) findViewById(R.id.addAuthorsText);
@@ -131,9 +130,17 @@ public class ModifyBookActivity extends AppCompatActivity {
                 // If the form is correctly fill
                 if(checkForm(isbnEdit, titleEdit,authorsList, view.getContext())) {
 
+                    String url = "";
+                    if(!mCurrentPhotoPath.equals("")){
+
+                        Bitmap bitmap = ImageManager.getRotateBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
+                        url = ImageManager.saveBitmap(view.getContext(), bitmap);
+
+                    }
+
                     // We save the book in the Database
                     BookManager bookManager = new BookManager(view.getContext());
-                    bookManager.modifyBook(book , new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), commentsEdit.getText().toString(), ""));
+                    bookManager.modifyBook(book , new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(), commentsEdit.getText().toString(), url));
                     Intent intent = new Intent(ModifyBookActivity.this, DisplayBookActivity.class);
                     int itemId = getIntent().getIntExtra(BookLibraryFragment.POSITION, -1);
                     if(itemId != -1)
@@ -160,7 +167,7 @@ public class ModifyBookActivity extends AppCompatActivity {
                 final String[] typeListString = TypeManager.toStringArray(typeList);
                 final ArrayList<String> typeArrayStringDisplayed = TypeManager.elementsTrueFromTwoArrays(typeListString, onCheckedItems );
                 int editButtonString = R.string.editTypes;
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
                 if(!(typeList.size() > 0)){
 
@@ -202,7 +209,6 @@ public class ModifyBookActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(ModifyBookActivity.this, TypeManagerActivity.class);
                         startActivity(intent);
-                        //TODO recharger la multiple choice items with new items
 
                     }
                 });
@@ -295,7 +301,7 @@ public class ModifyBookActivity extends AppCompatActivity {
     }
 
 
-    private void setPhotoButton(final CircularImageView imageButton) {
+    private void setPhotoButton(final ImageView imageButton) {
 
 
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -388,8 +394,8 @@ public class ModifyBookActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
-        imageButton.setImageURI(Uri.fromFile(new File(mCurrentPhotoPath)));
+        ImageView imageButton = (ImageView) findViewById(R.id.imageButton);
+        imageButton.setImageBitmap(ImageManager.getRotateBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath)));
     }
 
     //When we push the back button, come back to the main activity

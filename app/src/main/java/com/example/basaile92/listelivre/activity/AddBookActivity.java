@@ -35,7 +35,6 @@ import com.example.basaile92.listelivre.manager.ImageManager;
 import com.example.basaile92.listelivre.manager.AuthorManager;
 import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.manager.TypeManager;
-import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,7 +70,7 @@ public class AddBookActivity extends AppCompatActivity {
         final CheckBox isReadCheckBox = (CheckBox) findViewById(R.id.isReadCheckBox);
         final CheckBox isBorrowedCheckBox = (CheckBox) findViewById(R.id.isBorrowedCheckBox);
         final EditText commentsEdit = (EditText) findViewById(R.id.commentsEdit);
-        final CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
+        final ImageView imageButton = (ImageView) findViewById(R.id.imageButton);
         final ImageView sendButton = (ImageView) findViewById(R.id.sendButton);
 
         final TextView addAuthorsText = (TextView) findViewById(R.id.addAuthorsText);
@@ -104,17 +103,18 @@ public class AddBookActivity extends AppCompatActivity {
                 // If the form is correctly fill
                 if(checkForm(isbnEdit, titleEdit, authorsList, view.getContext())) {
 
+                    String url = "";
+
                     if(!mCurrentPhotoPath.equals("")){
 
-                            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-                            ImageManager.saveBitmap(view.getContext(), ImageManager.getNewSizeBitmap(bitmap,10));
+                            Bitmap bitmap = ImageManager.getRotateBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
+                            url = ImageManager.saveBitmap(view.getContext(),bitmap);
                     }
 
 
                     // We save the book in the Database
                     BookManager bookManager = new BookManager(view.getContext());
-                    bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(),  commentsEdit.getText().toString(), mCurrentPhotoPath));
+                    bookManager.saveSimpleBook(new SimpleBook(isbnEdit.getText().toString(), authorsList, titleEdit.getText().toString(), typesList, publisherEdit.getText().toString(), yearEdit.getText().toString(), summaryEdit.getText().toString(), isReadCheckBox.isChecked(), isBorrowedCheckBox.isChecked(),  commentsEdit.getText().toString(), url));
                     Intent intent = new Intent(AddBookActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -271,7 +271,7 @@ public class AddBookActivity extends AppCompatActivity {
 
 
 
-    private void setPhotoButton(final CircularImageView imageButton) {
+    private void setPhotoButton(final ImageView imageButton) {
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -362,8 +362,8 @@ public class AddBookActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        CircularImageView imageButton = (CircularImageView) findViewById(R.id.imageButton);
-        imageButton.setImageURI(Uri.fromFile(new File(mCurrentPhotoPath)));
+        ImageView imageButton = (ImageView) findViewById(R.id.imageButton);
+        imageButton.setImageBitmap(ImageManager.getRotateBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath)));
     }
 
     //When we push the back button, come back to the main activity

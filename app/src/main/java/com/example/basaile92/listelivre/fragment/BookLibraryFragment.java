@@ -3,6 +3,7 @@ package com.example.basaile92.listelivre.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.example.basaile92.listelivre.R;
+import com.example.basaile92.listelivre.adapter.BookLibraryAdapter;
 import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.manager.BookManager;
@@ -46,45 +48,16 @@ public class BookLibraryFragment extends Fragment {
 
         public void updateView(final View view){
 
-            final ListView bookList = (ListView) view.findViewById(R.id.bookList);
+            final RecyclerView bookList = (RecyclerView) view.findViewById(R.id.bookList);
             BookManager bookManager = new BookManager(getContext());
             final BookLibrary bookLibrary = bookManager.readBookLibrary();
-
-
-            // Assignate the click function of each items of the bookList.
-            bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-                    // We update the display book fragment with the good position
-                    mCallback.updateDisplayBookFragment(position, getView());
-                }
-            });
 
             // if the booklibrary is well assignate
             if(bookLibrary != null) {
 
-                List<Map<String,String>> listOfBook = new ArrayList<Map<String, String>>();
-                for(SimpleBook book : bookLibrary){
-
-                    // We fill the 4 fields for each view of the list view.
-                    Map<String, String> bookMap = new HashMap<String, String>();
-                    //TODO add the photo here
-                    bookMap.put("img", "");
-                    bookMap.put("authors", book.getAuthors().toString());
-                    bookMap.put("title", book.getTitle());
-                    listOfBook.add(bookMap);
-                }
-
-                //We assignate the listview
-                SimpleAdapter listAdapter = new SimpleAdapter(view.getContext(), listOfBook, R.layout.book, new String[]{"img", "authors", "title"}, new int[]{R.id.imageButton, R.id.authorBook, R.id.titleBook});
-                bookList.setAdapter(listAdapter);
+                bookList.setLayoutManager(new LinearLayoutManager(getActivity()));
+                bookList.setAdapter(new BookLibraryAdapter(bookLibrary, mCallback, getView()));
             }
-
-
-
-
         }
 
 

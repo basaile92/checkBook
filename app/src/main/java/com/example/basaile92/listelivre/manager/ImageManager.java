@@ -7,6 +7,7 @@ package com.example.basaile92.listelivre.manager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Environment;
 
@@ -41,6 +42,13 @@ public class ImageManager {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    public static Bitmap getRotateBitmap(Bitmap bitmap){
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     public static Bitmap getNewSizeBitmap(Bitmap image, int maxSize) {

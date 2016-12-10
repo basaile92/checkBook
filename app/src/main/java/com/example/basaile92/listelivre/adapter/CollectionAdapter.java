@@ -150,7 +150,7 @@ public class CollectionAdapter implements ExpandableListAdapter {
         childHolder.horizontalListView.setLayoutManager(layoutManager);
 
         //Add a bookAdapter to display all books inside the collection
-        BookAdapter bookAdapter = new BookAdapter(context, collectionList.get(groupPosition).getBooks());
+        BookAdapter bookAdapter = new BookAdapter(collectionList.get(groupPosition).getBooks());
         childHolder.horizontalListView.setAdapter(bookAdapter);
 
         return convertView;

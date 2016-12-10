@@ -1,6 +1,8 @@
 package com.example.basaile92.listelivre.adapter;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.entity.BookLibrary;
+import com.example.basaile92.listelivre.manager.ImageManager;
 
 
 /**
@@ -23,39 +26,46 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
 
     //Constructor
-    public BookAdapter(Context context, BookLibrary books) {
+    public BookAdapter(BookLibrary books) {
 
-        this.context = context;
         this.books = books;
     }
 
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService((context.LAYOUT_INFLATER_SERVICE));
-        View cardView = inflater.inflate(R.layout.book_portrait, null, false);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View cardView = inflater.inflate(R.layout.book_portrait, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(cardView);
-        viewHolder.bookImage = (ImageView) cardView.findViewById(R.id.image_book);
-        viewHolder.bookName = (TextView) cardView.findViewById(R.id.text_book_title);
-        viewHolder.bookAuthors = (TextView) cardView.findViewById(R.id.text_book_author);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        return viewHolder;
+                int itemPosition = ((RecyclerView) parent).getChildLayoutPosition(view);
+
+            }
+        });
+
+
+
+        return new ViewHolder(cardView);
     }
 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        //ImageView bookImageView = (ImageView) holder.bookImage;
-       // bookImageView.setImageResource(Integer.parseInt(books.get(position).getBook().getPhoto()));
+        TextView nameTextView = (TextView) holder.getBookName();
+        TextView authorsTextView = (TextView) holder.getBookAuthors();
 
-        TextView nameTextView = (TextView) holder.bookName;
         nameTextView.setText(books.get(position).getBook().getTitle());
-
-        TextView authorsTextView = (TextView) holder.bookAuthors;
         authorsTextView.setText(books.get(position).getAuthors().get(0).getName());
+
+        ImageView bookImageView = (ImageView) holder.bookImage;
+        bookImageView.setImageBitmap((ImageManager.getNewSizeBitmap(BitmapFactory.decodeFile(books.get(position).getBook().getPhoto()), 1000)));
+
+
     }
 
 
@@ -88,6 +98,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             bookAuthors = (TextView) bookView.findViewById(R.id.text_book_author);
         }
 
+        public TextView getBookName() {
+            return bookName;
+        }
+
+        public TextView getBookAuthors() {
+            return bookAuthors;
+        }
     }
 
 }

@@ -22,7 +22,6 @@ import com.example.basaile92.listelivre.activity.ModifyBookActivity;
 import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.manager.BookManager;
-import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.w3c.dom.Text;
 
@@ -70,7 +69,7 @@ public class DisplayBookFragment extends Fragment{
         TextView yearText = (TextView) viewModif.findViewById(R.id.yearText);
         TextView summaryText = (TextView) viewModif.findViewById(R.id.summaryText);
         TextView commentsText = (TextView) viewModif.findViewById(R.id.commentsText);
-        CircularImageView imageButton = (CircularImageView) viewModif.findViewById(R.id.imageButton);
+        ImageView imageButton = (ImageView) viewModif.findViewById(R.id.imageButton);
 
         LinearLayout titleLayout = (LinearLayout) viewModif.findViewById(R.id.titleLayout);
         LinearLayout authorLayout = (LinearLayout) viewModif.findViewById(R.id.authorLayout);
@@ -125,7 +124,7 @@ public class DisplayBookFragment extends Fragment{
         }
     }
 
-    private void setPictureVisibility(CircularImageView imageButton, String photo) {
+    private void setPictureVisibility(ImageView imageButton, String photo) {
 
         if(photo.equals("")){
             imageButton.setVisibility(View.GONE);
@@ -200,7 +199,7 @@ public class DisplayBookFragment extends Fragment{
         });
     }
 
-    private void setImageButton(CircularImageView imageButton, String path){
+    private void setImageButton(ImageView imageButton, String path){
 
         if(!path.equals("")) {
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();

@@ -6,20 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/livreLayout"
+    android:background="@color/colorPrimary"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:layout_marginTop="2.5dp">
+    android:layout_marginBottom="2.5dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="15dp"
+    android:paddingTop="15dp">
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/imageButton"
+    <ImageView
+        android:id="@+id/imageBook"
         android:src="@drawable/puzzle"
-        app:civ_border_color="?attr/colorButtonNormal"
-        app:civ_border_width="4dp"
-        app:civ_shadow_radius="10"
-        app:civ_shadow_color="@color/brownie_top"
         android:layout_height="match_parent"
-        android:layout_width="129dp"
-        app:civ_shadow="true" />
+        android:layout_width="81dp"
+        android:layout_weight="0.45" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -35,7 +36,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/titleBook"
             android:gravity="right|center_horizontal"
-            android:layout_margin="@dimen/activity_vertical_margin" />
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
         <TextView
             android:text="Author"
@@ -43,8 +46,9 @@
             android:layout_height="wrap_content"
             android:gravity="right|center_horizontal"
             android:id="@+id/authorBook"
-            android:textColor="@android:color/black"
-            android:layout_margin="@dimen/activity_vertical_margin" />
+            android:textColor="@android:color/white"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:textSize="18sp" />
 
 
     </LinearLayout>
