@@ -175,7 +175,10 @@ public class ModifyCollectionActivity extends AppCompatActivity {
                         for (int i = 0 ; i < booksToAdd.size() ; i++) {
 
                             SimpleBook book = booksToAdd.get(i);
-                            collectionBookManager.saveCollectionBook(collection, book);
+                            if(! collectionBookManager.existCollectionbook(book,collection)) {
+
+                                collectionBookManager.saveCollectionBook(collection, book);
+                            }
                         }
                     }
                 });

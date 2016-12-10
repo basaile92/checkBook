@@ -1,5 +1,6 @@
 package com.example.basaile92.listelivre.callback;
 
+import android.app.DialogFragment;
 import android.view.View;
 
 /**
@@ -7,4 +8,8 @@ import android.view.View;
  */
 public interface BookCollectionListFragmentCallBack {
     public void updateDisplayCollectionFragment(int position, View view);
+
+    public void onDialogPositiveClick(DialogFragment dialog, String nameEdit);
+
+    public void onDialogNegativeClick(DialogFragment dialog);
 }

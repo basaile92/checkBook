@@ -40,7 +40,6 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="user"
             tools:replace="android:screenOrientation" />
-        <activity android:name=".activity.AddCollectionActivity" />
         <activity android:name=".activity.ModifyCollectionActivity" />
         <provider
             android:name="android.support.v4.content.FileProvider"
