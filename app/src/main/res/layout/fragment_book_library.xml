@@ -15,8 +15,7 @@
     android:id="@+id/bookList"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingBottom="70dp">
+        android:layout_alignParentStart="true">
     </android.support.v7.widget.RecyclerView>
 
 
