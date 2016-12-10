@@ -71,7 +71,6 @@ public class CollectionbookData {
             do {
                 Collectionbook entry = fromCursor(c);
  
-                // adding to todo list
                 list.add(entry);
             } while (c.moveToNext());
         }

@@ -83,7 +83,6 @@ public class TypebookData {
             do {
                 Typebook entry = fromCursor(c);
  
-                // adding to todo list
                 list.add(entry);
             } while (c.moveToNext());
         }

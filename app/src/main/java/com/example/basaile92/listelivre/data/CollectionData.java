@@ -63,7 +63,6 @@ public class CollectionData {
             do {
                 Collection entry = fromCursor(c);
  
-                // adding to todo list
                 list.addCollection(entry);
             } while (c.moveToNext());
         }
