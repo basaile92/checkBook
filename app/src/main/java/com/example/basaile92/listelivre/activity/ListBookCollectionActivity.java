@@ -79,6 +79,7 @@ public class ListBookCollectionActivity extends FragmentActivity implements Book
             collectionManager.saveCollection(new Collection(nameEdit, new BookLibrary()));
 
             Intent intent = new Intent(ListBookCollectionActivity.this, MainActivity.class);
+            intent.putExtra("tabHostLocation", "collection");
             startActivity(intent);
 
             finish();
