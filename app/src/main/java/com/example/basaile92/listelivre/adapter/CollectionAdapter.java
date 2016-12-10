@@ -98,7 +98,7 @@ public class CollectionAdapter implements ExpandableListAdapter {
         Collection collection = (Collection) getGroup(groupPosition);
 
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             convertView = inflater.inflate(R.layout.collection, null);
             convertView.setHorizontalScrollBarEnabled(true);
 
@@ -118,10 +118,10 @@ public class CollectionAdapter implements ExpandableListAdapter {
         //Test if the indicator is expanded or not
         if(isExpanded) {
             //If the indicator is expanded, the arrow is up
-            parentHolder.indicator.setImageResource(R.drawable.ic_keyboard_arrow_up_black_18dp);
+            parentHolder.indicator.setImageResource(R.drawable.arrow_up);
         } else {
             //If the indicator is not expanded, the arrow is down
-            parentHolder.indicator.setImageResource(R.drawable.ic_keyboard_arrow_down_black_18dp);
+            parentHolder.indicator.setImageResource(R.drawable.arrow_down);
         }
 
         return convertView;
@@ -135,7 +135,7 @@ public class CollectionAdapter implements ExpandableListAdapter {
 
         if (convertView == null) {
 
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             convertView = inflater.inflate(R.layout.group_books_collection, parent, false);
 
             childHolder = new ChildHolder();
