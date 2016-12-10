@@ -15,6 +15,7 @@ import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
 import com.example.basaile92.listelivre.fragment.DisplayBookFragment;
 import com.example.basaile92.listelivre.fragment.AddBookByIsbnDialogFragment;
+import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.scanbook.ScanBook;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -83,7 +84,6 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
         addBookFormIsbnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 DialogFragment dialog = new AddBookByIsbnDialogFragment();
                 dialog.show(getFragmentManager(), "AddBookByIsbnDialogFragment");
 
@@ -96,9 +96,17 @@ private void createBookListAddPopUp(String s) {
 
     if(s.length() == 13){
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        BookLibraryFragment bookLibraryFragment = (BookLibraryFragment) fragmentManager.findFragmentById(R.id.bookLibraryFragment);
-        ScanBook.showScanBook(s, bookLibraryFragment, findViewById(R.id.bookLibraryFragment) ,BookLibraryActivity.this);
+        BookManager bookManager = new BookManager(BookLibraryActivity.this);
+        if(!bookManager.existIsbn(s)){
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            BookLibraryFragment bookLibraryFragment = (BookLibraryFragment) fragmentManager.findFragmentById(R.id.bookLibraryFragment);
+            ScanBook.showScanBook(s, bookLibraryFragment, findViewById(R.id.bookLibraryFragment) ,BookLibraryActivity.this);
+        }else
+        {
+            Toast toast = Toast.makeText(BookLibraryActivity.this, R.string.bookAlreadyExist, Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
     }else{
 

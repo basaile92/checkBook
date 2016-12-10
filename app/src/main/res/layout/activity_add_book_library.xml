@@ -29,7 +29,7 @@
 
                 <ImageView
                     android:id="@+id/imageButton"
-                    android:src="@drawable/puzzle"
+                    android:src="@drawable/icone"
                     android:layout_height="254dp"
                     android:layout_weight="0.49"
                     android:layout_width="254dp"

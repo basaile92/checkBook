@@ -75,14 +75,8 @@ public class DisplayBookFragment extends Fragment{
         TextView commentsText = (TextView) viewModif.findViewById(R.id.commentsText);
         ImageView imageButton = (ImageView) viewModif.findViewById(R.id.imageButton);
 
-        LinearLayout titleLayout = (LinearLayout) viewModif.findViewById(R.id.titleLayout);
-        LinearLayout authorLayout = (LinearLayout) viewModif.findViewById(R.id.authorLayout);
-        LinearLayout typeLayout = (LinearLayout) viewModif.findViewById(R.id.typeLayout);
-        LinearLayout publisherLayout = (LinearLayout) viewModif.findViewById(R.id.publisherLayout);
-        LinearLayout yearLayout = (LinearLayout) viewModif.findViewById(R.id.yearLayout);
-        LinearLayout summaryLayout = (LinearLayout) viewModif.findViewById(R.id.summaryLayout);
-        LinearLayout commentLayout = (LinearLayout) viewModif.findViewById(R.id.commentLayout);
-        LinearLayout stampLayout = (LinearLayout) viewModif.findViewById(R.id.stampLayout);
+        LinearLayout isReadLayout = (LinearLayout) viewModif.findViewById(R.id.isReadLayout);
+        LinearLayout isBorrowedLayout = (LinearLayout) viewModif.findViewById(R.id.isBorrowedLayout);
 
         ImageView editButton = (ImageView) viewModif.findViewById(R.id.editButton);
         ImageView deleteButton = (ImageView) viewModif.findViewById(R.id.deleteButton);
@@ -102,15 +96,7 @@ public class DisplayBookFragment extends Fragment{
 
         setImageButton(imageButton, book.getPhoto());
 
-        setLayoutVisibility(titleLayout, titleText.getText().toString());
-        setLayoutVisibility(authorLayout, authorText.getText().toString());
-        setLayoutVisibility(typeLayout, typeText.getText().toString());
-        setLayoutVisibility(publisherLayout, publisherText.getText().toString());
-        setLayoutVisibility(yearLayout, yearText.getText().toString());
-        setLayoutVisibility(summaryLayout, summaryText.getText().toString());
-        setLayoutVisibility(commentLayout, commentsText.getText().toString());
-        setPictureVisibility(imageButton, book.getPhoto());
-        setStampVisibility(stampLayout, book.isBorrowed() && book.isRead());
+        setStampVisibility(isBorrowedLayout, isReadLayout, book.isBorrowed(),book.isRead());
 
         setButtonEdit(editButton, position);
         setButtonDelete(deleteButton, position);
@@ -118,32 +104,24 @@ public class DisplayBookFragment extends Fragment{
     }
 
 
-    private void setStampVisibility(LinearLayout stampLayout, boolean b) {
+    private void setStampVisibility(LinearLayout isBorrowedLayout, LinearLayout isReadLayout, boolean isBorrowed, boolean isRead) {
 
-        if(!b){
+        if(isBorrowed){
 
-            stampLayout.setVisibility(View.INVISIBLE);
+            isBorrowedLayout.setVisibility(View.VISIBLE);
         }else{
 
-            stampLayout.setVisibility(View.VISIBLE);
+            isBorrowedLayout.setVisibility(View.INVISIBLE);
         }
-    }
 
-    private void setPictureVisibility(ImageView imageButton, String photo) {
+        if(isRead){
 
-        if(photo.equals(""))
-            imageButton.setVisibility(View.GONE);
-    }
+            isReadLayout.setVisibility(View.VISIBLE);
+        }else{
 
-    private void setLayoutVisibility(LinearLayout layout, String s) {
-
-        if (s.equals("")) {
-            layout.setVisibility(View.INVISIBLE);
-
-        }else
-        {
-            layout.setVisibility(View.VISIBLE);
+            isReadLayout.setVisibility(View.INVISIBLE);
         }
+
     }
 
     private void setButtonEdit(ImageView editButton, final int position) {
