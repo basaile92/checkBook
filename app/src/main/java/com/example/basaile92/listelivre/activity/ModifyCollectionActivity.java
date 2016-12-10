@@ -115,7 +115,8 @@ public class ModifyCollectionActivity extends AppCompatActivity {
 
                 CollectionManager collectionManager = new CollectionManager((view.getContext()));
                 Collection collection = collectionManager.getCollectionAtPosition(position);
-                String collectionName = editCollectionName.getText().toString();
+                String collectionName = collection.getName();
+                collection.setName(editCollectionName.getText().toString());
 
                 collectionManager.modifyCollectionName(collection, collectionName);
 
