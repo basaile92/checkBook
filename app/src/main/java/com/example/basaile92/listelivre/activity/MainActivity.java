@@ -30,10 +30,12 @@ public class MainActivity extends TabActivity {
         spec1.setContent(new Intent(this, ListBookCollectionActivity.class));
         tabHost.addTab(spec1);
 
+        // If there is a callBack from ModifyCollectionActivity
         Intent intentLocation = getIntent();
         String tabHostLocation = (String) intentLocation.getSerializableExtra("tabHostLocation");
         if(tabHostLocation != null) {
             if (tabHostLocation.equals("collection")) {
+                //Switch the tab host to the Collection Activity
                 tabHost.setCurrentTab(1);
             }
         }
