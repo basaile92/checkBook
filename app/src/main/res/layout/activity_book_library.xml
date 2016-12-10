@@ -22,7 +22,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/bookLibraryLayout">
         <fragment
             android:id="@+id/bookLibraryFragment"
             class="com.example.basaile92.listelivre.fragment.BookLibraryFragment"
@@ -31,6 +34,7 @@
             android:layout_height="match_parent"
             tools:layout="@layout/fragment_book_library">
         </fragment>
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@id/fabtoolbar_container"

@@ -14,6 +14,8 @@ import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.manager.ImageManager;
 
+import java.io.File;
+
 
 /**
  * Created by merciert on 27/11/2016.
@@ -63,8 +65,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         authorsTextView.setText(books.get(position).getAuthors().get(0).getName());
 
         ImageView bookImageView = (ImageView) holder.bookImage;
-        bookImageView.setImageBitmap((ImageManager.getNewSizeBitmap(BitmapFactory.decodeFile(books.get(position).getBook().getPhoto()), 1000)));
 
+        if(!books.get(position).getBook().getPhoto().equals("")) {
+            if (new File(books.get(position).getBook().getPhoto()).exists())
+                //TODO retirer ce bouquin une fois que l'import de photo fonctionne
+
+                bookImageView.setImageBitmap((ImageManager.getNewSizeBitmap(BitmapFactory.decodeFile(books.get(position).getBook().getPhoto()), 1000)));
+        }
 
     }
 

@@ -67,6 +67,16 @@ public class ImageManager {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
+    public static void deletePhoto(String pathToDel) throws IOException {
+
+        File file = new File(pathToDel);
+
+        if (file.delete() == false) {
+            throw new IOException();
+        }
+
+    }
+
     public interface DownloadImageListener {
 
         void onDownload(Bitmap bitmap);

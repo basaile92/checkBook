@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -23,6 +25,7 @@ import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.Type;
 import com.example.basaile92.listelivre.entity.TypeList;
+import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
 import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.manager.ImageManager;
 import com.example.basaile92.listelivre.manager.TypeManager;
@@ -39,14 +42,13 @@ import org.json.JSONObject;
 public class ScanBook{
 
 
-    public ScanBook(final String isbn, final BookLibrary bookLibrary, final Context context){
+        public static void showScanBook(final String isbn, final BookLibraryFragment bookLibraryFragment, final View view, final Context context){
 
         //We are getting the JSON thanks to the isbn that we got and with a JSON OBjectRequest (Method.GET).
         String bookSearchString = "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn;
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET,bookSearchString, null,  new Response.Listener<JSONObject>(){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,bookSearchString, null,  new Response.Listener<JSONObject>(){
 
             @Override
             public void onResponse(JSONObject response) {
@@ -85,6 +87,7 @@ public class ScanBook{
                                 typeManager.saveType(type);
                             }
                             bookManager.saveSimpleBook(book);
+                            bookLibraryFragment.updateView(view);
                             dialog.cancel();
                         }
                     });
@@ -112,7 +115,7 @@ public class ScanBook{
         requestQueue.add(jsonObjectRequest);
     }
 
-    private BookLibrary getBooks(JSONObject jsonObject, String isbn){
+    private static BookLibrary getBooks(JSONObject jsonObject, String isbn){
 
         BookLibrary list = new BookLibrary();
 
@@ -149,7 +152,7 @@ public class ScanBook{
     }
 
     //We parse the Date to have only the year.
-    private String parseYear(String publisherDate) {
+    private static String parseYear(String publisherDate) {
         int i = 0;
         while(publisherDate.charAt(i) != '-'){
             i++;
@@ -161,7 +164,7 @@ public class ScanBook{
     }
 
     //We parse the JSONArray to get an AuthorList
-    private AuthorList parseArrayAuthor(JSONArray array, String isbn) throws JSONException {
+    private static AuthorList parseArrayAuthor(JSONArray array, String isbn) throws JSONException {
 
         AuthorList res = new AuthorList();
 
@@ -173,7 +176,7 @@ public class ScanBook{
     }
 
     //We parse the JSONArray to get a TypeList
-    private TypeList parseArrayType(JSONArray array) throws JSONException {
+    private static TypeList parseArrayType(JSONArray array) throws JSONException {
 
         TypeList res = new TypeList();
 

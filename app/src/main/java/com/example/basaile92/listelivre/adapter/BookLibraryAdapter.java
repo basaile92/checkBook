@@ -14,6 +14,8 @@ import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.manager.ImageManager;
 
+import java.io.File;
+
 /**
  * Created by basaile92 on 09/12/2016.
  */
@@ -62,9 +64,11 @@ public class BookLibraryAdapter extends RecyclerView.Adapter<BookLibraryAdapter.
         author.setText(books.get(position).getAuthors().toString());
         title.setText(books.get(position).getBook().getTitle());
 
-        if(!books.get(position).getBook().getPhoto().equals(""))
-            photo.setImageBitmap((ImageManager.getNewSizeBitmap(BitmapFactory.decodeFile(books.get(position).getBook().getPhoto()), 1000)));
-
+        if(!books.get(position).getBook().getPhoto().equals("")) {
+            if (new File(books.get(position).getBook().getPhoto()).exists())
+                //TODO retirer ce bouquin une fois que l'import de photo fonctionne
+                photo.setImageBitmap((ImageManager.getNewSizeBitmap(BitmapFactory.decodeFile(books.get(position).getBook().getPhoto()), 1000)));
+        }
 
     }
 

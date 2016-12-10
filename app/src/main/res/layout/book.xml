@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/livreLayout"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPrimaryDark"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginBottom="2.5dp"

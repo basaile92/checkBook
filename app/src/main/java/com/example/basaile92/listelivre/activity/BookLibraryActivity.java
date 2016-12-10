@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,7 +12,6 @@ import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
-import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.fragment.BookLibraryFragment;
 import com.example.basaile92.listelivre.fragment.DisplayBookFragment;
 import com.example.basaile92.listelivre.fragment.AddBookByIsbnDialogFragment;
@@ -45,6 +45,7 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
         });
 
         LinearLayout displayBookLayout =(LinearLayout) findViewById(R.id.displayBookLayout);
+
 
         //If the modifyBookLibraryLayout is null, it means that you're in portrait view, and if it's not you're in landscape view
         if(displayBookLayout != null){
@@ -95,8 +96,9 @@ private void createBookListAddPopUp(String s) {
 
     if(s.length() == 13){
 
-        final BookLibrary bookLibrary = new BookLibrary();
-        ScanBook scanBook = new ScanBook(s, bookLibrary, BookLibraryActivity.this);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        BookLibraryFragment bookLibraryFragment = (BookLibraryFragment) fragmentManager.findFragmentById(R.id.bookLibraryFragment);
+        ScanBook.showScanBook(s, bookLibraryFragment, findViewById(R.id.bookLibraryFragment) ,BookLibraryActivity.this);
 
     }else{
 
@@ -128,6 +130,7 @@ public void updateDisplayBookFragment(int position, View viewLibrary){
         }
     }
 
+
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, String isbn) {
 
@@ -154,6 +157,7 @@ public void updateDisplayBookFragment(int position, View viewLibrary){
         }
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         //retrieve result of scanning - instantiate ZXing object
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);

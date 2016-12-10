@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.basaile92.listelivre.R;
@@ -22,8 +23,11 @@ import com.example.basaile92.listelivre.activity.ModifyBookActivity;
 import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.manager.BookManager;
+import com.example.basaile92.listelivre.manager.ImageManager;
 
 import org.w3c.dom.Text;
+
+import java.io.IOException;
 
 
 /**
@@ -79,14 +83,12 @@ public class DisplayBookFragment extends Fragment{
         LinearLayout summaryLayout = (LinearLayout) viewModif.findViewById(R.id.summaryLayout);
         LinearLayout commentLayout = (LinearLayout) viewModif.findViewById(R.id.commentLayout);
         LinearLayout stampLayout = (LinearLayout) viewModif.findViewById(R.id.stampLayout);
-        LinearLayout layout = (LinearLayout) viewModif.findViewById(R.id.layout);
-
 
         ImageView editButton = (ImageView) viewModif.findViewById(R.id.editButton);
         ImageView deleteButton = (ImageView) viewModif.findViewById(R.id.deleteButton);
 
         //We get the informations of the Simple Book
-        BookManager bookManager = new BookManager(viewLibrary.getContext());
+        BookManager bookManager = new BookManager(viewModif.getContext());
         SimpleBook book = bookManager.getSimpleBookAtPosition(position);
 
         //We set all field of the view with the informations of the book
@@ -120,21 +122,28 @@ public class DisplayBookFragment extends Fragment{
 
         if(!b){
 
-            stampLayout.setVisibility(View.GONE);
+            stampLayout.setVisibility(View.INVISIBLE);
+        }else{
+
+            stampLayout.setVisibility(View.VISIBLE);
         }
     }
 
     private void setPictureVisibility(ImageView imageButton, String photo) {
 
-        if(photo.equals("")){
+        if(photo.equals(""))
             imageButton.setVisibility(View.GONE);
-        }
     }
 
     private void setLayoutVisibility(LinearLayout layout, String s) {
 
-        if(s.equals(""))
-            layout.setVisibility(View.GONE);
+        if (s.equals("")) {
+            layout.setVisibility(View.INVISIBLE);
+
+        }else
+        {
+            layout.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setButtonEdit(ImageView editButton, final int position) {
@@ -146,7 +155,6 @@ public class DisplayBookFragment extends Fragment{
             public void onClick(View view) {
 
                 //We send the book at the position in the intent to the modify book activity
-                //TODO probleme quand c'est en paysage
                 Intent intent = new Intent( getContext(), ModifyBookActivity.class);
                 BookManager bookManager = new BookManager(view.getContext());
                 SimpleBook book = bookManager.getSimpleBookAtPosition(position);
@@ -176,6 +184,14 @@ public class DisplayBookFragment extends Fragment{
 
                         //if yes we come back to the main activity.
                         BookManager bookManager = new BookManager(view.getContext());
+                        String pathToDel = bookManager.getSimpleBookAtPosition(position).getPhoto();
+
+                        try {
+                            ImageManager.deletePhoto(pathToDel);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                         bookManager.deleteBook(bookManager.getSimpleBookAtPosition(position));
 
                         Intent intent = new Intent(getActivity(), MainActivity.class);
