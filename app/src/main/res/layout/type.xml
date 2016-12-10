@@ -7,7 +7,7 @@
     <TextView
         android:text="TypeText"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/typeText"
         android:layout_weight="3"
         android:textSize="18sp"
@@ -15,8 +15,8 @@
         android:textColor="@android:color/black" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:id="@+id/typeDeleteButton"
         android:layout_weight="1"
         android:src="@drawable/delete"

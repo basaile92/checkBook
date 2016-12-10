@@ -19,15 +19,15 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/typesEdit"
             android:layout_weight="4"
             android:hint="@string/addTypeText"
             android:inputType="textCapSentences" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:gravity="center_vertical|center_horizontal|center"
             android:id="@+id/addTypeButton"
             android:src="@drawable/plus"
