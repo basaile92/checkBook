@@ -82,4 +82,17 @@ public class CollectionBookManager extends DAOBase{
 
         return bookLibrary;
     }
+
+
+    public boolean existCollectionbook(SimpleBook book, Collection collection){
+
+        boolean exist;
+
+        String isbn = book.getIsbn();
+        String name = collection.getName();
+        CollectionbookData collectionbookData = new CollectionbookData(handler);
+        exist = (collectionbookData.getCollectionbook(isbn, name) != null);
+
+        return exist;
+    }
 }

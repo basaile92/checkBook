@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.basaile92.listelivre.database.MySQLHelper;
+import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.entity.Collectionbook;
 
 import java.util.ArrayList;
@@ -28,12 +29,17 @@ public class CollectionbookData {
     }
     
     public Collectionbook fromCursor(Cursor c) {
- 
-        Collectionbook entry = new Collectionbook();
-        entry.setId(c.getLong(c.getColumnIndex(KEY_ID)));
-        entry.setNamecollection(c.getString(c.getColumnIndex(KEY_NAMECOLLECTION)));
-        entry.setIsbn(c.getString(c.getColumnIndex(KEY_ISBN)));
-        return entry;
+
+        if (c.getCount() > 0) {
+
+            Collectionbook entry = new Collectionbook();
+            entry.setId(c.getLong(c.getColumnIndex(KEY_ID)));
+            entry.setNamecollection(c.getString(c.getColumnIndex(KEY_NAMECOLLECTION)));
+            entry.setIsbn(c.getString(c.getColumnIndex(KEY_ISBN)));
+            return entry;
+        }
+
+        return null;
     }
     
     public ContentValues toContentValues(Collectionbook arg) {
@@ -110,6 +116,15 @@ public class CollectionbookData {
             ;
  
         return getAllCollectionbookByQuery(selectQuery);
+    }
+
+    public Collectionbook getCollectionbook(String isbn, String name){
+
+        String selectQuery = "SELECT  * FROM " + TABLE_COLLECTIONBOOK + " WHERE "
+                + KEY_NAMECOLLECTION + " = " + "'" + name + "'" + " AND " + KEY_ISBN + " = " + "'" + isbn + "'"
+                ;
+
+        return getCollectionbookByQuery(selectQuery);
     }
     
     public List<Collectionbook> getAllCollectionbookByIsbn(String isbn) {
