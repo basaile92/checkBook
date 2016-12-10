@@ -54,8 +54,33 @@
     <string name="add">Ajouter</string>
     <string name="deleteBookFromCollection">Supprimer Livre</string>
     <string name="delete">Supprimer</string>
-
-
+    <string name="addBookByIsbnText">Ajouter un Livre par ISBN</string>
+    <string name="addBookFormButton">Formulaire</string>
+    <string name="addBookFormIsbnButton">Formulaire d\'ISBN</string>
+    <string name="addBookQuestion">Lequel voulez-vous ajouter?</string>
+    <string name="addBookScanIsbnButton">Scanner d\'ISBN</string>
+    <string name="addTypeText">Ajouter un type</string>
+    <string name="bookLibraryTitle">Bibliothèque</string>
+    <string name="borrowed">Emprunté par</string>
+    <string name="cancel">Annuler</string>
+    <string name="collectionTitle">Collection</string>
+    <string name="createNewType">Créer un nouveau type</string>
+    <string name="deleteAuthors">Quels auteurs voulez-vous supprimer?</string>
+    <string name="deleteButton">Supprimer</string>
+    <string name="editTypes">Editer types</string>
+    <string name="emptyTypeList">La liste de type est vide.</string>
+    <string name="findBook">Trouver livre(s)</string>
+    <string name="founded">trouvés</string>
+    <string name="isbnNotFound">Aucun livre n\'a été trouvé pour cet ISBN</string>
+    <string name="loading">Chargement...</string>
+    <string name="noPermission">Vous n\'avez pas mis à jour les permissions</string>
+    <string name="notRead">Non lu</string>
+    <string name="pickSomeTypes">Choisissez les types</string>
+    <string name="read">Lu</string>
+    <string name="scanFailed">Le scan n\'a pas fonctionné correctement</string>
+    <string name="typeAlreadyExist">Ce type existe déjà</string>
+    <string name="typesSpinnerText">Choisissez un type</string>
+    <string name="validate">Valider</string>
 
 
 </resources>
