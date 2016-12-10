@@ -120,18 +120,18 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:id="@+id/addAuthorsText"
                             android:layout_weight="4"
                             android:textSize="18sp"
                             android:textColor="@android:color/black" />
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
                             android:id="@+id/editAuthorsButton"
                             android:src="@drawable/pencil"
-                            android:tint="@color/colorAccent" />
+                            android:tint="@color/colorAccent"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp" />
 
                     </LinearLayout>
 
@@ -150,8 +150,8 @@
                             android:inputType="textCapSentences" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:id="@+id/addAuthorsButton"
                             android:adjustViewBounds="false"
                             android:cropToPadding="false"
@@ -244,12 +244,12 @@
                         android:textColor="@android:color/black" />
 
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="30dp"
                         android:gravity="center_vertical|center_horizontal|center"
                         android:id="@+id/addTypesButton"
                         android:tint="@color/colorAccent"
-                        android:src="@drawable/pencil" />
+                        android:src="@drawable/pencil"
+                        android:layout_height="30dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -354,8 +354,8 @@
 
                 <ImageView
                     android:text="Send"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:id="@+id/modifyButton"
                     android:src="@drawable/send"/>
             </LinearLayout>
