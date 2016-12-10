@@ -1,5 +1,6 @@
 package com.example.basaile92.listelivre.scanbook;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,11 +45,19 @@ public class ScanBook{
 
         public static void showScanBook(final String isbn, final BookLibraryFragment bookLibraryFragment, final View view, final Context context){
 
-        //We are getting the JSON thanks to the isbn that we got and with a JSON OBjectRequest (Method.GET).
+        //We are getting the JSON thanks to the isbn that we got and with a JSON OBjectRequest (Method.GET)
         String bookSearchString = "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn;
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(context.getString(R.string.loading));
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(true);
+        progressDialog.show();
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,bookSearchString, null,  new Response.Listener<JSONObject>(){
+
 
             @Override
             public void onResponse(JSONObject response) {
@@ -91,15 +100,17 @@ public class ScanBook{
 
 
                                 }
-                            }).execute(url);
+                            }, context).execute(url);
 
                         }
                     });
 
+                    progressDialog.dismiss();
                     builder.create();
                     builder.show();
                 }else{
 
+                    progressDialog.dismiss();
                     Toast toast = Toast.makeText(context, R.string.isbnNotFound, Toast.LENGTH_SHORT);
                     toast.show();
                 }

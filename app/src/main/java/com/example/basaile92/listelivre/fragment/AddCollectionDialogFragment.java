@@ -1,8 +1,8 @@
 package com.example.basaile92.listelivre.fragment;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.activity.ListBookCollectionActivity;
-import com.example.basaile92.listelivre.callback.BookCollectionListFragmentCallBack;
+import com.example.basaile92.listelivre.callback.AddCollectionDialogFragmentCallBack;
 
 /**
  * Created by merciert on 10/12/2016.
@@ -21,7 +20,7 @@ import com.example.basaile92.listelivre.callback.BookCollectionListFragmentCallB
 
 public class AddCollectionDialogFragment extends DialogFragment {
 
-    BookCollectionListFragmentCallBack myListener;
+    AddCollectionDialogFragmentCallBack myListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,15 +59,15 @@ public class AddCollectionDialogFragment extends DialogFragment {
 
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            myListener = (ListBookCollectionActivity) activity;
+            myListener = (AddCollectionDialogFragmentCallBack) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(context.toString()
                     + " must implement AddCollectionDialogFragmentCallBack");
         }
     }

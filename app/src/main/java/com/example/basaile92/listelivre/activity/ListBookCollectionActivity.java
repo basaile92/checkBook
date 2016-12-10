@@ -6,17 +6,26 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.callback.BookCollectionListFragmentCallBack;
+import com.example.basaile92.listelivre.adapter.CollectionAdapter;
+import com.example.basaile92.listelivre.callback.AddCollectionDialogFragmentCallBack;
 import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.entity.Collection;
+import com.example.basaile92.listelivre.entity.CollectionList;
 import com.example.basaile92.listelivre.fragment.AddCollectionDialogFragment;
+import com.example.basaile92.listelivre.manager.CollectionBookManager;
 import com.example.basaile92.listelivre.manager.CollectionManager;
 
-public class ListBookCollectionActivity extends FragmentActivity implements BookCollectionListFragmentCallBack{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class ListBookCollectionActivity extends FragmentActivity implements AddCollectionDialogFragmentCallBack{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +38,86 @@ public class ListBookCollectionActivity extends FragmentActivity implements Book
 
         //Add function to the button Create a new Collection
         FloatingActionButton createCollectionButton = (FloatingActionButton) findViewById(R.id.addCollectionButton);
-        setAddCollectionFunction(createCollectionButton);
+        setAddCollectionButton(createCollectionButton);
 
+        updateView();
 
     }
 
-    private void setAddCollectionFunction(FloatingActionButton createCollectionButton) {
+    public void updateView() {
+
+        final ExpandableListView collectionListView = (ExpandableListView) findViewById(R.id.collectionList);
+
+        CollectionManager collectionManager = new CollectionManager(ListBookCollectionActivity.this);
+
+        // Load all collections inside a CollectionList
+        CollectionList collectionList = collectionManager.readCollectionList();
+
+        // To be able to click on each collection
+        collectionListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                // We update the display book fragment with the good position
+                ExpandableListView elv = (ExpandableListView) findViewById(R.id.collectionList);
+                int pos, i;
+                pos = position;
+                for (i = 0 ; i < elv.getCount(); i++){
+
+                    if(elv.isGroupExpanded(i) && position > i){
+                        pos = position - 1;
+                    }
+                }
+
+                Intent intent = new Intent(ListBookCollectionActivity.this, ModifyCollectionActivity.class);
+                intent.putExtra("collectionID", pos);
+                startActivity(intent);
+                finish();
+                return true;
+            }
+        });
+
+        // Check if the list is initialized to add collections into a listView
+        if(collectionList != null) {
+
+            List<Map<String, String>> listOfCollections = new ArrayList<Map<String, String>>();
+
+            for (Collection collection : collectionList) {
+
+                Map<String, String> collectionInfos = new HashMap<String, String>();
+                collectionInfos.put("name", collection.getName());
+
+                listOfCollections.add(collectionInfos);
+            }
+
+            for (int i = 0 ; i < collectionList.size() ; i++) {
+
+                CollectionBookManager collectionBookManager = new CollectionBookManager(ListBookCollectionActivity.this);
+                BookLibrary bookLibrary = collectionBookManager.getAllSimpleBooksFromCollection(collectionList.get(i));
+                collectionList.get(i).setBooks(bookLibrary);
+            }
+
+            CollectionAdapter mCollectionAdapter = new CollectionAdapter(ListBookCollectionActivity.this , collectionList);
+            collectionListView.setAdapter(mCollectionAdapter);
+
+            collectionListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+                int previousGroup = -1;
+
+                @Override
+                public void onGroupExpand(int groupPosition) {
+                    if ((previousGroup != -1) && (groupPosition != previousGroup)) {
+                        collectionListView.collapseGroup(previousGroup);
+                    }
+                    previousGroup = groupPosition;
+                }
+            });
+
+        }
+    }
+
+
+    private void setAddCollectionButton(FloatingActionButton createCollectionButton) {
 
         createCollectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,42 +128,6 @@ public class ListBookCollectionActivity extends FragmentActivity implements Book
             }
         });
     }
-
-    public void updateDisplayCollectionFragment(int position, View viewLibrary){
-
-        ExpandableListView elv = (ExpandableListView) findViewById(R.id.collectionList);
-        int pos, i;
-        pos = position;
-        for (i = 0 ; i < elv.getCount(); i++){
-
-            if(elv.isGroupExpanded(i) && position > i){
-                pos = position - 1;
-            }
-        }
-
-        Intent intent = new Intent(ListBookCollectionActivity.this, ModifyCollectionActivity.class);
-        intent.putExtra("collectionID", pos);
-        startActivity(intent);
-        finish();
-    }
-
-
-    public void onDialogPositiveClick(DialogFragment dialog, String nameEdit) {
-
-        CollectionManager collectionManager = new CollectionManager(dialog.getActivity());
-
-        if(checkName(nameEdit, collectionManager)) {
-
-            collectionManager.saveCollection(new Collection(nameEdit, new BookLibrary()));
-
-            Intent intent = new Intent(ListBookCollectionActivity.this, MainActivity.class);
-            intent.putExtra("tabHostLocation", "collection");
-            startActivity(intent);
-
-            finish();
-        }
-    }
-
 
     private boolean checkName(String nameEdit, CollectionManager collectionManager) {
 
@@ -99,8 +146,23 @@ public class ListBookCollectionActivity extends FragmentActivity implements Book
         return true;
     }
 
-    public void onDialogNegativeClick(DialogFragment dialog) {
+    @Override
+    public void onDialogPositiveClick(AddCollectionDialogFragment addCollectionDialogFragment, String nameEditForm) {
+        CollectionManager collectionManager = new CollectionManager(addCollectionDialogFragment.getActivity());
 
-        dialog.dismiss();
+        if(checkName(nameEditForm, collectionManager)) {
+
+            collectionManager.saveCollection(new Collection(nameEditForm, new BookLibrary()));
+
+            updateView();
+            addCollectionDialogFragment.dismiss();
+        }
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(AddCollectionDialogFragment addCollectionDialogFragment) {
+
+        addCollectionDialogFragment.dismiss();
     }
 }

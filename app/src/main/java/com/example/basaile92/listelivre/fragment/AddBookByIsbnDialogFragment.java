@@ -1,9 +1,9 @@
 package com.example.basaile92.listelivre.fragment;
 
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -16,10 +16,7 @@ import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
 
 /**
- * Created by Basile on 26/11/2016.
- /* The activity that creates an instance of this dialog fragment must
- * implement this interface in order to receive event callbacks.
- * Each method passes the DialogFragment in case the host needs to query it. */
+ * Created by Basile on 26/11/2016.*/
 
 public class AddBookByIsbnDialogFragment extends DialogFragment {
 
@@ -69,15 +66,15 @@ public class AddBookByIsbnDialogFragment extends DialogFragment {
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            mListener = (BookLibraryFragmentCallBack) activity;
+            mListener = (BookLibraryFragmentCallBack) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(context.toString()
                     + " must implement BookLibraryFragmentCallBack");
         }
     }

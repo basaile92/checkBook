@@ -4,12 +4,15 @@ package com.example.basaile92.listelivre.manager;
  * Created by basaile92 on 04/12/2016.
  */
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Environment;
+
+import com.example.basaile92.listelivre.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -85,10 +88,27 @@ public class ImageManager {
     public static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
         protected DownloadImageListener listener;
+        protected Context context;
+        ProgressDialog progDailog;
 
-        public ImageDownloader(DownloadImageListener listener) {
+
+        public ImageDownloader(DownloadImageListener listener, Context context) {
             this.listener = listener;
+            this.context = context;
+            this.progDailog = new ProgressDialog(this.context);
+
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDailog.setMessage(context.getString(R.string.loading));
+            progDailog.setIndeterminate(false);
+            progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDailog.setCancelable(true);
+            progDailog.show();
+        }
+
 
         @Override
         protected Bitmap doInBackground(String... params) {
@@ -108,6 +128,7 @@ public class ImageManager {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
+            progDailog.dismiss();
             if (!isCancelled())
                 listener.onDownload(bitmap);
         }
