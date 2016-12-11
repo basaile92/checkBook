@@ -134,7 +134,7 @@ public class SimpleBook implements Serializable{
 
     public String toString(){
 
-        if(getPublisher() != "")
+        if(!getPublisher().equals(""))
             return(getTitle() + " - " + getAuthors().toString() + " - " + getPublisher());
         return (getTitle() + " - " + getAuthors().toString());
     }

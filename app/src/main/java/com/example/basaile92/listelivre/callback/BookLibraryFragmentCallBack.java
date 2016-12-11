@@ -9,7 +9,7 @@ import android.view.View;
 
 public interface BookLibraryFragmentCallBack {
 
-    public void updateDisplayBookFragment(int position, View view);
+    public void updateDisplayBookFragment(int position);
     public void onDialogPositiveClick(DialogFragment dialog, String isbn);
     public void onDialogNegativeClick(DialogFragment dialog);
 }

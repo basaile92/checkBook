@@ -3,6 +3,7 @@ package com.example.basaile92.listelivre.adapter;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +25,11 @@ public class BookLibraryAdapter extends RecyclerView.Adapter<BookLibraryAdapter.
 
     private BookLibrary books = new BookLibrary();
     private BookLibraryFragmentCallBack mCallBack;
-    private View display;
 
-    public BookLibraryAdapter(BookLibrary books, BookLibraryFragmentCallBack mCallBack, View display){
+    public BookLibraryAdapter(BookLibrary books, BookLibraryFragmentCallBack mCallBack){
 
         this.books = books;
         this.mCallBack = mCallBack;
-        this.display = display;
 
     }
 
@@ -39,7 +38,6 @@ public class BookLibraryAdapter extends RecyclerView.Adapter<BookLibraryAdapter.
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.book, parent, false);
 
-        final View display2 = this.display;
         final BookLibraryFragmentCallBack mCallBack2 = this.mCallBack;
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +45,7 @@ public class BookLibraryAdapter extends RecyclerView.Adapter<BookLibraryAdapter.
             public void onClick(View view) {
 
                 int itemPosition = ((RecyclerView)parent).getChildLayoutPosition(view);
-                mCallBack2.updateDisplayBookFragment(itemPosition, display2);
+                mCallBack2.updateDisplayBookFragment(itemPosition);
 
             }
         });

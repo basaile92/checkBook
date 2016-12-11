@@ -54,7 +54,7 @@ public class DisplayBookActivity extends FragmentActivity implements BookLibrary
 
     //This 3 functions are not used.
     @Override
-    public void updateDisplayBookFragment(int position, View view) {
+    public void updateDisplayBookFragment(int position) {
 
     }
 

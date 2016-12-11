@@ -42,7 +42,7 @@ public class BookLibraryFragment extends Fragment {
             if(bookLibrary != null) {
 
                 bookList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                bookList.setAdapter(new BookLibraryAdapter(bookLibrary, mCallback, getView()));
+                bookList.setAdapter(new BookLibraryAdapter(bookLibrary, mCallback));
             }
         }
 

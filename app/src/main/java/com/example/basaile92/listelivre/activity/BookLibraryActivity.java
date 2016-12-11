@@ -30,6 +30,7 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_library);
 
+
         // Title of the Activity
         setTitle(R.string.mainActivity);
 
@@ -53,7 +54,6 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
             // We add a new fragment in fragment manager
             DisplayBookFragment displayBookFragment = new DisplayBookFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.displayBookLayout, displayBookFragment).commit();
-
         }
 
         // Assignate function of add button
@@ -121,7 +121,7 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
     }
 
 
-    public void updateDisplayBookFragment(int position, View viewLibrary){
+    public void updateDisplayBookFragment(int position){
 
         LinearLayout displayBookLayout = (LinearLayout) findViewById(R.id.displayBookLayout);
 
@@ -129,9 +129,12 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
         if(displayBookLayout != null) {
 
             //We update the view of the displaybookfragment with the new position
-            DisplayBookFragment displayBookFragment = new DisplayBookFragment();
+            DisplayBookFragment displayBookFragment = (DisplayBookFragment) getSupportFragmentManager().findFragmentById(R.id.displayBookFragment);
+            DisplayBookFragment newDisplayBookFragment = new DisplayBookFragment();
             View viewDisplay = findViewById(R.id.fragment_display_book);
-            displayBookFragment.updateView(position, viewDisplay , viewLibrary);
+            newDisplayBookFragment.updateView(position, viewDisplay);
+            getSupportFragmentManager().beginTransaction().replace(R.id.displayBookLayout, newDisplayBookFragment).commit();
+
             displayBookLayout.setVisibility(View.VISIBLE);
         }else{
 

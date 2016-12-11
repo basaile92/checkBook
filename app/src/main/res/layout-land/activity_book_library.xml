@@ -34,7 +34,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="3.5"
                 android:id="@+id/bookLibraryLayout">
 
                 <fragment
@@ -52,10 +52,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="2.5"
                 android:orientation="horizontal"
                 android:id="@+id/displayBookLayout"
                 android:visibility="invisible">
+                    <fragment
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/displayBookFragment"
+                        class="com.example.basaile92.listelivre.fragment.DisplayBookFragment"
+                        android:name="com.example.basaile92.listelivre.fragment.DisplayBookFragment">
+
+
+                    </fragment>
 
             </LinearLayout>
         </LinearLayout>
