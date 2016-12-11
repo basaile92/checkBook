@@ -226,7 +226,7 @@ public class ModifyCollectionActivity extends AppCompatActivity {
                             booksToAdd.add(bookLibrary.get(which));
                         } else if (booksToAdd.contains(bookLibrary.get(which))) {
                             // Else, if the item is already in the array, we remove it
-                            booksToAdd.remove(Integer.valueOf(which));
+                            booksToAdd.remove(which);
                         }
                     }
                 });
@@ -313,7 +313,7 @@ public class ModifyCollectionActivity extends AppCompatActivity {
                             booksToDelete.add(booksInCollection.get(which));
                         } else if (booksToDelete.contains(booksInCollection.get(which))) {
                             // Else, if the item is already in the array, we remove it
-                            booksToDelete.remove(Integer.valueOf(which));
+                            booksToDelete.remove(which);
                         }
                     }
                 });
@@ -355,7 +355,7 @@ public class ModifyCollectionActivity extends AppCompatActivity {
         });
     }
 
-    
+
     /**
      * When we push the back button, come back to the main activity
      */

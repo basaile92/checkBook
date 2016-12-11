@@ -16,9 +16,8 @@ import com.example.basaile92.listelivre.manager.ImageManager;
 
 
 /**
- * Created by merciert on 27/11/2016.
+ * Class use to display Book
  */
-
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
     private Context context;
@@ -35,6 +34,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 
+        //Set the layout for a book
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View cardView = inflater.inflate(R.layout.book_portrait, parent, false);
 
@@ -45,13 +45,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        TextView nameTextView = (TextView) holder.getBookName();
-        TextView authorsTextView = (TextView) holder.getBookAuthors();
+        //Set the different information of a book : title, author and image
+
+        TextView nameTextView = holder.getBookName();
+        TextView authorsTextView = holder.getBookAuthors();
 
         nameTextView.setText(books.get(position).getBook().getTitle());
         authorsTextView.setText(books.get(position).getAuthors().get(0).getName());
 
-        ImageView bookImageView = (ImageView) holder.bookImage;
+        ImageView bookImageView = holder.bookImage;
 
         if(!books.get(position).getBook().getPhoto().equals("")) {
                 bookImageView.setImageBitmap((ImageManager.getNewSizeBitmap(BitmapFactory.decodeFile(books.get(position).getBook().getPhoto()), 1000)));

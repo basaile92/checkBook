@@ -15,7 +15,7 @@ import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.callback.AddCollectionDialogFragmentCallBack;
 
 /**
- * Created by merciert on 10/12/2016.
+ * Dialog to add a new collection
  */
 
 public class AddCollectionDialogFragment extends DialogFragment {
@@ -31,15 +31,19 @@ public class AddCollectionDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        //Create the builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.addCollection);
         final View view = getActivity().getLayoutInflater().inflate(R.layout.add_collection_form, null);
+
         builder.setView(view);
+
         builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                //Collect the name of the new collection
                 String nameEditForm = ((EditText) view.findViewById(R.id.addCollectionForm)).getText().toString();
                 myListener.onDialogPositiveClick(AddCollectionDialogFragment.this, nameEditForm);
             }

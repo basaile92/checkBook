@@ -81,16 +81,17 @@ public class ListBookCollectionActivity extends FragmentActivity implements AddC
         // Check if the list is initialized to add collections into a listView
         if(collectionList != null) {
 
-            List<Map<String, String>> listOfCollections = new ArrayList<Map<String, String>>();
+            List<Map<String, String>> listOfCollections = new ArrayList<>();
 
             for (Collection collection : collectionList) {
 
-                Map<String, String> collectionInfos = new HashMap<String, String>();
+                Map<String, String> collectionInfos = new HashMap<>();
                 collectionInfos.put("name", collection.getName());
 
                 listOfCollections.add(collectionInfos);
             }
 
+            //Collect all collections from database
             for (int i = 0 ; i < collectionList.size() ; i++) {
 
                 CollectionBookManager collectionBookManager = new CollectionBookManager(ListBookCollectionActivity.this);
@@ -98,6 +99,7 @@ public class ListBookCollectionActivity extends FragmentActivity implements AddC
                 collectionList.get(i).setBooks(bookLibrary);
             }
 
+            //Set the adapter
             CollectionAdapter mCollectionAdapter = new CollectionAdapter(ListBookCollectionActivity.this , collectionList);
             collectionListView.setAdapter(mCollectionAdapter);
 
@@ -117,26 +119,59 @@ public class ListBookCollectionActivity extends FragmentActivity implements AddC
     }
 
 
+    /**
+     * Allows to add a new collection
+     * @param createCollectionButton : Button which trigger the function
+     */
     private void setAddCollectionButton(FloatingActionButton createCollectionButton) {
 
+        //Set the eventClickListener
         createCollectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                //Create the dialog to add a collection
                 DialogFragment dialog = new AddCollectionDialogFragment();
                 dialog.show(getFragmentManager(), "AddCollectionDialogFragment");
             }
         });
     }
 
+
+    @Override
+    public void onDialogPositiveClick(AddCollectionDialogFragment addCollectionDialogFragment, String nameEditForm) {
+        CollectionManager collectionManager = new CollectionManager(addCollectionDialogFragment.getActivity());
+
+        //Check if new collection's name is correct
+        if(checkName(nameEditForm, collectionManager)) {
+
+            //If yes, we save the collection in the database
+            collectionManager.saveCollection(new Collection(nameEditForm, new BookLibrary()));
+
+            updateView();
+            addCollectionDialogFragment.dismiss();
+        }
+
+    }
+
+
+    /**
+     * Private function to check if a collection's name respect certain standards
+     * @param nameEdit : where is the name to check
+     * @param collectionManager : use to compare the name in the database
+     * @return True if the name is correct
+     *          False if not
+     */
     private boolean checkName(String nameEdit, CollectionManager collectionManager) {
 
+        //Verify if the name is not empty
         if(nameEdit.length() == 0) {
 
             Toast toast = Toast.makeText(ListBookCollectionActivity.this, R.string.collectionNameEmpty, Toast.LENGTH_SHORT);
             toast.show();
             return false;
         }
+        //Verify if the name already exist in the database
         if(collectionManager.existCollection(nameEdit)){
 
             Toast toast = Toast.makeText(ListBookCollectionActivity.this, R.string.alreadyExistCollection, Toast.LENGTH_SHORT);
@@ -144,20 +179,6 @@ public class ListBookCollectionActivity extends FragmentActivity implements AddC
             return false;
         }
         return true;
-    }
-
-    @Override
-    public void onDialogPositiveClick(AddCollectionDialogFragment addCollectionDialogFragment, String nameEditForm) {
-        CollectionManager collectionManager = new CollectionManager(addCollectionDialogFragment.getActivity());
-
-        if(checkName(nameEditForm, collectionManager)) {
-
-            collectionManager.saveCollection(new Collection(nameEditForm, new BookLibrary()));
-
-            updateView();
-            addCollectionDialogFragment.dismiss();
-        }
-
     }
 
     @Override

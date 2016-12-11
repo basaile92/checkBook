@@ -16,7 +16,7 @@ import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.entity.CollectionList;
 
 /**
- * Created by merciert on 24/11/16.
+ * Class use to display a collection
  */
 
 public class CollectionAdapter implements ExpandableListAdapter {
@@ -57,13 +57,14 @@ public class CollectionAdapter implements ExpandableListAdapter {
     }
 
 
-    // Return the book at the position groupPosition
+    // Return the collection at the position groupPosition
     @Override
     public Object getGroup(int groupPosition) {
         return collectionList.get(groupPosition);
     }
 
-    // Return the book at the position groupPosition
+
+    // Return the collection at the position groupPosition
     // childPosition is not use because, a collection have one list of books
     @Override
     public Object getChild(int groupPosition, int childPosition) {
@@ -93,7 +94,7 @@ public class CollectionAdapter implements ExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
-        ParentHolder parentHolder = null;
+        ParentHolder parentHolder;
 
         Collection collection = (Collection) getGroup(groupPosition);
 
@@ -128,10 +129,12 @@ public class CollectionAdapter implements ExpandableListAdapter {
 
     }
 
+
+    //Return a view to obtain a list of book view
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        ChildHolder childHolder = null;
+        ChildHolder childHolder;
 
         if (convertView == null) {
 

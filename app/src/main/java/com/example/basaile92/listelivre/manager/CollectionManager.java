@@ -10,24 +10,34 @@ import com.example.basaile92.listelivre.entity.CollectionList;
 import java.util.List;
 
 /**
- * Created by Basile on 22/11/2016.
+ * Class to manipulate the collection database
  */
 
 public class CollectionManager extends DAOBase {
 
+    //Constructor
     public CollectionManager(Context pContext) {
 
         super(pContext);
     }
 
+
+    /**
+     * Get all collections from the database
+     * @return a CollectionList
+     */
     public CollectionList readCollectionList(){
 
         CollectionData collectionData = new CollectionData(handler);
-        CollectionList collectionList = collectionData.getAllCollection();
-        return collectionList;
+
+        return collectionData.getAllCollection();
     }
 
 
+    /**
+     * Create a new Collection in the database
+     * @param collection : collection to add in the database
+     */
     public void saveCollection(Collection collection){
 
         CollectionData collectionData = new CollectionData(handler);
@@ -35,6 +45,11 @@ public class CollectionManager extends DAOBase {
     }
 
 
+    /**
+     * Modify collection's name in the database
+     * @param collection : the new collection
+     * @param Name of the collection in the database
+     */
     public void modifyCollectionName(Collection collection, String Name){
 
         CollectionData collectionData = new CollectionData(handler);
@@ -43,26 +58,37 @@ public class CollectionManager extends DAOBase {
     }
 
 
+    /**
+     * Get the collection at position "position" in the database
+     * @param position : position of the collection
+     * @return a Collection
+     */
     public Collection getCollectionAtPosition (int position) {
 
         CollectionData collectionData = new CollectionData(handler);
         List<Collection> collectionList = collectionData.getAllCollection();
 
-        Collection collection = collectionList.get(position);
-
-        return collection;
+        return collectionList.get(position);
     }
 
 
+    /**
+     * Get the collection with the name 'name'
+     * @param name : name of the collection
+     * @return a Collection
+     */
     public Collection getCollectionByName (String name) {
 
         CollectionData collectionData = new CollectionData(handler);
-        Collection collection = collectionData.getCollectionByName(name);
 
-        return collection;
+        return collectionData.getCollectionByName(name);
     }
 
 
+    /**
+     * Delete a collection from the database
+     * @param collection : collection to delete
+     */
     public void deleteCollection(Collection collection) {
 
         CollectionData collectionData = new CollectionData(handler);
@@ -70,6 +96,12 @@ public class CollectionManager extends DAOBase {
     }
 
 
+    /**
+     * Check if the collection already exist in the database
+     * @param name : name to check
+     * @return True if the collection already exist
+     *          False if not
+     */
     public boolean existCollection(String name){
 
         boolean exist;
