@@ -1,8 +1,5 @@
 package com.example.basaile92.listelivre.manager;
 
-/**
- * Created by basaile92 on 04/12/2016.
- */
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,8 +18,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * Class used to manipulated an Image
+ */
 public class ImageManager {
 
+    /**
+     * Create the file which contains the image
+     * @param context
+     * @return a temporary file
+     * @throws IOException
+     */
     public static File createImageFile(Context context) throws IOException {
 
         String timeStamp = String.valueOf(System.currentTimeMillis());
@@ -32,7 +38,12 @@ public class ImageManager {
         return File.createTempFile(imageFileName, ".jpg", storageDir);
     }
 
-
+    /**
+     * Compress a Bitmap in a file
+     * @param context
+     * @param bitmap : Bitmap to compress
+     * @return the path of the file
+     */
     public static String saveBitmap(Context context, Bitmap bitmap) {
 
         try {
@@ -47,6 +58,11 @@ public class ImageManager {
         }
     }
 
+    /**
+     * Rotate a Bitmap of 90 degrees
+     * @param bitmap Bitmap to rotate
+     * @return a rotate Bitmap
+     */
     public static Bitmap getRotateBitmap(Bitmap bitmap){
 
         Matrix matrix = new Matrix();
@@ -54,6 +70,12 @@ public class ImageManager {
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
+    /**
+     * Resize a Bitmap
+     * @param image Bitmap to resize
+     * @param maxSize the size of the new Bitmap
+     * @return a resize Bitmap
+     */
     public static Bitmap getNewSizeBitmap(Bitmap image, int maxSize) {
 
         int width = image.getWidth();
@@ -70,6 +92,11 @@ public class ImageManager {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
+    /**
+     * Delete a photo's file
+     * @param pathToDel the path of the file
+     * @throws IOException if the deletion fails
+     */
     public static void deletePhoto(String pathToDel) throws IOException {
 
         File file = new File(pathToDel);
@@ -79,6 +106,7 @@ public class ImageManager {
         }
 
     }
+
 
     public interface DownloadImageListener {
 

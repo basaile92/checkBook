@@ -11,15 +11,20 @@ import com.example.basaile92.listelivre.entity.TypeList;
 import java.util.ArrayList;
 
 /**
- * Created by Basile on 22/11/2016.
+ * Class used to manipulate authors
  */
-
 public class AuthorManager extends DAOBase{
 
     public AuthorManager(Context pContext) {
         super(pContext);
     }
 
+    /**
+     * Transform a list of string in an authorList
+     * @param authorNameList : the list to transform
+     * @param isbn : the Book's isbn assoicated with the authors
+     * @return
+     */
     public static AuthorList fromString(ArrayList<String> authorNameList, String isbn) {
 
         AuthorList authorList = new AuthorList();
@@ -33,6 +38,11 @@ public class AuthorManager extends DAOBase{
 
     }
 
+    /**
+     * Transform an AuthorList in a list of string
+     * @param authorList the list to transform
+     * @return a list of Author's name
+     */
     public static ArrayList<String> toStringList(AuthorList authorList) {
 
         ArrayList<String> listNameList = new ArrayList<String>();
@@ -45,6 +55,11 @@ public class AuthorManager extends DAOBase{
         return listNameList;
     }
 
+    /**
+     * Concatenate a list of string in a string of all author's name
+     * @param list list to concatenate
+     * @return a string which contains all author's name
+     */
     public static String StringListToString(ArrayList<String> list){
 
         String res = "";
@@ -67,6 +82,13 @@ public class AuthorManager extends DAOBase{
     }
 
 
+    /**
+     * Check if an author already exist in the list
+     * @param s the author's name to compare
+     * @param authorNameList the list which contains different author's names
+     * @return True if the author already exist
+     *          False if not
+     */
     public boolean existAuthor(String s, ArrayList<String> authorNameList) {
 
         for(String str : authorNameList){
