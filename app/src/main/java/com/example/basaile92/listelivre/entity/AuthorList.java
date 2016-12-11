@@ -3,22 +3,35 @@ package com.example.basaile92.listelivre.entity;
 import java.util.ArrayList;
 
 /**
- * Created by Basile on 20/11/2016.
+ * Used to manipulate a list of Author
  */
 
 public class AuthorList extends ArrayList<Author> {
 
+
+    /**
+     * Add an author to the list
+     * @param author : author to add
+     */
     public void addAuthor(Author author){
 
         this.add(author);
     }
 
+
+    /**
+     * Remove an author from the list
+     * @param author : author to remove
+     */
     public void removeAuthor(Author author){
 
         this.remove(author);
     }
 
 
+    /**
+     * @return a string to describe the author
+     */
     public String toString(){
 
         String res = "";

@@ -1,7 +1,7 @@
 package com.example.basaile92.listelivre.entity;
 
 /**
- * Class use to associate a book with a collection
+ * Class used to associate a book with a collection
  */
 public class Collectionbook {
 

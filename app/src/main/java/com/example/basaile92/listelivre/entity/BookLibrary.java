@@ -3,10 +3,10 @@ package com.example.basaile92.listelivre.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by basaile92 on 29/09/2016.
- */
 
+/**
+ * A BookLibrary contains a list of user's books
+ */
 public class BookLibrary extends ArrayList<SimpleBook> implements Serializable{
 
     public BookLibrary(){
