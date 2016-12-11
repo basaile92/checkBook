@@ -9,6 +9,10 @@ import com.example.basaile92.listelivre.database.MySQLHelper;
 import com.example.basaile92.listelivre.entity.Type;
 import com.example.basaile92.listelivre.entity.TypeList;
 
+/**
+ * Database for Type.
+ * Each Type contains a name.
+ */
 public class TypeData {
     
     private static final String LOG = "TypeData";
@@ -22,7 +26,11 @@ public class TypeData {
     public TypeData(MySQLHelper helper) {
         this.helper = helper;
     }
-    
+
+    /**
+     * @param c a cursor
+     * @return the Type which is designated by the cursor
+     */
     public Type fromCursor(Cursor c) {
  
         Type entry = new Type();
@@ -34,7 +42,12 @@ public class TypeData {
         }
         return null;
     }
-    
+
+    /**
+     * Create a ContentValue with a Type information
+     * @param arg a Type which contains information
+     * @return a ContentValue
+     */
     public ContentValues toContentValues(Type arg) {
     
         ContentValues values = new ContentValues();
@@ -43,7 +56,11 @@ public class TypeData {
         
         return values;
     }
-    
+
+    /**
+     * Create new Type in the database
+     * @param arg Type to add
+     */
     public long createType(Type arg) {
         SQLiteDatabase db = helper.getWritableDatabase();
  
@@ -51,7 +68,11 @@ public class TypeData {
  
         return db.insert(TABLE_TYPE, null, values);
     }
-    
+
+    /**
+     * @param query the condition
+     * @return a list of Type which contains all Types from the database which respects the query
+     */
     public TypeList getAllTypeByQuery(String query) {
         
         TypeList list = new TypeList();
@@ -72,6 +93,10 @@ public class TypeData {
         return list;
     }
 
+    /**
+     * @param query the condition
+     * @return a Type from the database which respects the query
+     */
     public Type getTypeByQuery(String query) {
         
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -89,7 +114,11 @@ public class TypeData {
  
         return entry;
     }
-    
+
+    /**
+     * @param name
+     * @return a Type from the database with the name 'name'
+     */
     public Type getTypeByName(String name) {
 
         if(name != null) {
@@ -100,16 +129,25 @@ public class TypeData {
         }else
             return null;
     }
-    
-    
-    
+
+
+    /**
+     * @return all Types from the database
+     */
     public TypeList getAllType() {
     
         String selectQuery = "SELECT  * FROM " + TABLE_TYPE;
 
         return getAllTypeByQuery(selectQuery);
     }
-    
+
+
+    /**
+     * Modify information of the Type have the name 'name' in the database
+     * @param arg new Type
+     * @param name
+     * @return the id
+     */
     public long updateTypeByName(Type arg, String name) {
         SQLiteDatabase db = helper.getWritableDatabase();
  
@@ -119,7 +157,11 @@ public class TypeData {
         return db.update(TABLE_TYPE, values, KEY_NAME + " = ?",
                 new String[] { String.valueOf(name) });
     }
-    
+
+    /**
+     * Delete a Type from the database which have the name 'name'
+     * @param name
+     */
     public void deleteTypeByName(String name) {
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(TABLE_TYPE, KEY_NAME + " = ?",

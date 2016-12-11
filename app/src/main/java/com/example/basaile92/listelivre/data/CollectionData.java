@@ -9,6 +9,10 @@ import com.example.basaile92.listelivre.database.MySQLHelper;
 import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.entity.CollectionList;
 
+/**
+ * Database for Collection.
+ * Each Collection contains a name.
+ */
 public class CollectionData {
     
     private static final String LOG = "CollectionData";
@@ -22,7 +26,11 @@ public class CollectionData {
     public CollectionData(MySQLHelper helper) {
         this.helper = helper;
     }
-    
+
+    /**
+     * @param c a cursor
+     * @return the Collection which is designated by the cursor
+     */
     public Collection fromCursor(Cursor c) {
 
         if(c.getCount() > 0) {
@@ -34,7 +42,12 @@ public class CollectionData {
         }
         return null;
     }
-    
+
+    /**
+     * Create a ContentValue with a Collection information
+     * @param arg a Collection which contains information
+     * @return a ContentValue
+     */
     public ContentValues toContentValues(Collection arg) {
     
         ContentValues values = new ContentValues();
@@ -43,7 +56,12 @@ public class CollectionData {
         
         return values;
     }
-    
+
+    /**
+     * Create a new Collection in the database
+     * @param arg Collection to add in the database
+     * @return the id
+     */
     public long createCollection(Collection arg) {
         SQLiteDatabase db = helper.getWritableDatabase();
  
@@ -51,7 +69,11 @@ public class CollectionData {
  
         return db.insert(TABLE_COLLECTION, null, values);
     }
-    
+
+    /**
+     * @param query the condition
+     * @return a list of Collection which contains all Collection from the database which respects the query
+     */
     public CollectionList getAllCollectionByQuery(String query) {
         
         CollectionList list = new CollectionList();
@@ -71,7 +93,11 @@ public class CollectionData {
  
         return list;
     }
-    
+
+    /**
+     * @param query the condition
+     * @return a Collection from the database which respects the query
+     */
     public Collection getCollectionByQuery(String query) {
         
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -89,7 +115,11 @@ public class CollectionData {
  
         return entry;
     }
-    
+
+    /**
+     * @param name
+     * @return a Collection from the database with the name 'name'
+     */
     public Collection getCollectionByName(String name) {
 
         String selectQuery = "SELECT  * FROM " + TABLE_COLLECTION + " WHERE "
@@ -98,16 +128,24 @@ public class CollectionData {
 
         return getCollectionByQuery(selectQuery);
     }
-    
-    
-    
+
+
+    /**
+     * @return all Collection from the database
+     */
     public CollectionList getAllCollection() {
     
         String selectQuery = "SELECT  * FROM " + TABLE_COLLECTION;
 
         return getAllCollectionByQuery(selectQuery);
     }
-    
+
+    /**
+     * Modify information of the Collection have the name 'name' in the database
+     * @param arg new Collection
+     * @param name
+     * @return the id
+     */
     public long updateCollectionByName(Collection arg, String name) {
         SQLiteDatabase db = helper.getWritableDatabase();
  
@@ -117,7 +155,11 @@ public class CollectionData {
         return db.update(TABLE_COLLECTION, values, KEY_NAME + " = ?",
                 new String[] { String.valueOf(name) });
     }
-    
+
+    /**
+     * Delete a Collection from the database which have the name 'name'
+     * @param name
+     */
     public void deleteCollectionByName(String name) {
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(TABLE_COLLECTION, KEY_NAME + " = ?",

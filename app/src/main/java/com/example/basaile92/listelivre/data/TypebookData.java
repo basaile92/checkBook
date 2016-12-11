@@ -13,6 +13,10 @@ import com.example.basaile92.listelivre.entity.Typebook;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Database for TypeBook.
+ * Each TypeBook contains an id, a nameType and an isbn.
+ */
 public class TypebookData {
     
     private static final String LOG = "TypebookData";
@@ -28,7 +32,11 @@ public class TypebookData {
     public TypebookData(MySQLHelper helper) {
         this.helper = helper;
     }
-    
+
+    /**
+     * @param c a cursor
+     * @return the TypeBook which is designated by the cursor
+     */
     public Typebook fromCursor(Cursor c) {
  
         Typebook entry = new Typebook();
@@ -37,7 +45,12 @@ public class TypebookData {
         entry.setIsbn(c.getString(c.getColumnIndex(KEY_ISBN)));
         return entry;
     }
-    
+
+    /**
+     * Create a ContentValue with a TypeBook information
+     * @param arg a TypeBook which contains information
+     * @return a ContentValue
+     */
     public ContentValues toContentValues(Typebook arg) {
     
         ContentValues values = new ContentValues();
@@ -48,6 +61,11 @@ public class TypebookData {
         return values;
     }
 
+    /**
+     * Create new TypeBooks in the database
+     * @param isbn isbn of typeBooks to add
+     * @param types names of typeBooks to add
+     */
     public void createTypebook(String isbn, TypeList types) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -63,7 +81,11 @@ public class TypebookData {
         }
     }
 
-
+    /**
+     * Create a new Collection in the database
+     * @param arg Collection to add in the database
+     * @return the id
+     */
     public long createTypebook(Typebook arg) {
         SQLiteDatabase db = helper.getWritableDatabase();
  
@@ -71,7 +93,11 @@ public class TypebookData {
  
         return db.insert(TABLE_TYPEBOOK, null, values);
     }
-    
+
+    /**
+     * @param query the condition
+     * @return a list of TypeBook which contains all TypeBooks from the database which respects the query
+     */
     public List<Typebook> getAllTypebookByQuery(String query) {
         
         List<Typebook> list = new ArrayList<Typebook>();
@@ -91,7 +117,11 @@ public class TypebookData {
  
         return list;
     }
-    
+
+    /**
+     * @param query the condition
+     * @return a TypeBook from the database which respects the query
+     */
     public Typebook getTypebookByQuery(String query) {
         
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -109,7 +139,11 @@ public class TypebookData {
  
         return entry;
     }
-    
+
+    /**
+     * @param id
+     * @return a TypeBook from the database with the id 'id'
+     */
     public Typebook getTypebookById(long id) {
 
         String selectQuery = "SELECT  * FROM " + TABLE_TYPEBOOK + " WHERE "
@@ -118,8 +152,11 @@ public class TypebookData {
 
         return getTypebookByQuery(selectQuery);
     }
-    
-    
+
+    /**
+     * @param nametype
+     * @return a list of TypeBooks from the database with the name 'nametype'
+     */
     public List<Typebook> getAllTypebookByNametype(String nametype) {
         
         String selectQuery = "SELECT  * FROM " + TABLE_TYPEBOOK + " WHERE "
@@ -128,7 +165,11 @@ public class TypebookData {
  
         return getAllTypebookByQuery(selectQuery);
     }
-    
+
+    /**
+     * @param isbn
+     * @return a list of TypeBooks from the database with the isbn 'isbn'
+     */
     public List<Typebook> getAllTypebookByIsbn(String isbn) {
         
         String selectQuery = "SELECT  * FROM " + TABLE_TYPEBOOK + " WHERE "
@@ -137,15 +178,25 @@ public class TypebookData {
  
         return getAllTypebookByQuery(selectQuery);
     }
-    
-    
+
+
+    /**
+     * @return all TypeBooks from the database
+     */
     public List<Typebook> getAllTypebook() {
     
         String selectQuery = "SELECT  * FROM " + TABLE_TYPEBOOK;
 
         return getAllTypebookByQuery(selectQuery);
     }
-    
+
+
+    /**
+     * Modify information of the TypeBook have the id 'id' in the database
+     * @param arg new Collection
+     * @param id
+     * @return the id
+     */
     public long updateTypebookById(Typebook arg, long id) {
         SQLiteDatabase db = helper.getWritableDatabase();
  
@@ -156,19 +207,31 @@ public class TypebookData {
                 new String[] { String.valueOf(id) });
     }
 
+    /**
+     * Modify information of all TypeBooks have the isbn 'isbn' from the TypeList 'types"
+     * @param types new TypesBooks
+     * @param isbn
+     */
     public void updateAllTypeBookByIsbn(TypeList types, String isbn) {
         deleteTypebookByIsbn(isbn);
         createTypebook(isbn, types);
     }
 
 
-
+    /**
+     * Delete a TypeBook from the database which have the id 'id'
+     * @param id
+     */
     public void deleteTypebookById(long id) {
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(TABLE_TYPEBOOK, KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
     }
 
+    /**
+     * Delete a TypeBook from the database which have the isbn 'isbn'
+     * @param isbn
+     */
     public void deleteTypebookByIsbn(String isbn){
 
         SQLiteDatabase db = helper.getWritableDatabase();

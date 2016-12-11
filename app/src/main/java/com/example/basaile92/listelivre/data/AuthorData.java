@@ -9,6 +9,10 @@ import com.example.basaile92.listelivre.database.MySQLHelper;
 import com.example.basaile92.listelivre.entity.Author;
 import com.example.basaile92.listelivre.entity.AuthorList;
 
+/**
+ * Database for Authors.
+ * Each Author contains an id, a name and a isbn number
+ */
 public class AuthorData {
     
     private static final String LOG = "AuthorData";
@@ -24,7 +28,11 @@ public class AuthorData {
     public AuthorData(MySQLHelper helper) {
         this.helper = helper;
     }
-    
+
+    /**
+     * @param c a cursor
+     * @return the Author who is designated by the cursor
+     */
     public Author fromCursor(Cursor c) {
 
         Author entry = new Author();
@@ -33,7 +41,12 @@ public class AuthorData {
         entry.setIsbn(c.getString(c.getColumnIndex(KEY_ISBN)));
         return entry;
     }
-    
+
+    /**
+     * Create a ContentValue with an author information
+     * @param arg an author which contains information
+     * @return a ContentValue
+     */
     public ContentValues toContentValues(Author arg) {
     
         ContentValues values = new ContentValues();
@@ -43,7 +56,12 @@ public class AuthorData {
         
         return values;
     }
-    
+
+    /**
+     * Create a new Authors in the database
+     * @param arg Author to add in the database
+     * @return the id
+     */
     public long createAuthor(Author arg) {
         SQLiteDatabase db = helper.getWritableDatabase();
  
@@ -52,6 +70,10 @@ public class AuthorData {
         return db.insert(TABLE_AUTHOR, null, values);
     }
 
+    /**
+     * Create all authors in the database from a list of authors
+     * @param authors an AuthorList contains all authors to add
+     */
     public void createAllAuthor(AuthorList authors) {
 
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -63,7 +85,11 @@ public class AuthorData {
             db.insert(TABLE_AUTHOR, null, values);
         }
     }
-    
+
+    /**
+     * @param query the condition
+     * @return an AuthorList which contains all authors from the database who respects the query
+     */
     public AuthorList getAllAuthorByQuery(String query) {
         
         AuthorList list = new AuthorList();
@@ -83,7 +109,11 @@ public class AuthorData {
  
         return list;
     }
-    
+
+    /**
+     * @param query the condition
+     * @return an Author from the database who respect the query
+     */
     public Author getAuthorByQuery(String query) {
         
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -101,7 +131,12 @@ public class AuthorData {
  
         return entry;
     }
-    
+
+
+    /**
+     * @param id
+     * @return an Author from the database with the id 'id'
+     */
     public Author getAuthorById(long id) {
 
         String selectQuery = "SELECT  * FROM " + TABLE_AUTHOR + " WHERE "
@@ -110,8 +145,12 @@ public class AuthorData {
 
         return getAuthorByQuery(selectQuery);
     }
-    
-    
+
+
+    /**
+     * @param isbn
+     * @return an AuthorList which contains Authors from the database with the isbn 'isbn'
+     */
     public AuthorList getAllAuthorByIsbn(String isbn) {
         
         String selectQuery = "SELECT  * FROM " + TABLE_AUTHOR + " WHERE "
@@ -120,15 +159,25 @@ public class AuthorData {
  
         return getAllAuthorByQuery(selectQuery);
     }
-    
-    
+
+
+    /**
+     * @return all authors from the database
+     */
     public AuthorList getAllAuthor() {
     
         String selectQuery = "SELECT  * FROM " + TABLE_AUTHOR;
 
         return getAllAuthorByQuery(selectQuery);
     }
-    
+
+
+    /**
+     * Modify information of the author have the id 'id' in the database
+     * @param arg new Author
+     * @param id
+     * @return the id
+     */
     public long updateAuthorById(Author arg, long id) {
         SQLiteDatabase db = helper.getWritableDatabase();
  
@@ -139,18 +188,33 @@ public class AuthorData {
                 new String[] { String.valueOf(id) });
     }
 
+    /**
+     * Modifiy information of all authors have the isbn 'isbn' in the database
+     * @param authors new authors
+     * @param isbn
+     */
     public void updateAllAuthorByIsbn(AuthorList authors, String isbn){
 
         deleteAllAuthorByIsbn(isbn);
         createAllAuthor(authors);
     }
 
+
+    /**
+     * Delete an author from the database who have the id 'id'
+     * @param id
+     */
     public void deleteAuthorById(long id) {
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(TABLE_AUTHOR, KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
     }
 
+
+    /**
+     * Delete all authors from the database who have the isbn 'isbn'
+     * @param isbn
+     */
     public void deleteAllAuthorByIsbn(String isbn){
 
         SQLiteDatabase db = helper.getWritableDatabase();

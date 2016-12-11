@@ -11,6 +11,10 @@ import com.example.basaile92.listelivre.entity.Book;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Database for Books.
+ * Each Book contains an isbn, a title, a publiser, a year of publication, a summary, if it is read or borrowed, a comment and a photo.
+ */
 public class BookData {
     
     private static final String LOG = "BookData";
@@ -32,7 +36,11 @@ public class BookData {
     public BookData(MySQLHelper helper) {
         this.helper = helper;
     }
-    
+
+    /**
+     * @param c a cursor
+     * @return the Book which is designated by the cursor
+     */
     public Book fromCursor(Cursor c) {
 
         if(c.getCount() > 0) {
@@ -52,7 +60,12 @@ public class BookData {
         return null;
 
     }
-    
+
+    /**
+     * Create a ContentValue with a Book information
+     * @param arg a Book which contains information
+     * @return a ContentValue
+     */
     public ContentValues toContentValues(Book arg) {
     
         ContentValues values = new ContentValues();
@@ -69,7 +82,12 @@ public class BookData {
         
         return values;
     }
-    
+
+    /**
+     * Create a new Book in the database
+     * @param arg Book to add in the database
+     * @return the id
+     */
     public long createBook(Book arg) {
         SQLiteDatabase db = helper.getWritableDatabase();
  
@@ -77,7 +95,11 @@ public class BookData {
  
         return db.insert(TABLE_BOOK, null, values);
     }
-    
+
+    /**
+     * @param query the condition
+     * @return a list of Book which contains all books from the database which respects the query
+     */
     public List<Book> getAllBookByQuery(String query) {
         
         List<Book> list = new ArrayList<Book>();
@@ -97,7 +119,11 @@ public class BookData {
  
         return list;
     }
-    
+
+    /**
+     * @param query the condition
+     * @return a Book from the database which respect the query
+     */
     public Book getBookByQuery(String query) {
         
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -115,7 +141,11 @@ public class BookData {
  
         return entry;
     }
-    
+
+    /**
+     * @param isbn
+     * @return a Book from the database with the isbn 'isbn'
+     */
     public Book getBookByIsbn(String isbn) {
 
         String selectQuery = "SELECT  * FROM " + TABLE_BOOK + " WHERE "
@@ -124,16 +154,24 @@ public class BookData {
 
         return getBookByQuery(selectQuery);
     }
-    
-    
-    
+
+
+    /**
+     * @return all books from the database
+     */
     public List<Book> getAllBook() {
     
         String selectQuery = "SELECT  * FROM " + TABLE_BOOK;
 
         return getAllBookByQuery(selectQuery);
     }
-    
+
+    /**
+     * Modify information of the Book have the isbn 'isbn' in the database
+     * @param arg new Book
+     * @param isbn
+     * @return the id
+     */
     public long updateBookByIsbn(Book arg, String isbn) {
         SQLiteDatabase db = helper.getWritableDatabase();
  
@@ -143,7 +181,11 @@ public class BookData {
         return db.update(TABLE_BOOK, values, KEY_ISBN + " = ?",
                 new String[] { String.valueOf(isbn) });
     }
-    
+
+    /**
+     * Delete a book from the database which have the isbn 'isbn'
+     * @param isbn
+     */
     public void deleteBookByIsbn(String isbn) {
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(TABLE_BOOK, KEY_ISBN + " = ?",

@@ -5,9 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-/**
- * Created by Basile on 02/11/2016.
- */
 
 public abstract class DAOBase {
 
