@@ -209,17 +209,18 @@ public class ModifyCollectionActivity extends AppCompatActivity {
 
                 //Collect all the books from the library
                 BookManager bookManager = new BookManager(view.getContext());
-                final BookLibrary bookLibrary = bookManager.readBookLibrary();
+                final BookLibrary allBookLibrary = bookManager.readBookLibrary();
 
-                CollectionManager collectionManager = new CollectionManager(view.getContext());
-                Collection collection = collectionManager.getCollectionAtPosition(position);
-                CollectionBookManager collectionBookManager = new CollectionBookManager(view.getContext());
+                final CollectionManager collectionManager = new CollectionManager(view.getContext());
+                final Collection collection = collectionManager.getCollectionAtPosition(position);
+                final CollectionBookManager collectionBookManager = new CollectionBookManager(view.getContext());
+                final BookLibrary bookLibrary = new BookLibrary();
 
                 //We remove all books already exist in the collection
-                for(SimpleBook book : bookLibrary){
+                for(SimpleBook book : allBookLibrary){
 
-                    if (collectionBookManager.existCollectionbook(book, collection)){
-                        bookLibrary.removeBook(book);
+                    if (!collectionBookManager.existCollectionbook(book, collection)){
+                        bookLibrary.addBook(book);
                     }
                 }
 
@@ -251,9 +252,6 @@ public class ModifyCollectionActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         //Add all the checked books in the collection
-                        CollectionManager collectionManager = new CollectionManager(view.getContext());
-                        Collection collection = collectionManager.getCollectionAtPosition(position);
-                        CollectionBookManager collectionBookManager = new CollectionBookManager(view.getContext());
 
                         for (int i = 0 ; i < booksToAdd.size() ; i++) {
 
