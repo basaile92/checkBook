@@ -1,9 +1,7 @@
 package com.example.basaile92.listelivre.adapter;
 
-import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +12,6 @@ import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
 import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.manager.ImageManager;
-
-import java.io.File;
 
 /**
  * Created by basaile92 on 09/12/2016.

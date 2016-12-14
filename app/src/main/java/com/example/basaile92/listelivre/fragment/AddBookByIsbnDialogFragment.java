@@ -22,7 +22,6 @@ public class AddBookByIsbnDialogFragment extends DialogFragment {
 
     // Use this instance of the interface to deliver action events
     BookLibraryFragmentCallBack mListener;
-    EditText isbnEditForm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
@@ -58,10 +57,6 @@ public class AddBookByIsbnDialogFragment extends DialogFragment {
 
     }
 
-    public EditText getIsbnEditForm(){
-
-        return this.isbnEditForm;
-    }
 
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener

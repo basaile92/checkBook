@@ -2,7 +2,6 @@ package com.example.basaile92.listelivre.manager;
 
 import android.content.Context;
 
-import com.example.basaile92.listelivre.exception.BookNotInDatabaseException;
 import com.example.basaile92.listelivre.data.AuthorData;
 import com.example.basaile92.listelivre.data.BookData;
 import com.example.basaile92.listelivre.data.TypebookData;
@@ -12,6 +11,7 @@ import com.example.basaile92.listelivre.entity.Book;
 import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.Typebook;
+import com.example.basaile92.listelivre.exception.BookNotInDatabaseException;
 
 import java.util.List;
 

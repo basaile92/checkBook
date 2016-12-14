@@ -8,14 +8,12 @@ import com.example.basaile92.listelivre.data.BookData;
 import com.example.basaile92.listelivre.data.CollectionbookData;
 import com.example.basaile92.listelivre.data.TypebookData;
 import com.example.basaile92.listelivre.database.DAOBase;
-import com.example.basaile92.listelivre.entity.Author;
 import com.example.basaile92.listelivre.entity.AuthorList;
 import com.example.basaile92.listelivre.entity.Book;
 import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.entity.Collectionbook;
 import com.example.basaile92.listelivre.entity.SimpleBook;
-import com.example.basaile92.listelivre.entity.TypeList;
 import com.example.basaile92.listelivre.entity.Typebook;
 
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
 package com.example.basaile92.listelivre.callback;
 
 import android.app.DialogFragment;
-import android.view.View;
 
 /**
  * Created by basaile92 on 20/10/2016.

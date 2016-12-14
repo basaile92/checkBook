@@ -3,35 +3,25 @@ package com.example.basaile92.listelivre.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.basaile92.listelivre.R;
-import com.example.basaile92.listelivre.activity.BookLibraryActivity;
-import com.example.basaile92.listelivre.activity.DisplayBookActivity;
 import com.example.basaile92.listelivre.activity.MainActivity;
 import com.example.basaile92.listelivre.activity.ModifyBookActivity;
 import com.example.basaile92.listelivre.callback.BookLibraryFragmentCallBack;
-import com.example.basaile92.listelivre.entity.BookLibrary;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.manager.BookManager;
 import com.example.basaile92.listelivre.manager.ImageManager;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -112,6 +102,7 @@ public class DisplayBookFragment extends Fragment{
 
     private void setStampVisibility(LinearLayout isBorrowedLayout, LinearLayout isReadLayout, boolean isBorrowed, boolean isRead) {
 
+        //if isBorrowed is true, show the Borrowed stamp, else, hide the Borrowed stamp
         if(isBorrowed){
 
             isBorrowedLayout.setVisibility(View.VISIBLE);
@@ -119,7 +110,7 @@ public class DisplayBookFragment extends Fragment{
 
             isBorrowedLayout.setVisibility(View.INVISIBLE);
         }
-
+        //if isRead is true, show the Read stamp, else, hide the Read stamp
         if(isRead){
 
             isReadLayout.setVisibility(View.VISIBLE);
@@ -203,6 +194,7 @@ public class DisplayBookFragment extends Fragment{
 
     private void setImageButton(ImageView imageButton, String path){
 
+        //If a picture is assignated, set the picture, else, set the basic picture
         if(!path.equals("")) {
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);

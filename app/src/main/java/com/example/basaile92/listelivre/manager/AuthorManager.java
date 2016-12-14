@@ -5,8 +5,6 @@ import android.content.Context;
 import com.example.basaile92.listelivre.database.DAOBase;
 import com.example.basaile92.listelivre.entity.Author;
 import com.example.basaile92.listelivre.entity.AuthorList;
-import com.example.basaile92.listelivre.entity.Type;
-import com.example.basaile92.listelivre.entity.TypeList;
 
 import java.util.ArrayList;
 

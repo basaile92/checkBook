@@ -3,7 +3,6 @@ package com.example.basaile92.listelivre.entity;
 import com.example.basaile92.listelivre.manager.TypeManager;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 

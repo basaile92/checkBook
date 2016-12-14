@@ -3,8 +3,6 @@ package com.example.basaile92.listelivre.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.util.ArrayList;
-
 
 public abstract class DAOBase {
 

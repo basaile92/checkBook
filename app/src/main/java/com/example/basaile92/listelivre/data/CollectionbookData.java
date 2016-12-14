@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.basaile92.listelivre.database.MySQLHelper;
-import com.example.basaile92.listelivre.entity.Collection;
 import com.example.basaile92.listelivre.entity.Collectionbook;
 
 import java.util.ArrayList;

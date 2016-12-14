@@ -22,9 +22,9 @@ import com.example.basaile92.listelivre.R;
 import com.example.basaile92.listelivre.entity.AuthorList;
 import com.example.basaile92.listelivre.entity.SimpleBook;
 import com.example.basaile92.listelivre.entity.TypeList;
-import com.example.basaile92.listelivre.manager.ImageManager;
 import com.example.basaile92.listelivre.manager.AuthorManager;
 import com.example.basaile92.listelivre.manager.BookManager;
+import com.example.basaile92.listelivre.manager.ImageManager;
 import com.example.basaile92.listelivre.manager.TypeManager;
 
 import java.io.File;
