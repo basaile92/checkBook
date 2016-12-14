@@ -21,4 +21,13 @@ public class BookLibrary extends ArrayList<SimpleBook> implements Serializable{
 
         this.add(book);
     }
+
+    /**
+     * Remove a book from the Book library.
+     * @param book is the Book that you want to delete in the library.
+     */
+    public void removeBook(SimpleBook book){
+
+        this.remove(book);
+    }
 }

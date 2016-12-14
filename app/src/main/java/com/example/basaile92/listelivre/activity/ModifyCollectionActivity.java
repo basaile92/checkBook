@@ -210,6 +210,19 @@ public class ModifyCollectionActivity extends AppCompatActivity {
                 //Collect all the books from the library
                 BookManager bookManager = new BookManager(view.getContext());
                 final BookLibrary bookLibrary = bookManager.readBookLibrary();
+
+                CollectionManager collectionManager = new CollectionManager(view.getContext());
+                Collection collection = collectionManager.getCollectionAtPosition(position);
+                CollectionBookManager collectionBookManager = new CollectionBookManager(view.getContext());
+
+                //We remove all books already exist in the collection
+                for(SimpleBook book : bookLibrary){
+
+                    if (collectionBookManager.existCollectionbook(book, collection)){
+                        bookLibrary.removeBook(book);
+                    }
+                }
+
                 //String[] is use to add book in the dialog
                 String[] booksDescription = new String[bookLibrary.size()];
                 for(int i = 0 ; i<bookLibrary.size() ; i++) {
@@ -245,10 +258,7 @@ public class ModifyCollectionActivity extends AppCompatActivity {
                         for (int i = 0 ; i < booksToAdd.size() ; i++) {
 
                             SimpleBook book = booksToAdd.get(i);
-                            if(! collectionBookManager.existCollectionbook(book,collection)) {
-
-                                collectionBookManager.saveCollectionBook(collection, book);
-                            }
+                            collectionBookManager.saveCollectionBook(collection, book);
                         }
                     }
                 });
