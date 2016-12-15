@@ -131,7 +131,7 @@ public class DisplayBookFragment extends Fragment{
 
                 //We send the book at the position in the intent to the modify book activity
                 Intent intent;
-                intent = new Intent(getActivity(), ModifyBookActivity.class);
+                intent = new Intent(view.getContext(), ModifyBookActivity.class);
 
                 BookManager bookManager = new BookManager(view.getContext());
                 SimpleBook book = bookManager.getSimpleBookAtPosition(position);

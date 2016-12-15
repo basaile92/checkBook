@@ -129,13 +129,11 @@ public class BookLibraryActivity extends FragmentActivity implements BookLibrary
         if(displayBookLayout != null) {
 
             //We update the view of the displaybookfragment with the new position
-            DisplayBookFragment displayBookFragment = (DisplayBookFragment) getSupportFragmentManager().findFragmentById(R.id.displayBookFragment);
-            DisplayBookFragment newDisplayBookFragment = new DisplayBookFragment();
+            DisplayBookFragment displayBookFragment = new DisplayBookFragment();
             View viewDisplay = findViewById(R.id.fragment_display_book);
-            newDisplayBookFragment.updateView(position, viewDisplay);
-            getSupportFragmentManager().beginTransaction().replace(R.id.displayBookLayout, newDisplayBookFragment).commit();
-
+            displayBookFragment.updateView(position, viewDisplay);
             displayBookLayout.setVisibility(View.VISIBLE);
+
         }else{
 
             //We change the activity and send the position by an intent to the DisplayBookActivity
